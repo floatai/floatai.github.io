@@ -52,8 +52,8 @@
   const canvas = document.getElementById("graph");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  const LABELS = ["pretraining", "post-training", "scaling laws", "reasoning", "data attribution", "evaluation", "optimization", "coding agents", "tokenization", "harnesses", "interpretability", "multilingual"];
-  const SLOTS = [[0.70, 0.09], [0.85, 0.05], [0.77, 0.17], [0.90, 0.24], [0.68, 0.30], [0.83, 0.37], [0.73, 0.45], [0.88, 0.51], [0.69, 0.59], [0.84, 0.66], [0.72, 0.73], [0.88, 0.80]];
+  const LABELS = ["pretraining", "mid-training", "post-training", "scaling laws", "data attribution", "reasoning", "optimization", "evaluation", "efficiency", "coding agents", "harnesses", "tokenization", "multilingual", "interpretability"];
+  const SLOTS = [[0.70, 0.07], [0.85, 0.04], [0.77, 0.14], [0.89, 0.20], [0.68, 0.25], [0.83, 0.31], [0.72, 0.37], [0.89, 0.42], [0.79, 0.48], [0.68, 0.54], [0.87, 0.59], [0.73, 0.65], [0.86, 0.71], [0.70, 0.78]];
   let w, h, dpr, nodes = [], pointer = { x: -1e4, y: -1e4 };
 
   const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();

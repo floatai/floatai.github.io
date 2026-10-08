@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&text=%E6%A5%9A%E6%B2%B3%E6%BC%A2%E7%95%8C%E8%BB%8A%E9%A6%AC%E5%B8%A5%E5%B0%87%E8%B1%A1%E5%8D%92%E7%9B%B8%E4%BB%95%E7%82%AE%E5%85%B5%E5%A3%AB%E7%A0%B2&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/site.css?v=20261009h" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261009i" />
 </head>
 <body>
   <header class="nav">
@@ -98,7 +98,7 @@
       <section class="block" id="overview">
         <h2 class="block__label">Overview</h2>
         <div class="block__body">
-          <p>Static evaluations credit a language model for naming the right move, but an agent must carry a plan through to a verified outcome while an opponent responds. XiangqiBench measures this difference in Chinese chess.</p>
+          <p>Static evaluations credit a language model for naming the right move, but an agent must carry a plan through to a verified outcome while an opponent responds. XiangqiBench measures that gap in xiangqi, or Chinese chess.</p>
           <p>Starting from 119 tactical endgames with forced mates, an LLM agent must deliver checkmate against an engine defender. An interactive REPL separates real moves, state queries and forward simulation. We record 8,568 multi-turn trajectories from 12 frontier LLMs under two observation protocols.</p>
           <p>Three signals that look like competence each overstate closed-loop success. Agent evaluations should score the outcome of the whole game, and report reliability alongside coverage.</p>
         </div>
@@ -126,7 +126,7 @@
             <div>
               <dt>Opponent mismatch</dt>
               <dd class="findings__num">49.3%</dd>
-              <dd>of comparable cases: the real defender replies differently from the line the agent simulated.</dd>
+              <dd>of comparable defender replies depart from the line the agent simulated for them.</dd>
             </div>
           </dl>
         </div>
@@ -177,7 +177,7 @@
       <section class="block" id="positions">
         <h2 class="block__label">Per position</h2>
         <div class="block__body block__body--wide">
-          <p class="block__lead">Each column is one position, grouped by mate distance; each cell counts the wins of one model in three trials. Wins concentrate on a minority of positions: no model wins 56 of the 119 under sighted observation, or 73 under restricted observation.</p>
+          <p class="block__lead">Each column is one position, grouped by mate distance; each cell counts the wins of one model in three trials. Wins concentrate on a minority of positions: 56 of the 119 are never won by any model under sighted observation, and 73 under restricted observation.</p>
           <div id="hm-root" class="hm-root"><p class="rp__note">Loading…</p></div>
         </div>
       </section>
@@ -194,7 +194,7 @@
         <h2 class="block__label">Setup</h2>
         <div class="block__body">
           <dl class="facts">
-            <div><dt>Positions</dt><dd>119 tactical endgames with forced mates in 3–11 plies, supported by engine or checks-only search: 116 from <i>Shi Qing Ya Qu</i> (1570), 3 from <i>Jianghu</i></dd></div>
+            <div><dt>Positions</dt><dd>119 tactical endgames with forced mates in 3–11 plies, verified by engine or checks-only search: 116 from <i>Shi Qing Ya Qu</i> (1570), 3 from <i>Jianghu</i></dd></div>
             <div><dt>Defender</dt><dd>Pikafish, depth 18, one thread, 256 MB hash</dd></div>
             <div><dt>Interface</dt><dd>REPL with real moves, state queries and forward simulation</dd></div>
             <div><dt>Protocols</dt><dd>Sighted (board, FEN and legal moves each ply) and restricted (move diffs only)</dd></div>
@@ -257,11 +257,11 @@ xiangqibench score runs/</code></pre>
           <a href="https://github.com/orgs/floatai/discussions" target="_blank" rel="noopener">Discussions</a>
         </nav>
       </div>
-      <p class="footer__note">© 2024–<span id="year">2026</span> FloatAI. See each repository for its license.</p>
+      <p class="footer__note">© 2024–<span id="year">2026</span> FloatAI</p>
     </div>
   </footer>
 
-  <script src="/assets/js/site.js?v=20261009h" defer></script>
-  <script src="/xiangqibench/xiangqibench.js?v=20261009h" defer></script>
+  <script src="/assets/js/site.js?v=20261009i" defer></script>
+  <script src="/xiangqibench/xiangqibench.js?v=20261009i" defer></script>
 </body>
 </html>

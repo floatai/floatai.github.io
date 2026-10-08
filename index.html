@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/site.css?v=20261009h" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261009i" />
 </head>
 <body>
   <header class="nav" id="top">
@@ -56,7 +56,7 @@
         </h1>
         <p class="hero__lede">
           An open research network studying how large language models learn, read and act,
-          and how to measure it. Our benchmarks and datasets are public.
+          and how to evaluate them. Our benchmarks and datasets are public.
         </p>
         <div class="hero__actions">
           <a class="btn btn--primary" href="#research">Explore the research</a>
@@ -114,7 +114,7 @@
             </figure>
             <p class="theme__meta"><span class="theme__topic">Agents</span><span class="theme__venue">Preprint 2026</span></p>
             <h3><a class="theme__title" href="/xiangqibench/">Can an agent finish the game, not just find the move?</a></h3>
-            <p>Agents play xiangqi endgames to checkmate against an engine. Across 12 frontier LLMs, playing the right first move, pass@k and self-simulated lines each overstate closed-loop success.</p>
+            <p>LLM agents must deliver checkmate in xiangqi endgames against an engine. Across 12 frontier models, the right first move, pass@k and self-simulated lines each overstate how often an agent actually wins.</p>
             <span class="theme__link" aria-hidden="true">XiangqiBench →</span>
           </article>
           <article class="theme">
@@ -153,7 +153,7 @@
             </figure>
             <p class="theme__meta"><span class="theme__topic">Multilingual</span><span class="theme__venue">LREC-COLING 2024</span></p>
             <h3><a class="theme__title" href="/humaneval-xl/">Does code generation transfer beyond English prompts?</a></h3>
-            <p>Most code benchmarks are English-in, code-out. We pose the same problems in 23 natural languages and 12 programming languages and compare the results.</p>
+            <p>Most code benchmarks are English-in, code-out. We pose the same 80 problems in 23 natural languages and 12 programming languages, so any drop reflects the language, not the task.</p>
             <span class="theme__link" aria-hidden="true">HumanEval-XL →</span>
           </article>
         </div>
@@ -174,7 +174,7 @@
           <li><a href="https://aclanthology.org/2025.emnlp-main.1146/" target="_blank" rel="noopener"><time datetime="2025-11">Nov 2025</time><span class="pubx__cat">Tokenization</span><span class="pubx__title">Understanding Subword Compositionality of Large Language Models</span><span class="pubx__venue">EMNLP 2025</span></a></li>
           <li><a href="https://aclanthology.org/2025.emnlp-main.109/" target="_blank" rel="noopener"><time datetime="2025-11">Nov 2025</time><span class="pubx__cat">Multilingual</span><span class="pubx__title">CodeMixBench: Evaluating Code-Mixing Capabilities of LLMs Across 18 Languages</span><span class="pubx__venue">EMNLP 2025</span></a></li>
           <li><a href="https://aclanthology.org/2025.findings-emnlp.88/" target="_blank" rel="noopener"><time datetime="2025-11">Nov 2025</time><span class="pubx__cat">Efficiency</span><span class="pubx__title">EvolKV: Evolutionary KV Cache Compression for LLM Inference</span><span class="pubx__venue">Findings of EMNLP 2025</span></a></li>
-          <li><a href="https://aclanthology.org/2025.coling-industry.56/" target="_blank" rel="noopener"><time datetime="2025-01">Jan 2025</time><span class="pubx__cat">Pretraining</span><span class="pubx__title">Aurora-M: Open Source Continual Pre-training for Multilingual Language and Code</span><span class="pubx__venue">COLING 2025 Industry</span></a></li>
+          <li><a href="https://aclanthology.org/2025.coling-industry.56/" target="_blank" rel="noopener"><time datetime="2025-01">Jan 2025</time><span class="pubx__cat">Pretraining</span><span class="pubx__title">Aurora-M: Open Source Continual Pre-training for Multilingual Language and Code</span><span class="pubx__venue">COLING 2025 (Industry)</span></a></li>
           <li><a href="/tkeval/"><time datetime="2024-11">Nov 2024</time><span class="pubx__cat">Tokenization</span><span class="pubx__title">Tokenization Falling Short: On Subword Robustness in Large Language Models</span><span class="pubx__venue">Findings of EMNLP 2024</span></a></li>
           <li><a href="https://proceedings.mlr.press/v235/li24i.html" target="_blank" rel="noopener"><time datetime="2024-07">Jul 2024</time><span class="pubx__cat">Interpretability</span><span class="pubx__title">GiLOT: Interpreting Generative Language Models via Optimal Transport</span><span class="pubx__venue">ICML 2024</span></a></li>
           <li><a href="/humaneval-xl/"><time datetime="2024-05">May 2024</time><span class="pubx__cat">Multilingual</span><span class="pubx__title">HumanEval-XL: A Multilingual Code Generation Benchmark for Cross-lingual Natural Language Generalization</span><span class="pubx__venue">LREC-COLING 2024</span></a></li>
@@ -212,7 +212,7 @@
             <span class="steps__n">03</span>
             <div>
               <h3>Propose a project</h3>
-              <p>Have a sharp question about LLMs and need collaborators? Start a thread in Discussions and find co-authors.</p>
+              <p>Have a focused question about LLMs and want collaborators? Start a thread in Discussions.</p>
             </div>
           </li>
         </ol>
@@ -235,10 +235,10 @@
           <a href="https://github.com/orgs/floatai/discussions" target="_blank" rel="noopener">Discussions</a>
         </nav>
       </div>
-      <p class="footer__note">© 2024–<span id="year">2026</span> FloatAI. See each repository for its license.</p>
+      <p class="footer__note">© 2024–<span id="year">2026</span> FloatAI</p>
     </div>
   </footer>
 
-  <script src="/assets/js/site.js?v=20261009h" defer></script>
+  <script src="/assets/js/site.js?v=20261009i" defer></script>
 </body>
 </html>

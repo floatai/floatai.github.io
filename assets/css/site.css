@@ -601,6 +601,12 @@ html:has(.toc) { scroll-padding-top: 128px; }
 .pager a:hover span { color: var(--blue); }
 .pager__all { font-size: 13px; color: var(--ink-3); }
 .pager__all:hover { color: var(--ink); }
+.next { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; font-size: 15px; }
+.next a { display: block; padding-top: 14px; border-top: 1px solid var(--line); }
+.next small { display: block; margin-bottom: 4px; font: 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.next span { color: var(--ink); transition: color .15s; }
+.next a:hover span { color: var(--blue); }
+@media (max-width: 720px) { .next { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .links { list-style: none; padding: 0; margin: 20px 0 0; display: flex; gap: 24px; flex-wrap: wrap; }
 .links a { font-size: 14px; font-weight: 500; color: var(--blue); }
 .links a:hover { text-decoration: underline; text-underline-offset: 4px; }

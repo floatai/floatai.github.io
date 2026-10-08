@@ -25,9 +25,11 @@ The site is plain HTML, CSS and JavaScript. There is no build step and no depend
 ```
 index.html                 the homepage
 <project>/index.html       one page per project, e.g. xiangqibench/, tkeval/
+xiangqibench/xiangqibench.js   boards, leaderboard, per-position heatmap and replays
+xiangqibench/data/         per-position results and replayed games, from the paper's archive
 404.html                   not-found page
 assets/css/site.css        styles; light and dark themes follow prefers-color-scheme
-assets/js/site.js          hero graph, xiangqi board, copy buttons, scroll reveal
+assets/js/site.js          hero graph, copy buttons, scroll reveal
 assets/brand/              logo files from the FloatAI brand kit
 assets/img/og/             1200×630 share cards, one per page
 scripts/make_og_cards.py   renders the share cards (optional, needs Playwright)

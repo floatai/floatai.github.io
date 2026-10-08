@@ -1,7 +1,5 @@
 (() => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const SVG = "http://www.w3.org/2000/svg";
-
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
@@ -36,53 +34,6 @@
     });
     pre.appendChild(btn);
   });
-
-  // A legal xiangqi position where the rook's move to the back rank is mate.
-  // King on f10 has two flight squares: e10 (covered by the rook along the rank) and f9 (covered by the horse).
-  const board = document.getElementById("board");
-  if (board) {
-    const O = 40, S = 48;
-    const X = (c) => O + c * S, Y = (r) => O + r * S;
-    const el = (tag, attrs, parent = board) => {
-      const n = document.createElementNS(SVG, tag);
-      for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
-      parent.appendChild(n);
-      return n;
-    };
-    const defs = el("defs", {});
-    const marker = el("marker", { id: "arMove", viewBox: "0 0 10 10", refX: 7, refY: 5, markerWidth: 7, markerHeight: 7, orient: "auto" }, defs);
-    el("path", { d: "M0 0L10 5L0 10z", fill: "var(--blue)" }, marker);
-
-    let d = "";
-    for (let r = 0; r <= 9; r++) d += `M${X(0)} ${Y(r)}H${X(8)}`;
-    for (let c = 1; c < 8; c++) d += `M${X(c)} ${Y(0)}V${Y(4)}M${X(c)} ${Y(5)}V${Y(9)}`;
-    d += `M${X(3)} ${Y(0)}L${X(5)} ${Y(2)}M${X(5)} ${Y(0)}L${X(3)} ${Y(2)}`;
-    d += `M${X(3)} ${Y(7)}L${X(5)} ${Y(9)}M${X(5)} ${Y(7)}L${X(3)} ${Y(9)}`;
-    el("path", { d, class: "b-line" });
-    el("rect", { x: X(0), y: Y(0), width: 8 * S, height: 9 * S, class: "b-frame" });
-    el("text", { x: X(1.5), y: Y(4.5) + 7, class: "b-river" }).textContent = "楚河";
-    el("text", { x: X(5.5), y: Y(4.5) + 7, class: "b-river" }).textContent = "漢界";
-
-    el("path", { d: `M${X(7)} ${Y(2)}H${X(6)}L${X(5)} ${Y(1)}`, class: "b-move", "stroke-dasharray": "2 5", "stroke-linecap": "round", opacity: ".7" });
-    el("circle", { cx: X(0), cy: Y(3), r: 19, class: "b-ghost" });
-    el("path", { d: `M${X(0)} ${Y(3) - 24}V${Y(0) + 26}`, class: "b-move", "marker-end": "url(#arMove)" });
-    for (const [c, r] of [[4, 0], [5, 1]]) {
-      el("path", { d: `M${X(c) - 6} ${Y(r) - 6}l12 12m0 -12l-12 12`, class: "b-cover" });
-    }
-
-    const pieces = [
-      ["red", "車", 0, 0], ["red", "馬", 7, 2], ["red", "帥", 3, 9],
-      ["black", "將", 5, 0], ["black", "象", 8, 2], ["black", "卒", 2, 6],
-    ];
-    for (const [side, ch, c, r] of pieces) {
-      const g = el("g", { class: `b-piece b-piece--${side}` });
-      el("circle", { cx: X(c), cy: Y(r), r: 19 }, g);
-      const t = el("text", { x: X(c), y: Y(r) + 7.5, "text-anchor": "middle" }, g);
-      t.textContent = ch;
-    }
-    el("circle", { cx: X(5), cy: Y(0), r: 19, class: "b-ring" });
-    el("text", { x: X(5) + 26, y: Y(0) - 14, class: "b-tag" }).textContent = "mate";
-  }
 
   // Hero: a slowly drifting graph of research topics, densest on the right.
   const canvas = document.getElementById("graph");

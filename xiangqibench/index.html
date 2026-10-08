@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&text=%E6%A5%9A%E6%B2%B3%E6%BC%A2%E7%95%8C%E8%BB%8A%E9%A6%AC%E5%B8%A5%E5%B0%87%E8%B1%A1%E5%8D%92&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&text=%E6%A5%9A%E6%B2%B3%E6%BC%A2%E7%95%8C%E8%BB%8A%E9%A6%AC%E5%B8%A5%E5%B0%87%E8%B1%A1%E5%8D%92%E7%9B%B8%E4%BB%95%E7%82%AE%E5%85%B5%E5%A3%AB%E7%A0%B2&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/site.css" />
 </head>
 <body>
@@ -110,11 +110,69 @@
         </div>
       </section>
 
+      <section class="block" id="leaderboard">
+        <h2 class="block__label">Leaderboard</h2>
+        <div class="block__body block__body--wide">
+          <p class="block__lead">Success rate (%) over 119 positions with three trials each. pass@3 counts positions won in at least one trial; pass^3, positions won in all three. The gap between the two bars is the consistency gap.</p>
+          <div id="lb-root" class="lb-root">
+            <div class="lb-scroll">
+              <table class="lb">
+                <caption>Success rate (%) over 119 positions, three trials each, ranked by sighted pass@1. S: sighted; R: restricted. pass@3 counts positions won in at least one of three trials, pass^3 positions won in all three.</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" rowspan="2" class="lb__model">Model</th>
+                    <th scope="colgroup" colspan="2">pass@1</th>
+                    <th scope="colgroup" colspan="2">pass@3</th>
+                    <th scope="colgroup" colspan="2">pass^3</th>
+                  </tr>
+                  <tr>
+                    <th scope="col">S</th><th scope="col">R</th>
+                    <th scope="col">S</th><th scope="col">R</th>
+                    <th scope="col">S</th><th scope="col">R</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Gemini 3.1 Pro</th><td class="lb__top">22.1</td><td class="lb__top">14.0</td><td class="lb__top">38.7</td><td class="lb__top">32.8</td><td class="lb__top">5.9</td><td class="lb__top">1.7</td></tr>
+                  <tr><th scope="row">GPT-5.5</th><td>9.0</td><td>3.4</td><td>17.6</td><td>6.7</td><td>2.5</td><td>0.8</td></tr>
+                  <tr><th scope="row">Qwen 3.7 Max</th><td>6.2</td><td>2.8</td><td>13.4</td><td>5.9</td><td>0.8</td><td>0.8</td></tr>
+                  <tr><th scope="row">Claude Opus 4.7</th><td>5.3</td><td>0.8</td><td>10.9</td><td>1.7</td><td>0.8</td><td>0.0</td></tr>
+                  <tr><th scope="row">DeepSeek V4 Pro</th><td>2.8</td><td>0.0</td><td>5.0</td><td>0.0</td><td>1.7</td><td>0.0</td></tr>
+                  <tr><th scope="row">Seed 2.0 Pro</th><td>0.8</td><td>0.6</td><td>2.5</td><td>1.7</td><td>0.0</td><td>0.0</td></tr>
+                  <tr><th scope="row">Kimi K2.5</th><td>0.8</td><td>0.3</td><td>1.7</td><td>0.8</td><td>0.0</td><td>0.0</td></tr>
+                  <tr><th scope="row">Mistral Large 3</th><td>0.8</td><td>0.0</td><td>0.8</td><td>0.0</td><td>0.8</td><td>0.0</td></tr>
+                  <tr><th scope="row">MiniMax M2.5</th><td>0.8</td><td>0.0</td><td>0.8</td><td>0.0</td><td>0.8</td><td>0.0</td></tr>
+                  <tr><th scope="row">DeepSeek R1</th><td>0.6</td><td>0.0</td><td>1.7</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+                  <tr><th scope="row">GPT-OSS 120B</th><td>0.3</td><td>0.0</td><td>0.8</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+                  <tr><th scope="row">DeepSeek V3.2</th><td>0.3</td><td>0.0</td><td>0.8</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="lb-note">Bootstrap intervals and k&nbsp;=&nbsp;2 are in the <a href="https://arxiv.org/abs/2610.02425">paper</a>. To add a model, run the <a href="https://github.com/floatai/xiangqibench">benchmark</a> with the standard settings and open an issue with the scored records.</p>
+        </div>
+      </section>
+
+      <section class="block" id="positions">
+        <h2 class="block__label">Per position</h2>
+        <div class="block__body block__body--wide">
+          <p class="block__lead">Each column is one position, grouped by mate distance; each cell counts the wins of one model in three trials. Wins concentrate on a minority of positions: no model wins 56 of the 119 under sighted observation, or 73 under restricted observation.</p>
+          <div id="hm-root" class="hm-root"><p class="rp__note">Loading…</p></div>
+        </div>
+      </section>
+
+      <section class="block" id="replays">
+        <h2 class="block__label">Replays</h2>
+        <div class="block__body block__body--wide">
+          <p class="block__lead">Four games from the paper, ply by ply: what the agent wrote, simulated and played on each turn, and how the defender answered. Use the arrow keys to step.</p>
+          <div id="rp-root" class="rp" tabindex="-1"><p class="rp__note">Loading…</p></div>
+        </div>
+      </section>
+
       <section class="block">
         <h2 class="block__label">Setup</h2>
         <div class="block__body">
           <dl class="facts">
-            <div><dt>Positions</dt><dd>119 tactical endgames with forced mates</dd></div>
+            <div><dt>Positions</dt><dd>119 tactical endgames with forced mates in 3–11 plies: 116 from <i>Shi Qing Ya Qu</i> (1570), 3 from <i>Jianghu</i></dd></div>
             <div><dt>Defender</dt><dd>Pikafish, depth 18, one thread, 256 MB hash</dd></div>
             <div><dt>Interface</dt><dd>REPL with real moves, state queries and forward simulation</dd></div>
             <div><dt>Protocols</dt><dd>Sighted (board, FEN and legal moves each ply) and restricted (move diffs only)</dd></div>
@@ -186,5 +244,6 @@ xiangqibench score runs/</code></pre>
   </footer>
 
   <script src="/assets/js/site.js" defer></script>
+  <script src="/xiangqibench/xiangqibench.js" defer></script>
 </body>
 </html>

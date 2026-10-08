@@ -34,17 +34,6 @@
     });
   });
 
-  const downloadsEl = document.querySelector("[data-hf-downloads]");
-  Promise.all(["HumanEval-XL", "TKEval"].map((d) =>
-    fetch(`https://huggingface.co/api/datasets/floatai/${d}?expand[]=downloadsAllTime`)
-      .then((r) => (r.ok ? r.json() : {}))
-      .then((j) => j.downloadsAllTime || 0)
-      .catch(() => 0)
-  )).then((counts) => {
-    const total = counts.reduce((a, b) => a + b, 0);
-    if (total >= 1000) downloadsEl.textContent = `${Math.floor(total / 1000)}k+`;
-  });
-
   // Featured: a legal xiangqi position where the rook's move to the back rank is mate.
   // King on f10 has two flight squares: e10 (covered by the rook along the rank) and f9 (covered by the horse).
   const board = document.getElementById("board");

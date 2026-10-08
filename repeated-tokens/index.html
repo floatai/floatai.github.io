@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/site.css?v=20261009f" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261009g" />
 </head>
 <body>
   <header class="nav">
@@ -81,7 +81,6 @@
         <a href="#evidence">Evidence</a>
         <a href="#beyond">Beyond counts</a>
         <a href="#practice">In practice</a>
-        <a href="#setup">Setup</a>
         <a href="#citation">Citation</a>
       </div>
     </nav>
@@ -180,7 +179,7 @@
             </div>
             <div class="eq">
               <p class="eq__tag">Allocation at fixed U <span>Eq. 5 · §4.4</span></p>
-              <p class="eq__f"><var>N</var><sub>opt</sub> = √(<var>C</var>/6τ), <var>R</var><sub>opt</sub> = √(τ<var>C</var>/6) / <var>U</var></p>
+              <p class="eq__f"><var>N</var><sub>opt</sub> = √(<var>C</var>/6τ)<br /><var>R</var><sub>opt</sub> = √(τ<var>C</var>/6) / <var>U</var></p>
               <p>With unique data fixed, compute goes to model size and epochs in roughly equal shares (fitted <var>N</var> ∝ <var>C</var><sup>0.52–0.53</sup>, <var>R</var> ∝ <var>C</var><sup>0.47–0.48</sup>), holding τ = <var>D</var>/<var>N</var> at 16–24, until loss stops improving near <var>R</var><sub>c</sub>.</p>
             </div>
             <div class="eq">
@@ -325,21 +324,6 @@
         </div>
       </section>
 
-      <section class="block" id="setup">
-        <h2 class="block__label">Setup</h2>
-        <div class="block__body">
-          <dl class="facts">
-            <div><dt>Grid</dt><dd>Five sizes from 23M to 361M non-embedding parameters; 5–300 tokens per parameter; 1, 2, 4, 8 and 16 epochs with U = D/R</dd></div>
-            <div><dt>Sweeps</dt><dd>Fixed corpus (14M–2B, up to 32 epochs), U = 2.5N (23M–1.2B), D = 20N partial repetition, order, source entropy and re-tokenization studies</dd></div>
-            <div><dt>Models</dt><dd>Decoder-only Transformers with grouped-query attention, RoPE, ReLU² MLPs and tied embeddings; context 1,024</dd></div>
-            <div><dt>Optimizer</dt><dd>Muon for hidden matrices, Adam elsewhere; no weight decay, dropout or clipping; learning rate annealed to each run’s horizon</dd></div>
-            <div><dt>Data</dt><dd>SlimPajama: CommonCrawl, C4, GitHub, Books, arXiv, Wikipedia and StackExchange; GPT-2 byte-level BPE</dd></div>
-            <div><dt>Metric</dt><dd>Bits per byte on held-out test sets of each source; paired studies use three or more replicates</dd></div>
-            <div><dt>Compute</dt><dd>Eight H800 GPUs</dd></div>
-          </dl>
-          <p class="src" style="margin-top:18px">Limitations: the models are far smaller than frontier systems, and since weight decay lowers the cost of repetition, the constants of Eqs. 3 and 4 may shift under other regularization.</p>
-        </div>
-      </section>
 
       <section class="block" id="citation">
         <h2 class="block__label">Citation</h2>
@@ -384,7 +368,7 @@
     </div>
   </footer>
 
-  <script src="/assets/js/site.js?v=20261009f" defer></script>
-  <script src="/repeated-tokens/page.js?v=20261009f" defer></script>
+  <script src="/assets/js/site.js?v=20261009g" defer></script>
+  <script src="/repeated-tokens/page.js?v=20261009g" defer></script>
 </body>
 </html>

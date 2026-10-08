@@ -411,7 +411,12 @@
       }
       svg.setAttribute("aria-label", `Board after ply ${step} of ${t.plies.length}`);
       [...plies.children].forEach((li) => li.classList.toggle("is-current", +li.dataset.step === step));
-      plies.querySelector(".is-current")?.scrollIntoView({ block: "nearest", inline: "nearest" });
+      const cur = plies.querySelector(".is-current");
+      if (cur) {
+        const left = cur.offsetLeft - plies.offsetLeft, right = left + cur.offsetWidth;
+        if (left < plies.scrollLeft) plies.scrollLeft = left;
+        else if (right > plies.scrollLeft + plies.clientWidth) plies.scrollLeft = right - plies.clientWidth;
+      }
       prevB.disabled = step === 0; nextB.disabled = done;
       status.textContent = done ? t.end : step === 0 ? `${t.model}, ${t.setting.toLowerCase()} observation, trial ${t.trial}. Red to move.` : `Ply ${step} of ${t.plies.length}`;
 
@@ -426,7 +431,7 @@
         const acts = last.acts || [];
         log.replaceChildren(h("div", { class: "rp__head" }, h("b", { text: last.mv ? `Ply ${step} · Red ${last.mv}` : `Ply ${step} · Red resigns` }),
           h("span", { text: `${acts.length} command${acts.length === 1 ? "" : "s"} this turn` })),
-          ...acts.map(actView), done ? h("p", { class: "rp__end", text: t.end }) : null);
+          ...acts.map(actView), ...(done ? [h("p", { class: "rp__end", text: t.end })] : []));
       }
       log.scrollTop = 0;
       if (done) stop();

@@ -57,32 +57,54 @@
       <p class="overline">Agents · October 2026</p>
       <h1 class="page-title">Finding the move is not winning the&nbsp;game</h1>
       <p class="page-paper">XiangqiBench for closed-loop evaluation of LLM agents</p>
-      <p class="page-authors">Yekun Chai, Qiwei Peng, Haoyi Xiong</p>
+      <p class="page-authors">Yekun Chai<sup>1</sup>, Qiwei Peng<sup>1,2</sup>, Haoyi Xiong<sup>3</sup></p>
+      <p class="page-affil"><span><sup>1</sup>FloatAI</span><span><sup>2</sup>University of Copenhagen</span><span><sup>3</sup>Independent Researcher</span></p>
       <p class="page-venue">arXiv preprint 2610.02425</p>
       <div class="page-actions">
         <a class="btn btn--primary" href="https://arxiv.org/abs/2610.02425" target="_blank" rel="noopener">Paper</a>
         <a class="btn btn--ghost" href="https://github.com/floatai/xiangqibench" target="_blank" rel="noopener">Code</a>
         <a class="btn btn--ghost" href="https://pypi.org/project/xiangqibench/" target="_blank" rel="noopener">PyPI</a>
+        <a class="btn btn--ghost" href="#citation">BibTeX</a>
+      </div>
+      <div class="page-stats">
+        <div><b>119</b><span>tactical endgames with forced mates in 3–11 plies</span></div>
+        <div><b>12</b><span>frontier LLMs, each playing Red against an engine</span></div>
+        <div><b>8,568</b><span>multi-turn trajectories, three trials per position</span></div>
+        <div><b>2</b><span>observation protocols, sighted and restricted</span></div>
       </div>
     </section>
 
+    <nav class="toc" aria-label="On this page">
+      <div class="wrap toc__inner">
+        <a href="#overview">Overview</a>
+        <a href="#findings">Findings</a>
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#positions">Per position</a>
+        <a href="#replays">Replays</a>
+        <a href="#setup">Setup</a>
+        <a href="#start">Get started</a>
+        <a href="#citation">Citation</a>
+      </div>
+    </nav>
+
     <div class="wrap">
-      <figure class="page-figure page-figure--board">
+      <figure class="page-figure page-figure--board" style="margin-top:56px">
         <svg id="board" viewBox="0 0 464 512" role="img" aria-label="Illustrative xiangqi position. Red plays rook nine forward three: the rook reaches the back rank with check, and the horse covers the king's only other flight square. Checkmate."></svg>
         <figcaption>Illustrative position. Red (shown in blue) plays R9+3: the rook reaches the back rank with check, and the horse covers the king’s only other flight square. Checkmate.</figcaption>
       </figure>
     </div>
 
     <div class="wrap">
-      <section class="block">
+      <section class="block" id="overview">
         <h2 class="block__label">Overview</h2>
         <div class="block__body">
           <p>Static evaluations credit a language model for naming the right move, but an agent must carry a plan through to a verified outcome while an opponent responds. XiangqiBench measures this difference in Chinese chess.</p>
           <p>Starting from 119 tactical endgames with forced mates, an LLM agent must deliver checkmate against an engine defender. An interactive REPL separates real moves, state queries and forward simulation. We record 8,568 multi-turn trajectories from 12 frontier LLMs under two observation protocols.</p>
+          <p>Three signals that look like competence each overstate closed-loop success. Agent evaluations should score the outcome of the whole game, and report reliability alongside coverage.</p>
         </div>
       </section>
 
-      <section class="block">
+      <section class="block" id="findings">
         <h2 class="block__label">Findings</h2>
         <div class="block__body">
           <dl class="findings">
@@ -168,11 +190,11 @@
         </div>
       </section>
 
-      <section class="block">
+      <section class="block" id="setup">
         <h2 class="block__label">Setup</h2>
         <div class="block__body">
           <dl class="facts">
-            <div><dt>Positions</dt><dd>119 tactical endgames with forced mates in 3–11 plies: 116 from <i>Shi Qing Ya Qu</i> (1570), 3 from <i>Jianghu</i></dd></div>
+            <div><dt>Positions</dt><dd>119 tactical endgames with forced mates in 3–11 plies, supported by engine or checks-only search: 116 from <i>Shi Qing Ya Qu</i> (1570), 3 from <i>Jianghu</i></dd></div>
             <div><dt>Defender</dt><dd>Pikafish, depth 18, one thread, 256 MB hash</dd></div>
             <div><dt>Interface</dt><dd>REPL with real moves, state queries and forward simulation</dd></div>
             <div><dt>Protocols</dt><dd>Sighted (board, FEN and legal moves each ply) and restricted (move diffs only)</dd></div>
@@ -181,7 +203,7 @@
         </div>
       </section>
 
-      <section class="block">
+      <section class="block" id="start">
         <h2 class="block__label">Get started</h2>
         <div class="block__body">
           <pre class="code"><code>pip install xiangqibench
@@ -196,12 +218,12 @@ xiangqibench score runs/</code></pre>
         </div>
       </section>
 
-      <section class="block">
+      <section class="block" id="citation">
         <h2 class="block__label">Citation</h2>
         <div class="block__body">
           <pre class="code"><code>@misc{chai2026xiangqibench,
-  title         = {Finding the Move Is Not Winning the Game: {XiangqiBench} for Closed-Loop
-                   Evaluation of {LLM} Agents},
+  title         = {Finding the Move Is Not Winning the Game:
+                   {XiangqiBench} for Closed-Loop Evaluation of {LLM} Agents},
   author        = {Yekun Chai and Qiwei Peng and Haoyi Xiong},
   year          = {2026},
   eprint        = {2610.02425},

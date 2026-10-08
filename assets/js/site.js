@@ -22,6 +22,19 @@
     });
   }
 
+  const tocLinks = [...document.querySelectorAll(".toc a[href^='#']")];
+  if (tocLinks.length && "IntersectionObserver" in window) {
+    const byId = new Map(tocLinks.map((a) => [a.getAttribute("href").slice(1), a]));
+    const visible = new Set();
+    const tocIo = new IntersectionObserver((entries) => {
+      for (const e of entries) e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id);
+      const first = [...byId.keys()].find((id) => visible.has(id));
+      if (!first) return;
+      tocLinks.forEach((a) => a.classList.toggle("is-active", a === byId.get(first)));
+    }, { rootMargin: "-130px 0px -55% 0px" });
+    byId.forEach((_, id) => { const s = document.getElementById(id); if (s) tocIo.observe(s); });
+  }
+
   document.querySelectorAll("pre.code").forEach((pre) => {
     const btn = document.createElement("button");
     btn.type = "button"; btn.className = "code__copy"; btn.textContent = "Copy";

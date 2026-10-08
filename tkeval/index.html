@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TKEval: Tokenization Falling Short — FloatAI</title>
-  <meta name="description" content="Tokenization Falling Short: On Subword Robustness in Large Language Models (Findings of EMNLP 2024). Evaluation code and data." />
+  <meta name="description" content="Tokenization Falling Short: how subword tokenization limits LLMs on character-level problems, token structure and typos, and how BPE-dropout helps (Findings of EMNLP 2024)." />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0c1016" media="(prefers-color-scheme: dark)" />
   <meta property="og:title" content="TKEval: Tokenization Falling Short — FloatAI" />
@@ -60,65 +60,240 @@
       <p class="overline">Tokenization · Findings of EMNLP 2024</p>
       <h1 class="page-title">Tokenization falling&nbsp;short</h1>
       <p class="page-paper">On subword robustness in large language models</p>
-      <p class="page-authors">Yekun Chai, Yewei Fang, Qiwei Peng, Xuhong Li</p>
+      <p class="page-authors">Yekun Chai<sup>1*</sup>, Yewei Fang<sup>2*</sup>, Qiwei Peng<sup>3</sup>, Xuhong Li<sup>1</sup></p>
+      <p class="page-affil"><span><sup>1</sup>Baidu</span><span><sup>2</sup>ModelBest</span><span><sup>3</sup>University of Copenhagen</span><span><sup>*</sup>Equal contribution</span></p>
       <p class="page-venue">Findings of the Association for Computational Linguistics: EMNLP 2024, pages 1582–1599</p>
       <div class="page-actions">
         <a class="btn btn--primary" href="https://aclanthology.org/2024.findings-emnlp.86/" target="_blank" rel="noopener">Paper</a>
         <a class="btn btn--ghost" href="https://arxiv.org/abs/2406.11687" target="_blank" rel="noopener">arXiv</a>
         <a class="btn btn--ghost" href="https://github.com/floatai/TKEval" target="_blank" rel="noopener">Code</a>
         <a class="btn btn--ghost" href="https://huggingface.co/datasets/floatai/TKEval" target="_blank" rel="noopener">Dataset</a>
+        <a class="btn btn--ghost" href="#citation">BibTeX</a>
+      </div>
+      <div class="page-stats">
+        <div><b>3</b><span>research questions on the curse of tokenization</span></div>
+        <div><b>7</b><span>token-structure probes with 1,400 test items</span></div>
+        <div><b>4</b><span>typo perturbations on GSM8K, MMLU, TruthfulQA and HumanEval</span></div>
+        <div><b>6</b><span>LLMs, from Mistral-7B to GPT-4 Turbo</span></div>
       </div>
     </section>
 
+    <nav class="toc" aria-label="On this page">
+      <div class="wrap toc__inner">
+        <a href="#overview">Overview</a>
+        <a href="#findings">Findings</a>
+        <a href="#problem-solving">Problem solving</a>
+        <a href="#token-structure">Token structure</a>
+        <a href="#typos">Typos</a>
+        <a href="#bpe-dropout">BPE-dropout</a>
+        <a href="#get-started">Get started</a>
+        <a href="#citation">Citation</a>
+      </div>
+    </nav>
+
     <div class="wrap">
-      <figure class="page-figure">
-        <svg viewBox="0 0 320 180" role="img" aria-label="The word strawberry split into the subword tokens str, aw and berry. Counting the letter r requires seeing inside the tokens.">
-          <g class="t-mono-lg" text-anchor="middle">
-            <text x="52" y="66">s</text><text x="76" y="66">t</text><text x="100" y="66" class="t-accent">r</text>
-            <text x="124" y="66">a</text><text x="148" y="66">w</text>
-            <text x="172" y="66">b</text><text x="196" y="66">e</text><text x="220" y="66" class="t-accent">r</text><text x="244" y="66" class="t-accent">r</text><text x="268" y="66">y</text>
-          </g>
-          <rect x="40" y="92" width="72" height="32" rx="6" class="f-card s-ink" stroke-width="1.2"/>
-          <rect x="116" y="92" width="44" height="32" rx="6" class="f-card s-ink" stroke-width="1.2"/>
-          <rect x="164" y="92" width="116" height="32" rx="6" class="f-soft s-accent" stroke-width="1.2"/>
-          <g class="t-mono" text-anchor="middle"><text x="76" y="112">str</text><text x="138" y="112">aw</text><text x="222" y="112" class="t-accent">berry</text></g>
-          <text x="160" y="156" class="t-mono t-muted" text-anchor="middle">count("r") → ?</text>
+      <figure class="page-figure page-figure--chart" style="margin-top:56px">
+        <svg class="chart" viewBox="0 0 640 260" role="img" aria-labelledby="tk-hero-t">
+        <title id="tk-hero-t">Two angle diagrams. The embedding of “assignment” and the sum of the embeddings of “assign” and “ment” are 78.16 degrees apart, cosine 0.21. “import” and “im” plus “port” are 82.47 degrees apart, cosine 0.13.</title>
+        <defs><marker id="tk-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="f-accent"/></marker>
+        <marker id="tk-ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="f-ink"/></marker></defs>
+        <path class="c-zone" d="M60 200L105.7 195.2A46 46 0 0 0 64.7 154.2Z"/>
+        <path class="s-accent" stroke-width="1.2" fill="none" d="M105.7 195.2A46 46 0 0 0 64.7 154.2"/>
+        <path class="s-accent" stroke-width="2" d="M60 200L249.0 180.1" marker-end="url(#tk-ar)"/>
+        <path class="s-ink" stroke-width="2" d="M60 200L76.6 37.4" marker-end="url(#tk-ar2)"/>
+        <circle cx="60" cy="200" r="3" class="f-ink"/>
+        <text class="t-mono t-accent" x="245.0" y="202.1" text-anchor="end">“assignment”</text>
+        <text class="t-mono" x="86.6" y="41.4">“assign” + “ment”</text>
+        <text class="lbl" x="102.4" y="161.5">78.16°</text>
+        <text class="tick" x="60" y="230">cosine 0.21</text>
+        <path class="c-zone" d="M380 200L425.7 195.2A46 46 0 0 0 381.2 154.0Z"/>
+        <path class="s-accent" stroke-width="1.2" fill="none" d="M425.7 195.2A46 46 0 0 0 381.2 154.0"/>
+        <path class="s-accent" stroke-width="2" d="M380 200L569.0 180.1" marker-end="url(#tk-ar)"/>
+        <path class="s-ink" stroke-width="2" d="M380 200L384.4 36.7" marker-end="url(#tk-ar2)"/>
+        <circle cx="380" cy="200" r="3" class="f-ink"/>
+        <text class="t-mono t-accent" x="565.0" y="202.1" text-anchor="end">“import”</text>
+        <text class="t-mono" x="394.4" y="40.7">“im” + “port”</text>
+        <text class="lbl" x="420.7" y="160.0">82.47°</text>
+        <text class="tick" x="380" y="230">cosine 0.13</text>
         </svg>
-        <figcaption>A model reads “strawberry” as subword identifiers. Questions about its letters need information the tokens hide.</figcaption>
+        <figcaption>A word’s embedding against the sum of the embeddings of its subword pieces (the paper’s Figure 1). Nearly orthogonal vectors mean the model does not compose a word’s surface form from its tokens.</figcaption>
       </figure>
     </div>
 
     <div class="wrap">
-      <section class="block">
+      <section class="block" id="overview">
         <h2 class="block__label">Overview</h2>
         <div class="block__body">
-          <p>Language models tokenize raw text into subword identifiers from a fixed vocabulary. This process is sensitive to typographical errors and length variation, and largely blind to the internal structure of tokens. We call these issues the curse of tokenization and measure how much they still affect LLMs.</p>
+          <p>Language models read text as subword identifiers from a fixed vocabulary. That makes them sensitive to typographical errors and length variation, and largely blind to the characters inside each token. We call these issues the curse of tokenization.</p>
+          <p>TKEval measures how much the curse still affects current LLMs through three questions: can models solve problems that need access to characters, do they know the internal structure of their own tokens, and how robust are they to typographical variation? A final experiment tests whether subword regularization during training helps.</p>
         </div>
       </section>
 
-      <section class="block">
-        <h2 class="block__label">Research questions</h2>
-        <div class="block__body">
-          <ul class="questions">
-            <li><div><b>Complex problem solving</b><span>Tasks that need character access, such as cycled letters in a word, word unscrambling and identifying math theorems.</span></div></li>
-            <li><div><b>Token structure probing</b><span>What models know about the characters and sub-units inside their own tokens.</span></div></li>
-            <li><div><b>Typographical variation</b><span>Robustness to character-level and token-level perturbations of the input.</span></div></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="block">
+      <section class="block" id="findings">
         <h2 class="block__label">Findings</h2>
         <div class="block__body">
           <ul class="questions">
-            <li><div><b>Scale helps, partly.</b><span>Scaling model parameters mitigates the effects of tokenization.</span></div></li>
-            <li><div><b>Typos still bias models.</b><span>LLMs still suffer from biases induced by typos and other text format variations.</span></div></li>
-            <li><div><b>Subword regularization helps.</b><span>Training with subword regularization such as BPE-dropout mitigates the issue.</span></div></li>
+            <li><div><b>Scale helps, but does not lift the curse.</b><span>Larger models solve more character-level problems, yet every model struggles with characters counted from the end of a word and with non-contiguous patterns across tokens.</span></div></li>
+            <li><div><b>Typos still bias models.</b><span>Models are much more sensitive to noise than to reordering, and more to character-level changes than to token-level ones, regardless of size.</span></div></li>
+            <li><div><b>Moderate subword regularization helps.</b><span>Post-training with BPE-dropout at p = 0.2 often beats the baseline; high drop rates hurt.</span></div></li>
           </ul>
         </div>
       </section>
 
-      <section class="block">
+      <section class="block" id="problem-solving">
+        <h2 class="block__label">Problem solving</h2>
+        <div class="block__body">
+          <p class="lede">Tasks whose answers depend on characters the tokenizer hides. All three come from BIG-bench.</p>
+          <div class="tasks" style="margin-top:24px">
+            <div class="task">
+              <div class="task__head"><h4>Cycled letters</h4><span class="task__abbr">CL</span></div>
+              <p>Undo a rotation of a word’s letters.</p>
+              <dl class="io"><dt>In</dt><dd><code>remo</code></dd><dt>Out</dt><dd><code>more</code></dd></dl>
+            </div>
+            <div class="task">
+              <div class="task__head"><h4>Word unscrambling</h4><span class="task__abbr">WU</span></div>
+              <p>Recover a word from randomly scrambled letters.</p>
+              <dl class="io"><dt>In</dt><dd><code>nad</code></dd><dt>Out</dt><dd><code>and</code></dd></dl>
+            </div>
+          </div>
+          <div class="task" style="margin-top:14px">
+            <div class="task__head"><h4>Identify math theorems</h4><span class="task__abbr">IMT</span></div>
+            <p>Read a theorem written in LaTeX, decide whether it is true and, if not, pick the correct version. 54 problems in nine areas of mathematics; models choose by perplexity.</p>
+            <dl class="io">
+              <dt>In</dt><dd>Let <i>f</i> ∈ L<sup>1</sup>(ℝ) be an integrable function. The span of {<i>f<sub>a</sub></i>(<i>x</i>) = <i>f</i>(<i>x</i> + <i>a</i>) : <i>a</i> ∈ ℝ} is dense in L<sup>1</sup>(ℝ) if and only if <i>f̂</i> …</dd>
+              <dt>A</dt><dd>… has no real roots. <span class="task__abbr">correct</span></dd>
+              <dt>C</dt><dd>… is irreducible over ℚ.</dd>
+              <dt>D</dt><dd>… has no repeated roots.</dd>
+            </dl>
+          </div>
+
+          <div class="tbl-scroll" style="margin-top:32px">
+            <table class="tbl">
+              <caption>Exact match (%) on Identify Math Theorems by number of in-context examples (Table 1). GPT-3 rows are from Srivastava et al. (2022).</caption>
+              <thead><tr><th scope="col">Model</th><th scope="col">0-shot</th><th scope="col">1-shot</th><th scope="col">2-shot</th><th scope="col">3-shot</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">GPT-3 6B</th><td>33.96</td><td>28.30</td><td>33.96</td><td>28.30</td></tr>
+                <tr><th scope="row">GPT-3 200B</th><td>32.08</td><td>30.19</td><td>33.96</td><td>30.19</td></tr>
+                <tr><th scope="row">Llama 2 7B</th><td>37.70</td><td>34.00</td><td>35.80</td><td>37.70</td></tr>
+                <tr><th scope="row">Llama 3 8B</th><td>41.51</td><td>45.28</td><td>45.28</td><td>35.85</td></tr>
+                <tr class="is-ours"><th scope="row">Llama 3 70B</th><td class="is-top">62.26</td><td class="is-top">79.25</td><td class="is-top">69.81</td><td class="is-top">71.70</td></tr>
+                <tr><th scope="row">Mistral 7B</th><td>47.20</td><td>43.40</td><td>37.70</td><td>37.70</td></tr>
+                <tr><th scope="row">Mixtral 8×7B</th><td>49.10</td><td>56.60</td><td>64.20</td><td>62.30</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small" style="color:var(--ink-2)">Llama 3 70B leads at every shot count, but more examples do not help consistently, and GPT-3 200B is no better than GPT-3 6B. On the anagram tasks, GPT-4 Turbo outperforms every other model at every shot count, and all models struggle with longer words.</p>
+        </div>
+      </section>
+
+      <section class="block" id="token-structure">
+        <h2 class="block__label">Token structure</h2>
+        <div class="block__body">
+          <p class="lede">Seven probes ask what a model knows about the characters inside its tokens and the substrings shared across them. Each has 200 test items, built from about 300 words.</p>
+          <h3 class="sub">Inside a token</h3>
+          <div class="tasks" style="margin-top:16px">
+            <div class="task">
+              <div class="task__head"><h4>Character count</h4><span class="task__abbr">CC</span></div>
+              <dl class="io"><dt>Q</dt><dd>Which character appears 3 times in the word ‘messrs’?</dd><dt>A</dt><dd><code>s</code></dd></dl>
+            </div>
+            <div class="task">
+              <div class="task__head"><h4>N-th character</h4><span class="task__abbr">NC</span></div>
+              <dl class="io"><dt>Q</dt><dd>What is the 4th character of the word ‘myron’?</dd><dt>A</dt><dd><code>o</code></dd></dl>
+            </div>
+            <div class="task">
+              <div class="task__head"><h4>N-th character from the end</h4><span class="task__abbr">NCR</span></div>
+              <dl class="io"><dt>Q</dt><dd>What is the 2nd character from the end of the word ‘pensioner’?</dd><dt>A</dt><dd><code>e</code></dd></dl>
+            </div>
+            <div class="task">
+              <div class="task__head"><h4>Case conversion</h4><span class="task__abbr">CCV</span></div>
+              <p>Convert the characters of a word to upper case, lower case or title case.</p>
+            </div>
+          </div>
+          <h3 class="sub">Across tokens</h3>
+          <div class="tasks" style="margin-top:16px">
+            <div class="task">
+              <div class="task__head"><h4>Common substrings</h4><span class="task__abbr">CS</span></div>
+              <dl class="io"><dt>Q</dt><dd>What are the common substrings of ‘critical’ and ‘conscious’?</dd><dt>A</dt><dd><code>i</code>, <code>c</code></dd></dl>
+            </div>
+            <div class="task">
+              <div class="task__head"><h4>Longest common substring</h4><span class="task__abbr">LCS</span></div>
+              <dl class="io"><dt>Q</dt><dd>What are the longest common substrings of ‘cow’ and ‘condition’?</dd><dt>A</dt><dd><code>co</code></dd></dl>
+            </div>
+            <div class="task">
+              <div class="task__head"><h4>Longest common subsequence</h4><span class="task__abbr">LCSeq</span></div>
+              <dl class="io"><dt>Q</dt><dd>What are the longest common subsequences of ‘illustrate’ and ‘critical’?</dd><dt>A</dt><dd><code>ita</code></dd></dl>
+            </div>
+          </div>
+          <dl class="findings" style="margin-top:40px">
+            <div>
+              <dt>Character count</dt>
+              <dd class="findings__num">0 <span>→</span> 81%</dd>
+              <dd>Llama 3 8B from zero to three examples. Demonstrations help most from zero to one shot, then level off.</dd>
+            </div>
+            <div>
+              <dt>N-th character</dt>
+              <dd class="findings__num">1 <span>→</span> 55%</dd>
+              <dd>Llama 3 70B from zero to three examples.</dd>
+            </div>
+            <div>
+              <dt>From the end</dt>
+              <dd class="findings__num">52%</dd>
+              <dd>The best one-shot score on reverse character lookup, by GPT-4 Turbo. Counting from the end is harder for every model.</dd>
+            </div>
+            <div>
+              <dt>Subsequences</dt>
+              <dd class="findings__num">1 <span>→</span> 4%</dd>
+              <dd>Llama 3 8B on longest common subsequence. Even the best models struggle with non-contiguous patterns, far below their scores on common substrings.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="block" id="typos">
+        <h2 class="block__label">Typos</h2>
+        <div class="block__body">
+          <p class="lede">Four perturbations are applied to the questions of GSM8K, MMLU, TruthfulQA and HumanEval, over n-grams of 2, 3 and 5; answers stay intact.</p>
+          <div class="duo" style="margin-top:24px">
+            <div><small>Character level</small><b>Permutation and noise</b><p>Shuffle characters within word boundaries (50% per n-gram), or insert, delete and replace characters (10% each).</p></div>
+            <div><small>Token level</small><b>Permutation and noise</b><p>Reorder tokens within an n-gram (50%), or insert, delete and replace tokens (30%).</p></div>
+          </div>
+
+          <div class="ex" style="margin-top:28px" id="typo-char">
+            <div class="ex__bar"><span>HumanEval · character level · 5-grams</span><div class="seg" role="group" aria-label="Variant"></div></div>
+            <pre class="ex__pre" tabindex="0" style="min-height:0"></pre>
+          </div>
+          <div class="ex" style="margin-top:16px" id="typo-tok">
+            <div class="ex__bar"><span>GSM8K · token level · 3-grams</span><div class="seg" role="group" aria-label="Variant"></div></div>
+            <div class="toks" aria-live="polite"></div>
+          </div>
+          <p class="src">Examples from the paper’s Figures 9 and 10; highlighted characters and tokens differ from the original. Token IDs are decoded with the Llama 3 vocabulary.</p>
+
+          <ul class="questions" style="margin-top:32px">
+            <li><div><b>Noise hurts more than reordering.</b><span>Character-level noise degrades every model, regardless of size; reordering the same n-grams costs much less.</span></div></li>
+            <li><div><b>Characters hurt more than tokens.</b><span>Models handle token-level permutations better than character-level shuffles and noise.</span></div></li>
+            <li><div><b>Longer n-grams are easier.</b><span>As the n-gram grows from 2 to 5, scores tend to stabilize or recover. GPT-4 Turbo stays accurate under reordering at every n-gram size.</span></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="block" id="bpe-dropout">
+        <h2 class="block__label">BPE-dropout</h2>
+        <div class="block__body">
+          <p class="lede">BPE-dropout randomly skips merges during tokenization, so the model sees the same word split in different ways. We post-train Mistral-7B with drop rates from 0 to 0.8 on about 111k synthesized token-structure examples.</p>
+          <ul class="questions" style="margin-top:28px">
+            <li><div><b>p = 0.2 works best.</b><span>A moderate rate frequently surpasses the baseline, and consistently on case conversion, n-th character and longest common substring.</span></div></li>
+            <li><div><b>High rates hurt.</b><span>p = 0.6 and 0.8 score lower on most tasks, which the paper attributes to training for only five epochs.</span></div></li>
+            <li><div><b>Sensitivity varies by task.</b><span>Common substrings and character count are robust to dropout; n-th character, longest common substring and reverse lookup are the most sensitive.</span></div></li>
+          </ul>
+          <dl class="facts" style="margin-top:28px">
+            <div><dt>Model</dt><dd>Mistral-7B, drop rates p ∈ {0, 0.2, 0.4, 0.6, 0.8}</dd></div>
+            <div><dt>Training</dt><dd>AdamW (β = 0.9, 0.95), peak learning rate 5e-5 with 10% warmup and cosine decay, 5 epochs, batch 16, context 4,096</dd></div>
+            <div><dt>Evaluation</dt><dd>Exact match on the seven token-structure probes, zero to three shots</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="block" id="get-started">
         <h2 class="block__label">Get started</h2>
         <div class="block__body">
           <pre class="code"><code><span class="c"># download the data</span>
@@ -134,7 +309,7 @@ python -u src/eval_rq1.py \
         </div>
       </section>
 
-      <section class="block">
+      <section class="block" id="citation">
         <h2 class="block__label">Citation</h2>
         <div class="block__body">
           <pre class="code"><code>@inproceedings{chai-etal-2024-tokenization,
@@ -152,15 +327,12 @@ python -u src/eval_rq1.py \
         </div>
       </section>
 
-      <section class="block">
-        <h2 class="block__label">More research</h2>
-        <div class="block__body next">
-          <a href="/repeated-tokens/"><small>Pretraining</small><span>What is a repeated token worth?</span></a>
-          <a href="/xiangqibench/"><small>Agents</small><span>XiangqiBench</span></a>
-          <a href="/humaneval-xl/"><small>Multilingual</small><span>HumanEval-XL</span></a>
-        </div>
-      </section>
     </div>
+    <nav class="wrap pager" aria-label="More research">
+      <a class="pager__prev" href="/xiangqibench/"><small>Previous</small><span>XiangqiBench</span></a>
+      <a class="pager__all" href="/#research">All research</a>
+      <a class="pager__next" href="/humaneval-xl/"><small>Next</small><span>HumanEval-XL</span></a>
+    </nav>
   </main>
 
   <footer class="footer footer--page">
@@ -171,7 +343,6 @@ python -u src/eval_rq1.py \
             <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
             <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="104" height="28" />
           </picture>
-          <span>Beijing · Copenhagen · Zurich · London · Edinburgh · and beyond</span>
         </div>
         <nav class="footer__links" aria-label="Footer">
           <a href="https://github.com/floatai" target="_blank" rel="noopener">GitHub</a>
@@ -184,5 +355,6 @@ python -u src/eval_rq1.py \
   </footer>
 
   <script src="/assets/js/site.js" defer></script>
+  <script src="/tkeval/page.js" defer></script>
 </body>
 </html>

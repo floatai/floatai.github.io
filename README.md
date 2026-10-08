@@ -24,8 +24,9 @@ The site is plain HTML, CSS and JavaScript. There is no build step and no depend
 
 ```
 index.html              the homepage
+<project>/index.html    one page per project, e.g. xiangqibench/, tkeval/
 assets/css/site.css     styles; light and dark themes follow prefers-color-scheme
-assets/js/site.js       hero graph, xiangqi board illustration, scroll reveal
+assets/js/site.js       hero graph, xiangqi board, copy buttons, scroll reveal
 assets/brand/           logo files from the FloatAI brand kit
 favicon.ico, *.png      favicons and touch icon
 .nojekyll               serve files as-is, without Jekyll
@@ -43,14 +44,14 @@ Then open http://127.0.0.1:4173.
 
 ## Updating content
 
-All content lives in `index.html`.
+The homepage gives one card per project under Research and one entry per paper under Publications. Each project has its own page at `floatai.github.io/<project>/` with the overview, findings, setup, code and citation.
 
-| To add | Edit |
-|---|---|
-| A news item | a new `<li>` at the top of `.news__list` in the hero |
-| A paper | a new `<li class="pub">` at the top of `.pubs`, with authors, venue and links |
-| A research area | a new `<article class="theme">` in `.themes`, with an inline SVG illustration |
-| An open-source project | a new `<a class="repo">` card in `.repos` |
+To add a project:
+
+1. Copy an existing project folder, for example `repeated-tokens/`, to a new lowercase slug and rewrite its `index.html`.
+2. In `index.html`, add an `<article class="theme">` to `.themes` linking to `/<slug>/`, with an inline SVG illustration.
+3. Add an `<li class="pub">` at the top of `.pubs`, with authors, venue and a Project link.
+4. Update the "More research" links at the bottom of the other project pages.
 
 Keep entries newest first. Copy follows the existing style: state what a study measures and what it found, and use numbers from the paper rather than adjectives.
 

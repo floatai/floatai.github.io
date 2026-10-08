@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>What Is a Repeated Token Worth? — FloatAI</title>
+  <meta name="description" content="The scaling geometry of multi-epoch pretraining: pricing a repeated token against fresh data across models from 14M to 2B parameters." />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0c1016" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="What Is a Repeated Token Worth? — FloatAI" />
+  <meta property="og:description" content="The scaling geometry of multi-epoch pretraining." />
+  <meta property="og:image" content="https://floatai.github.io/assets/brand/avatar-512.png" />
+  <meta property="og:url" content="https://floatai.github.io/repeated-tokens/" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="/" aria-label="FloatAI home">
+        <picture>
+          <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
+          <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="122" height="33" />
+        </picture>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="/#research">Research</a>
+        <a href="/#publications">Publications</a>
+        <a href="/#network">Network</a>
+        <a class="nav__cta" href="https://arxiv.org/abs/2610.05591" target="_blank" rel="noopener">Paper</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap page-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/#research">Research</a><span aria-hidden="true">/</span><span>Pretraining</span></nav>
+      <p class="overline">Pretraining · October 2026</p>
+      <h1 class="page-title">What is a repeated token&nbsp;worth?</h1>
+      <p class="page-paper">The scaling geometry of multi-epoch pretraining</p>
+      <p class="page-authors">Yekun Chai, Haoyi Xiong</p>
+      <p class="page-venue">arXiv preprint 2610.05591</p>
+      <div class="page-actions">
+        <a class="btn btn--primary" href="https://arxiv.org/abs/2610.05591" target="_blank" rel="noopener">Paper</a>
+        <a class="btn btn--ghost" href="https://arxiv.org/pdf/2610.05591" target="_blank" rel="noopener">PDF</a>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <figure class="page-figure">
+        <svg viewBox="0 0 320 180" role="img" aria-label="Schematic: loss against epochs for three model sizes. Larger models reach their loss minimum after fewer epochs.">
+          <path d="M44 22V150H300" class="s-ink" fill="none" stroke-width="1.2"/>
+          <path d="M186 28V150" class="s-accent" stroke-width="1" stroke-dasharray="3 4" opacity=".7"/>
+          <path d="M48 52 C120 92, 210 118, 296 116" class="s-line" fill="none" stroke-width="1.6" style="opacity:.7"/>
+          <path d="M48 74 C110 118, 160 128, 200 122 S270 96, 296 84" class="s-ink" fill="none" stroke-width="1.4"/>
+          <path d="M48 96 C82 132, 112 140, 134 136 S220 92, 296 46" class="s-accent" fill="none" stroke-width="1.8"/>
+          <circle cx="182" cy="125" r="3.5" class="f-ink"/>
+          <circle cx="132" cy="136" r="4" class="f-accent"/>
+          <text x="268" y="134" class="t-mono t-muted">14M</text>
+          <text x="262" y="44" class="t-mono t-accent">2B</text>
+          <text x="192" y="38" class="t-mono t-accent">R<tspan font-size="9" dy="3">c</tspan></text>
+          <text x="300" y="168" class="t-mono t-muted" text-anchor="end">epochs →</text>
+          <text x="30" y="30" class="t-mono t-muted" text-anchor="end" transform="rotate(-90 30 30)">loss</text>
+        </svg>
+        <figcaption>Schematic. With unique data fixed, larger models reach their loss minimum after fewer epochs; the dashed line marks a critical epoch count past which a repeated token is worth less than half a fresh one.</figcaption>
+      </figure>
+    </div>
+
+    <div class="wrap">
+      <section class="block">
+        <h2 class="block__label">Overview</h2>
+        <div class="block__body">
+          <p>As pretraining increasingly repeats data, every run faces three questions: how many epochs to take, how that number should change with model size, and whether anything besides the epoch count matters.</p>
+          <p>We price a repeated token against two references: one epoch on the same data, which gives its value, and fresh data at equal compute, which gives its cost. A grid over model size, training tokens per parameter and epochs gives every repeated run both baselines.</p>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Findings</h2>
+        <div class="block__body">
+          <dl class="findings">
+            <div>
+              <dt>One variable</dt>
+              <dd class="findings__num">z = (R−1)N/U</dd>
+              <dd>Excess loss over fresh data at equal compute follows a power law in extra epochs times parameters over unique tokens. No further size term is needed.</dd>
+            </div>
+            <div>
+              <dt>Second epoch</dt>
+              <dd class="findings__num">0.87–1.02</dd>
+              <dd>Value of a second epoch relative to a fresh token, at every training budget per parameter on the grid.</dd>
+            </div>
+            <div>
+              <dt>Size trend</dt>
+              <dd class="findings__num">15 <span>→</span> 4 epochs</dd>
+              <dd>Loss-minimizing epoch count at fixed unique data, from 127M to 2B parameters. When unique data grow with the model, it barely moves.</dd>
+            </div>
+            <div>
+              <dt>Order matters</dt>
+              <dd class="findings__num">+0.46 bpb</dd>
+              <dd>At identical counts, replaying shards consecutively raises loss by up to 0.46 bits per byte.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">In practice</h2>
+        <div class="block__body">
+          <ul class="questions">
+            <li><div><b>Transfer epoch counts with data, not size.</b><span>To reuse an epoch count on a larger model, scale the unique data with it.</span></div></li>
+            <li><div><b>Stop near the critical epoch count.</b><span>With unique data fixed, the compute-optimal run grows model size and epochs together until loss stops improving, near the point where a repeat is worth half a fresh token.</span></div></li>
+            <li><div><b>Spread and shuffle repeats.</b><span>Concentrating repeats on fewer samples raises loss, lower-entropy sources such as code degrade faster, and re-tokenizing repeats helps only under heavy repetition.</span></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Setup</h2>
+        <div class="block__body">
+          <dl class="facts">
+            <div><dt>Models</dt><dd>Decoder-only Transformers, 14M to 2B parameters</dd></div>
+            <div><dt>Optimizer</dt><dd>Muon for hidden matrices, Adam elsewhere; learning rate annealed to each run’s horizon</dd></div>
+            <div><dt>Data</dt><dd>SlimPajama, seven sources, GPT-2 byte-level BPE</dd></div>
+            <div><dt>Metric</dt><dd>Bits per byte on held-out test sets of each source</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Citation</h2>
+        <div class="block__body">
+          <pre class="code"><code>@misc{chai2026repeated,
+  title         = {What Is a Repeated Token Worth? The Scaling Geometry of
+                   Multi-Epoch Pretraining},
+  author        = {Yekun Chai and Haoyi Xiong},
+  year          = {2026},
+  eprint        = {2610.05591},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2610.05591}
+}</code></pre>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">More research</h2>
+        <div class="block__body next">
+          <a href="/xiangqibench/"><small>Agents</small><span>XiangqiBench</span></a>
+          <a href="/tkeval/"><small>Tokenization</small><span>Tokenization falling short</span></a>
+          <a href="/humaneval-xl/"><small>Multilingual</small><span>HumanEval-XL</span></a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer footer--page">
+    <div class="wrap">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <picture>
+            <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
+            <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="104" height="28" />
+          </picture>
+          <span>Beijing · Copenhagen · Zurich · London · Edinburgh · and beyond</span>
+        </div>
+        <nav class="footer__links" aria-label="Footer">
+          <a href="https://github.com/floatai" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://huggingface.co/floatai" target="_blank" rel="noopener">Hugging Face</a>
+          <a href="https://github.com/orgs/floatai/discussions" target="_blank" rel="noopener">Discussions</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/site.js" defer></script>
+</body>
+</html>

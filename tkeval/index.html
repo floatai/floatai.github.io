@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TKEval: Tokenization Falling Short — FloatAI</title>
+  <meta name="description" content="Tokenization Falling Short: On Subword Robustness in Large Language Models (Findings of EMNLP 2024). Evaluation code and data." />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0c1016" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="TKEval: Tokenization Falling Short — FloatAI" />
+  <meta property="og:description" content="On subword robustness in large language models." />
+  <meta property="og:image" content="https://floatai.github.io/assets/brand/avatar-512.png" />
+  <meta property="og:url" content="https://floatai.github.io/tkeval/" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="/" aria-label="FloatAI home">
+        <picture>
+          <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
+          <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="122" height="33" />
+        </picture>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="/#research">Research</a>
+        <a href="/#publications">Publications</a>
+        <a href="/#network">Network</a>
+        <a class="nav__cta" href="https://github.com/floatai/TKEval" target="_blank" rel="noopener">Code</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap page-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/#research">Research</a><span aria-hidden="true">/</span><span>Tokenization</span></nav>
+      <p class="overline">Tokenization · Findings of EMNLP 2024</p>
+      <h1 class="page-title">Tokenization falling&nbsp;short</h1>
+      <p class="page-paper">On subword robustness in large language models</p>
+      <p class="page-authors">Yekun Chai, Yewei Fang, Qiwei Peng, Xuhong Li</p>
+      <p class="page-venue">Findings of the Association for Computational Linguistics: EMNLP 2024, pages 1582–1599</p>
+      <div class="page-actions">
+        <a class="btn btn--primary" href="https://aclanthology.org/2024.findings-emnlp.86/" target="_blank" rel="noopener">Paper</a>
+        <a class="btn btn--ghost" href="https://arxiv.org/abs/2406.11687" target="_blank" rel="noopener">arXiv</a>
+        <a class="btn btn--ghost" href="https://github.com/floatai/TKEval" target="_blank" rel="noopener">Code</a>
+        <a class="btn btn--ghost" href="https://huggingface.co/datasets/floatai/TKEval" target="_blank" rel="noopener">Dataset</a>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <figure class="page-figure">
+        <svg viewBox="0 0 320 180" role="img" aria-label="The word strawberry split into the subword tokens str, aw and berry. Counting the letter r requires seeing inside the tokens.">
+          <g class="t-mono-lg" text-anchor="middle">
+            <text x="52" y="66">s</text><text x="76" y="66">t</text><text x="100" y="66" class="t-accent">r</text>
+            <text x="124" y="66">a</text><text x="148" y="66">w</text>
+            <text x="172" y="66">b</text><text x="196" y="66">e</text><text x="220" y="66" class="t-accent">r</text><text x="244" y="66" class="t-accent">r</text><text x="268" y="66">y</text>
+          </g>
+          <rect x="40" y="92" width="72" height="32" rx="6" class="f-card s-ink" stroke-width="1.2"/>
+          <rect x="116" y="92" width="44" height="32" rx="6" class="f-card s-ink" stroke-width="1.2"/>
+          <rect x="164" y="92" width="116" height="32" rx="6" class="f-soft s-accent" stroke-width="1.2"/>
+          <g class="t-mono" text-anchor="middle"><text x="76" y="112">str</text><text x="138" y="112">aw</text><text x="222" y="112" class="t-accent">berry</text></g>
+          <text x="160" y="156" class="t-mono t-muted" text-anchor="middle">count("r") → ?</text>
+        </svg>
+        <figcaption>A model reads “strawberry” as subword identifiers. Questions about its letters need information the tokens hide.</figcaption>
+      </figure>
+    </div>
+
+    <div class="wrap">
+      <section class="block">
+        <h2 class="block__label">Overview</h2>
+        <div class="block__body">
+          <p>Language models tokenize raw text into subword identifiers from a fixed vocabulary. This process is sensitive to typographical errors and length variation, and largely blind to the internal structure of tokens. We call these issues the curse of tokenization and measure how much they still affect LLMs.</p>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Research questions</h2>
+        <div class="block__body">
+          <ul class="questions">
+            <li><div><b>Complex problem solving</b><span>Tasks that need character access, such as cycled letters in a word, word unscrambling and identifying math theorems.</span></div></li>
+            <li><div><b>Token structure probing</b><span>What models know about the characters and sub-units inside their own tokens.</span></div></li>
+            <li><div><b>Typographical variation</b><span>Robustness to character-level and token-level perturbations of the input.</span></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Findings</h2>
+        <div class="block__body">
+          <ul class="questions">
+            <li><div><b>Scale helps, partly.</b><span>Scaling model parameters mitigates the effects of tokenization.</span></div></li>
+            <li><div><b>Typos still bias models.</b><span>LLMs still suffer from biases induced by typos and other text format variations.</span></div></li>
+            <li><div><b>Subword regularization helps.</b><span>Training with subword regularization such as BPE-dropout mitigates the issue.</span></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Get started</h2>
+        <div class="block__body">
+          <pre class="code"><code><span class="c"># download the data</span>
+git lfs install
+git clone https://huggingface.co/datasets/floatai/TKEval data/TKEval
+
+<span class="c"># complex problem solving: cycled letters</span>
+python -u src/eval_rq1.py \
+  --model_path /path/to/Meta-Llama-3-8B \
+  --data_path data/TKEval/complex_problem_solving/cycled_letters_all_data_0123_shots.json \
+  --eval_metric generation \
+  --output_path output/cycled_letters.llama3-8b.json</code></pre>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Citation</h2>
+        <div class="block__body">
+          <pre class="code"><code>@inproceedings{chai-etal-2024-tokenization,
+  title     = "Tokenization Falling Short: On Subword Robustness in Large Language Models",
+  author    = "Chai, Yekun and Fang, Yewei and Peng, Qiwei and Li, Xuhong",
+  booktitle = "Findings of the Association for Computational Linguistics: EMNLP 2024",
+  month     = nov,
+  year      = "2024",
+  address   = "Miami, Florida, USA",
+  publisher = "Association for Computational Linguistics",
+  url       = "https://aclanthology.org/2024.findings-emnlp.86/",
+  doi       = "10.18653/v1/2024.findings-emnlp.86",
+  pages     = "1582--1599"
+}</code></pre>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">More research</h2>
+        <div class="block__body next">
+          <a href="/repeated-tokens/"><small>Pretraining</small><span>What is a repeated token worth?</span></a>
+          <a href="/xiangqibench/"><small>Agents</small><span>XiangqiBench</span></a>
+          <a href="/humaneval-xl/"><small>Multilingual</small><span>HumanEval-XL</span></a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer footer--page">
+    <div class="wrap">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <picture>
+            <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
+            <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="104" height="28" />
+          </picture>
+          <span>Beijing · Copenhagen · Zurich · London · Edinburgh · and beyond</span>
+        </div>
+        <nav class="footer__links" aria-label="Footer">
+          <a href="https://github.com/floatai" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://huggingface.co/floatai" target="_blank" rel="noopener">Hugging Face</a>
+          <a href="https://github.com/orgs/floatai/discussions" target="_blank" rel="noopener">Discussions</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XiangqiBench — FloatAI</title>
+  <meta name="description" content="XiangqiBench: closed-loop evaluation of LLM agents on xiangqi endgames. 119 tactical endgames, 12 frontier LLMs, 8,568 trajectories." />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0c1016" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="XiangqiBench — FloatAI" />
+  <meta property="og:description" content="Finding the move is not winning the game: closed-loop evaluation of LLM agents." />
+  <meta property="og:image" content="https://floatai.github.io/assets/brand/avatar-512.png" />
+  <meta property="og:url" content="https://floatai.github.io/xiangqibench/" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Noto+Serif+SC:wght@500&text=%E6%A5%9A%E6%B2%B3%E6%BC%A2%E7%95%8C%E8%BB%8A%E9%A6%AC%E5%B8%A5%E5%B0%87%E8%B1%A1%E5%8D%92&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="/" aria-label="FloatAI home">
+        <picture>
+          <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
+          <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="122" height="33" />
+        </picture>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="/#research">Research</a>
+        <a href="/#publications">Publications</a>
+        <a href="/#network">Network</a>
+        <a class="nav__cta" href="https://github.com/floatai/xiangqibench" target="_blank" rel="noopener">Code</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap page-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/#research">Research</a><span aria-hidden="true">/</span><span>Agents</span></nav>
+      <p class="overline">Agents · October 2026</p>
+      <h1 class="page-title">Finding the move is not winning the&nbsp;game</h1>
+      <p class="page-paper">XiangqiBench for closed-loop evaluation of LLM agents</p>
+      <p class="page-authors">Yekun Chai, Qiwei Peng, Haoyi Xiong</p>
+      <p class="page-venue">arXiv preprint 2610.02425</p>
+      <div class="page-actions">
+        <a class="btn btn--primary" href="https://arxiv.org/abs/2610.02425" target="_blank" rel="noopener">Paper</a>
+        <a class="btn btn--ghost" href="https://github.com/floatai/xiangqibench" target="_blank" rel="noopener">Code</a>
+        <a class="btn btn--ghost" href="https://pypi.org/project/xiangqibench/" target="_blank" rel="noopener">PyPI</a>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <figure class="page-figure page-figure--board">
+        <svg id="board" viewBox="0 0 464 512" role="img" aria-label="Illustrative xiangqi position. Red plays rook nine forward three: the rook reaches the back rank with check, and the horse covers the king's only other flight square. Checkmate."></svg>
+        <figcaption>Illustrative position. Red (shown in blue) plays R9+3: the rook reaches the back rank with check, and the horse covers the king’s only other flight square. Checkmate.</figcaption>
+      </figure>
+    </div>
+
+    <div class="wrap">
+      <section class="block">
+        <h2 class="block__label">Overview</h2>
+        <div class="block__body">
+          <p>Static evaluations credit a language model for naming the right move, but an agent must carry a plan through to a verified outcome while an opponent responds. XiangqiBench measures this difference in Chinese chess.</p>
+          <p>Starting from 119 tactical endgames with forced mates, an LLM agent must deliver checkmate against an engine defender. An interactive REPL separates real moves, state queries and forward simulation. We record 8,568 multi-turn trajectories from 12 frontier LLMs under two observation protocols.</p>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Findings</h2>
+        <div class="block__body">
+          <dl class="findings">
+            <div>
+              <dt>Conversion gap</dt>
+              <dd class="findings__num">26.1% <span>→</span> 13.9%</dd>
+              <dd>Models play the reference first move in 26.1% of sighted trials; only 13.9% of those trials end in a win.</dd>
+            </div>
+            <div>
+              <dt>Consistency gap</dt>
+              <dd class="findings__num">38.7% <span>vs</span> 5.9%</dd>
+              <dd>The leading model reaches 38.7% pass@3 but only 5.9% pass^3, winning all three trials on 7 of the 46 positions it ever wins.</dd>
+            </div>
+            <div>
+              <dt>Simulation gap</dt>
+              <dd class="findings__num">32.3%</dd>
+              <dd>of accepted simulation calls stop on an illegal move. Self-authored rollouts check legality but cannot anticipate the opponent.</dd>
+            </div>
+            <div>
+              <dt>Opponent mismatch</dt>
+              <dd class="findings__num">49.3%</dd>
+              <dd>of comparable cases: the real defender replies differently from the line the agent simulated.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Setup</h2>
+        <div class="block__body">
+          <dl class="facts">
+            <div><dt>Positions</dt><dd>119 tactical endgames with forced mates</dd></div>
+            <div><dt>Defender</dt><dd>Pikafish, depth 18, one thread, 256 MB hash</dd></div>
+            <div><dt>Interface</dt><dd>REPL with real moves, state queries and forward simulation</dd></div>
+            <div><dt>Protocols</dt><dd>Sighted (board, FEN and legal moves each ply) and restricted (move diffs only)</dd></div>
+            <div><dt>Scoring</dt><dd>pass@k and pass^k with 95% case-bootstrap intervals</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Get started</h2>
+        <div class="block__body">
+          <pre class="code"><code>pip install xiangqibench
+<span class="c"># build the Pikafish defender</span>
+git clone https://github.com/official-pikafish/Pikafish &amp;&amp; make -C Pikafish/src -j build
+export PIKAFISH_PATH=$PWD/Pikafish/src/pikafish
+xiangqibench doctor
+
+<span class="c"># run five positions and score them</span>
+xiangqibench run --model gpt-5.5 --mode sighted --limit 5
+xiangqibench score runs/</code></pre>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Citation</h2>
+        <div class="block__body">
+          <pre class="code"><code>@misc{chai2026xiangqibench,
+  title         = {Finding the Move Is Not Winning the Game: {XiangqiBench} for Closed-Loop
+                   Evaluation of {LLM} Agents},
+  author        = {Yekun Chai and Qiwei Peng and Haoyi Xiong},
+  year          = {2026},
+  eprint        = {2610.02425},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2610.02425}
+}</code></pre>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">More research</h2>
+        <div class="block__body next">
+          <a href="/repeated-tokens/"><small>Pretraining</small><span>What is a repeated token worth?</span></a>
+          <a href="/tkeval/"><small>Tokenization</small><span>Tokenization falling short</span></a>
+          <a href="/humaneval-xl/"><small>Multilingual</small><span>HumanEval-XL</span></a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer footer--page">
+    <div class="wrap">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <picture>
+            <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
+            <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="104" height="28" />
+          </picture>
+          <span>Beijing · Copenhagen · Zurich · London · Edinburgh · and beyond</span>
+        </div>
+        <nav class="footer__links" aria-label="Footer">
+          <a href="https://github.com/floatai" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://huggingface.co/floatai" target="_blank" rel="noopener">Hugging Face</a>
+          <a href="https://github.com/orgs/floatai/discussions" target="_blank" rel="noopener">Discussions</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/site.js" defer></script>
+</body>
+</html>

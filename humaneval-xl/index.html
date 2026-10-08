@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HumanEval-XL — FloatAI</title>
+  <meta name="description" content="HumanEval-XL: a multilingual code generation benchmark across 23 natural languages and 12 programming languages (LREC-COLING 2024)." />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0c1016" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="HumanEval-XL — FloatAI" />
+  <meta property="og:description" content="A multilingual code generation benchmark for cross-lingual natural language generalization." />
+  <meta property="og:image" content="https://floatai.github.io/assets/brand/avatar-512.png" />
+  <meta property="og:url" content="https://floatai.github.io/humaneval-xl/" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="/" aria-label="FloatAI home">
+        <picture>
+          <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
+          <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="122" height="33" />
+        </picture>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="/#research">Research</a>
+        <a href="/#publications">Publications</a>
+        <a href="/#network">Network</a>
+        <a class="nav__cta" href="https://github.com/floatai/HumanEval-XL" target="_blank" rel="noopener">Code</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap page-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/#research">Research</a><span aria-hidden="true">/</span><span>Multilingual</span></nav>
+      <p class="overline">Multilingual · LREC-COLING 2024</p>
+      <h1 class="page-title">HumanEval-XL</h1>
+      <p class="page-paper">A multilingual code generation benchmark for cross-lingual natural language generalization</p>
+      <p class="page-authors">Qiwei Peng, Yekun Chai, Xuhong Li</p>
+      <p class="page-venue">Proceedings of LREC-COLING 2024, pages 8383–8394</p>
+      <div class="page-actions">
+        <a class="btn btn--primary" href="https://aclanthology.org/2024.lrec-main.735/" target="_blank" rel="noopener">Paper</a>
+        <a class="btn btn--ghost" href="https://github.com/floatai/HumanEval-XL" target="_blank" rel="noopener">Code</a>
+        <a class="btn btn--ghost" href="https://huggingface.co/datasets/floatai/HumanEval-XL" target="_blank" rel="noopener">Dataset</a>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <figure class="page-figure">
+        <svg viewBox="0 0 320 180" role="img" aria-label="Natural languages on the left connected to programming languages on the right; every pair is evaluated on the same problems.">
+          <g class="s-line" stroke-width="1">
+            <path d="M92 34L228 34M92 34L228 62M92 34L228 90M92 34L228 118M92 34L228 146M92 62L228 34M92 62L228 62M92 62L228 118M92 62L228 146M92 90L228 34M92 90L228 62M92 90L228 90M92 90L228 146M92 118L228 34M92 118L228 90M92 118L228 118M92 118L228 146M92 146L228 62M92 146L228 90M92 146L228 118"/>
+          </g>
+          <path d="M92 62L228 90M92 146L228 34" class="s-accent" stroke-width="1.8"/>
+          <g class="f-ink"><circle cx="92" cy="34" r="3"/><circle cx="92" cy="90" r="3"/><circle cx="92" cy="118" r="3"/></g>
+          <g class="f-accent"><circle cx="92" cy="62" r="3.5"/><circle cx="92" cy="146" r="3.5"/><circle cx="228" cy="90" r="3.5"/><circle cx="228" cy="34" r="3.5"/></g>
+          <g class="f-ink"><circle cx="228" cy="62" r="3"/><circle cx="228" cy="118" r="3"/><circle cx="228" cy="146" r="3"/></g>
+          <g class="t-mono" text-anchor="end"><text x="80" y="38">en</text><text x="80" y="66" class="t-accent">zh</text><text x="80" y="94">ru</text><text x="80" y="122">ar</text><text x="80" y="150" class="t-accent">fi</text></g>
+          <g class="t-mono"><text x="240" y="38" class="t-accent">python</text><text x="240" y="66">java</text><text x="240" y="94" class="t-accent">go</text><text x="240" y="122">swift</text><text x="240" y="150">kotlin</text></g>
+        </svg>
+        <figcaption>The same problems, posed in every natural language and solved in every programming language.</figcaption>
+      </figure>
+    </div>
+
+    <div class="wrap">
+      <section class="block">
+        <h2 class="block__label">Overview</h2>
+        <div class="block__body">
+          <p>Existing code generation benchmarks mostly translate English prompts into many programming languages, or cover very few natural languages. HumanEval-XL connects 23 natural languages with 12 programming languages through parallel, execution-based problems, so a model’s understanding of each natural language can be compared on the same tasks.</p>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Benchmark</h2>
+        <div class="block__body">
+          <dl class="findings">
+            <div><dt>Natural languages</dt><dd class="findings__num">23</dd><dd>English, Russian, Chinese, German, Spanish, French, Italian, Portuguese, Greek, Hungarian, Dutch, Finnish, Indonesian, Turkish, Arabic, Vietnamese, Bulgarian, Persian, Malay, Hebrew, Estonian, Tagalog, Afrikaans</dd></div>
+            <div><dt>Programming languages</dt><dd class="findings__num">12</dd><dd>Python, Java, JavaScript, C#, Go, Kotlin, Perl, PHP, Ruby, Scala, Swift, TypeScript</dd></div>
+            <div><dt>Prompts</dt><dd class="findings__num">22,080</dd><dd>80 parallel problems in every natural and programming language pair.</dd></div>
+            <div><dt>Tests per problem</dt><dd class="findings__num">8.33</dd><dd>Average number of test cases; solutions are scored by execution.</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Get started</h2>
+        <div class="block__body">
+          <pre class="code"><code>from datasets import load_dataset
+
+<span class="c"># one programming language; one split per natural language</span>
+dataset = load_dataset("floatai/HumanEval-XL", "python")
+print(dataset["Chinese"][0]["prompt"])</code></pre>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">Citation</h2>
+        <div class="block__body">
+          <pre class="code"><code>@inproceedings{peng-etal-2024-humaneval,
+  title     = "{H}uman{E}val-{XL}: A Multilingual Code Generation Benchmark for
+               Cross-lingual Natural Language Generalization",
+  author    = "Peng, Qiwei and Chai, Yekun and Li, Xuhong",
+  booktitle = "Proceedings of the 2024 Joint International Conference on Computational
+               Linguistics, Language Resources and Evaluation (LREC-COLING 2024)",
+  month     = may,
+  year      = "2024",
+  address   = "Torino, Italia",
+  publisher = "ELRA and ICCL",
+  url       = "https://aclanthology.org/2024.lrec-main.735/",
+  pages     = "8383--8394"
+}</code></pre>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__label">More research</h2>
+        <div class="block__body next">
+          <a href="/repeated-tokens/"><small>Pretraining</small><span>What is a repeated token worth?</span></a>
+          <a href="/xiangqibench/"><small>Agents</small><span>XiangqiBench</span></a>
+          <a href="/tkeval/"><small>Tokenization</small><span>Tokenization falling short</span></a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer footer--page">
+    <div class="wrap">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <picture>
+            <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
+            <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="104" height="28" />
+          </picture>
+          <span>Beijing · Copenhagen · Zurich · London · Edinburgh · and beyond</span>
+        </div>
+        <nav class="footer__links" aria-label="Footer">
+          <a href="https://github.com/floatai" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://huggingface.co/floatai" target="_blank" rel="noopener">Hugging Face</a>
+          <a href="https://github.com/orgs/floatai/discussions" target="_blank" rel="noopener">Discussions</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/site.js" defer></script>
+</body>
+</html>

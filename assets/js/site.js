@@ -2,14 +2,15 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const SVG = "http://www.w3.org/2000/svg";
 
-  document.getElementById("year").textContent = new Date().getFullYear();
+  const year = document.getElementById("year");
+  if (year) year.textContent = new Date().getFullYear();
 
   const nav = document.querySelector(".nav");
   const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  const revealTargets = document.querySelectorAll(".section__head, .feature__art, .feature__text, .findings > div, .theme, .pub, .repo, .steps li, .network__intro, .footer__statement");
+  const revealTargets = document.querySelectorAll(".section__head, .page-figure, .block, .theme, .pub, .steps li, .network__intro, .footer__statement");
   if ("IntersectionObserver" in window && !reduceMotion) {
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
@@ -32,6 +33,19 @@
         setTimeout(() => { btn.classList.remove("is-copied"); hint.textContent = "Copy"; }, 1600);
       } catch { /* clipboard unavailable */ }
     });
+  });
+
+  document.querySelectorAll("pre.code").forEach((pre) => {
+    const btn = document.createElement("button");
+    btn.type = "button"; btn.className = "code__copy"; btn.textContent = "Copy";
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(pre.querySelector("code").innerText.trim());
+        btn.textContent = "Copied";
+        setTimeout(() => { btn.textContent = "Copy"; }, 1600);
+      } catch { /* clipboard unavailable */ }
+    });
+    pre.appendChild(btn);
   });
 
   // Featured: a legal xiangqi position where the rook's move to the back rank is mate.
@@ -83,6 +97,7 @@
 
   // Hero: a slowly drifting graph of research topics, densest on the right.
   const canvas = document.getElementById("graph");
+  if (!canvas) return;
   const ctx = canvas.getContext("2d");
   const LABELS = ["evaluation", "agents", "tokenization", "robustness", "multilingual", "code", "reasoning", "open data"];
   const SLOTS = [[0.70, 0.18], [0.86, 0.12], [0.78, 0.32], [0.90, 0.40], [0.69, 0.52], [0.84, 0.60], [0.74, 0.76], [0.88, 0.84]];

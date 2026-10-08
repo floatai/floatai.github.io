@@ -202,7 +202,12 @@ p, figure { margin: 0; }
 
 /* Themes */
 .themes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 72px 40px; }
-.theme { display: flex; flex-direction: column; }
+.theme { display: flex; flex-direction: column; position: relative; }
+.theme__meta { font-size: 12.5px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+.theme__title::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius); }
+.theme__title:focus-visible { outline: none; }
+.theme__title:focus-visible::after { outline: 2px solid var(--blue); outline-offset: 6px; }
+.theme:hover .theme__link { gap: 10px; }
 .theme__art {
   aspect-ratio: 16 / 8; display: grid; place-items: center; border-radius: var(--radius);
   background: var(--card); margin-bottom: 28px; padding: 20px;
@@ -235,6 +240,56 @@ p, figure { margin: 0; }
 .pub h3 a:hover { background-size: 100% 1px; }
 .pub p { margin-top: 14px; color: var(--ink-2); max-width: 68ch; font-size: 16px; }
 .pub p.pub__authors { margin-top: 10px; color: var(--ink); font-size: 15px; }
+.pubs--compact .pub { padding: 32px 0; }
+.pubs--compact .pub h3 { font-size: 23px; }
+.pubs--compact .links { margin-top: 14px; }
+
+/* Project pages */
+.crumbs { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--ink-3); }
+.crumbs a { color: var(--ink-2); }
+.crumbs a:hover { color: var(--ink); }
+.page-head { padding: clamp(64px, 9vw, 112px) 0 clamp(48px, 6vw, 72px); }
+.page-head .overline { margin-top: 40px; }
+.page-title { margin-top: 20px; font-family: var(--serif); font-weight: 300; font-size: clamp(44px, 6vw, 84px); line-height: 1; letter-spacing: -0.035em; max-width: 16ch; text-wrap: balance; }
+.page-paper { margin-top: 24px; font-family: var(--serif); font-size: clamp(20px, 2vw, 26px); line-height: 1.3; color: var(--ink-2); max-width: 44ch; }
+.page-authors { margin-top: 20px; font-size: 16px; color: var(--ink); }
+.page-venue { margin-top: 4px; font-size: 14.5px; color: var(--ink-3); }
+.page-actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+.btn--ghost { border-color: var(--line); color: var(--ink); }
+.btn--ghost:hover { border-color: var(--ink-3); }
+
+.page-figure { background: var(--bg-tint); border-radius: var(--radius); padding: clamp(32px, 5vw, 72px); display: grid; place-items: center; }
+.page-figure svg { width: 100%; max-width: 560px; height: auto; display: block; }
+.page-figure--board svg { max-width: 420px; }
+.page-figure figcaption { margin-top: 28px; max-width: 560px; font-size: 13.5px; color: var(--ink-3); text-align: center; }
+
+.block { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 40px; padding: 56px 0; border-top: 1px solid var(--line); }
+.block:first-child { border-top: 0; }
+.block__label { font-size: 12.5px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); padding-top: 6px; }
+.block__body { max-width: 760px; }
+.block__body > p { font-size: 18px; color: var(--ink-2); }
+.block__body > p + p { margin-top: 16px; }
+.block__body .findings { margin-top: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+.block__body .facts { margin-top: 0; }
+.block__body .facts div { grid-template-columns: 140px 1fr; }
+.questions { list-style: none; margin: 0; padding: 0; counter-reset: q; }
+.questions li { counter-increment: q; display: grid; grid-template-columns: 40px 1fr; padding: 18px 0; border-top: 1px solid var(--line); }
+.questions li:last-child { border-bottom: 1px solid var(--line); }
+.questions li::before { content: counter(q, decimal-leading-zero); font-family: var(--serif); font-size: 18px; color: var(--blue); }
+.questions b { display: block; font-weight: 500; }
+.questions span { color: var(--ink-2); font-size: 15.5px; }
+
+.code { position: relative; margin: 0; padding: 22px 24px; border-radius: 14px; background: var(--dark); color: #e3e8f0; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; line-height: 1.7; }
+.code .c { color: #7f8a9c; }
+.code + .code { margin-top: 16px; }
+.code__copy { position: absolute; top: 12px; right: 12px; padding: 5px 11px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: #c5cdd9; font: 500 12px var(--sans); cursor: pointer; }
+.code__copy:hover { border-color: rgba(255,255,255,.4); }
+
+.next { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.next a { display: block; padding: 24px 0; border-top: 1px solid var(--ink); }
+.next small { display: block; font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.next span { display: block; margin-top: 10px; font-family: var(--serif); font-size: 21px; line-height: 1.3; }
+.next a:hover span { color: var(--blue); }
 .links { list-style: none; padding: 0; margin: 20px 0 0; display: flex; gap: 24px; flex-wrap: wrap; }
 .links a { font-size: 14px; font-weight: 500; color: var(--blue); }
 .links a:hover { text-decoration: underline; text-underline-offset: 4px; }
@@ -274,6 +329,8 @@ p, figure { margin: 0; }
 
 /* Footer */
 .footer { padding: clamp(80px, 10vw, 128px) 0 48px; font-size: 14px; color: var(--ink-3); }
+.footer--page { padding-top: 24px; }
+.footer--page .footer__inner { margin-top: 0; }
 .footer__statement { font-family: var(--serif); font-weight: 300; font-size: clamp(40px, 6vw, 80px); line-height: 1; letter-spacing: -0.03em; color: var(--ink); }
 .footer__statement em { color: var(--blue); }
 .footer__inner { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
@@ -302,7 +359,9 @@ p, figure { margin: 0; }
   .section__head--row { flex-direction: column; align-items: flex-start; }
   .hero__canvas, .hero::after { display: none; }
   .feature__text { order: -1; }
-  .findings { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .findings, .block__body .findings, .next { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .block { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 40px 0; }
+  .block__body .facts div { grid-template-columns: 110px 1fr; }
   .facts div { grid-template-columns: 96px 1fr; }
 }
 

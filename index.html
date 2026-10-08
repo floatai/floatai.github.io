@@ -4,36 +4,34 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FloatAI — Open research on large language models</title>
-  <meta name="description" content="FloatAI is an open research network studying large language models: how they are evaluated, how they read, and how they act. Benchmarks, data and code, released in the open." />
+  <meta name="description" content="FloatAI is an open research network studying large language models: how they learn from data, how they read text, how they act as agents, and how we evaluate all three." />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0c1016" media="(prefers-color-scheme: dark)" />
   <meta property="og:title" content="FloatAI — Open research on large language models" />
-  <meta property="og:description" content="An open research network for LLM evaluation, robustness and agents." />
+  <meta property="og:description" content="An open research network for LLM pretraining, robustness, agents and evaluation." />
   <meta property="og:image" content="https://floatai.github.io/assets/brand/avatar-512.png" />
   <meta property="og:url" content="https://floatai.github.io/" />
-  <link rel="icon" href="favicon.ico" sizes="any" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/site.css" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
 </head>
 <body>
   <header class="nav" id="top">
     <div class="wrap nav__inner">
-      <a class="nav__brand" href="#top" aria-label="FloatAI home">
+      <a class="nav__brand" href="/" aria-label="FloatAI home">
         <picture>
-          <source srcset="assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
-          <img src="assets/brand/floatai-lockup.svg" alt="FloatAI" width="122" height="33" />
+          <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
+          <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="122" height="33" />
         </picture>
       </a>
       <nav class="nav__links" aria-label="Primary">
-        <a href="#latest">Latest</a>
-        <a href="#research">Research</a>
-        <a href="#publications">Publications</a>
-        <a href="#projects">Open source</a>
-        <a href="#network">Network</a>
+        <a href="/#research">Research</a>
+        <a href="/#publications">Publications</a>
+        <a href="/#network">Network</a>
         <a class="nav__cta" href="https://github.com/floatai" target="_blank" rel="noopener">
           <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
           GitHub
@@ -43,7 +41,6 @@
   </header>
 
   <main>
-    <!-- Hero -->
     <section class="hero">
       <canvas class="hero__canvas" id="graph" aria-hidden="true"></canvas>
       <div class="wrap hero__inner">
@@ -53,101 +50,25 @@
         </h1>
         <p class="hero__lede">
           An open research network studying large language models: how they learn from data,
-          how they read text, how they act as agents, and how we evaluate all three. Every benchmark, dataset and harness
-          we build is released in the open, so others can check our work and build on it.
+          how they read text, how they act as agents, and how we evaluate all three. Every benchmark,
+          dataset and harness we build is released in the open, so others can check our work and build on it.
         </p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#latest">Latest research</a>
+          <a class="btn btn--primary" href="#research">Explore the research</a>
           <a class="btn btn--text" href="#network">Join the network <span aria-hidden="true">→</span></a>
         </div>
-        <div class="news">
-          <p class="news__label">Recent</p>
-          <ul class="news__list">
-            <li>
-              <time datetime="2026-10">Oct 2026</time>
-              <a href="https://arxiv.org/abs/2610.05591" target="_blank" rel="noopener">What Is a Repeated Token Worth? The scaling geometry of multi-epoch pretraining</a>
-              <span class="news__kind">Paper</span>
-            </li>
-            <li>
-              <time datetime="2026-10">Oct 2026</time>
-              <a href="https://arxiv.org/abs/2610.02425" target="_blank" rel="noopener">XiangqiBench: closed-loop evaluation of LLM agents</a>
-              <span class="news__kind">Paper · Code</span>
-            </li>
-            <li>
-              <time datetime="2024-12">Dec 2024</time>
-              <a href="https://huggingface.co/datasets/floatai/TKEval" target="_blank" rel="noopener">TKEval dataset and evaluation code released</a>
-              <span class="news__kind">Dataset</span>
-            </li>
-            <li>
-              <time datetime="2024-09">Sep 2024</time>
-              <a href="https://aclanthology.org/2024.findings-emnlp.86/" target="_blank" rel="noopener">Tokenization Falling Short accepted to Findings of EMNLP 2024</a>
-              <span class="news__kind">Paper</span>
-            </li>
-          </ul>
-        </div>
       </div>
     </section>
 
-    <!-- Featured -->
-    <section class="section feature" id="latest">
-      <div class="wrap feature__grid">
-        <figure class="feature__art">
-          <svg id="board" viewBox="0 0 464 512" role="img" aria-label="Illustrative xiangqi position. Red plays rook nine forward three: the rook reaches the back rank with check, and the horse covers the king's only other flight square. Checkmate."></svg>
-          <figcaption>
-            Illustrative position. Red (shown in blue) plays R9+3: the rook reaches the back rank with check, and the horse covers the king’s only other flight square. Checkmate.
-          </figcaption>
-        </figure>
-        <div class="feature__text">
-          <p class="overline">Latest research · October 2026</p>
-          <h2>Finding the move is not winning the&nbsp;game</h2>
-          <p class="feature__lede">
-            Starting from 119 tactical endgames with forced mates, an LLM agent must deliver checkmate against
-            an engine defender. It acts through a REPL that separates real moves, state queries and forward
-            simulation, and is scored only on whether it delivers mate.
-          </p>
-          <dl class="facts">
-            <div><dt>Models</dt><dd>12 frontier LLMs, two observation protocols</dd></div>
-            <div><dt>Data</dt><dd>8,568 multi-turn trajectories</dd></div>
-            <div><dt>Authors</dt><dd>Yekun Chai, Qiwei Peng, Haoyi Xiong</dd></div>
-          </dl>
-          <div class="feature__actions">
-            <a class="btn btn--primary" href="https://arxiv.org/abs/2610.02425" target="_blank" rel="noopener">Read the paper</a>
-            <button class="copy" type="button" data-copy="pip install xiangqibench">
-              <code>pip install xiangqibench</code>
-              <span class="copy__hint" aria-live="polite">Copy</span>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="wrap">
-        <p class="findings__lead">Three signals that look like competence each overstate closed-loop success.</p>
-        <dl class="findings">
-          <div>
-            <dt>Conversion gap</dt>
-            <dd class="findings__num">26.1% <span>→</span> 13.9%</dd>
-            <dd>Models play the reference first move in 26.1% of sighted trials; only 13.9% of those trials end in a win.</dd>
-          </div>
-          <div>
-            <dt>Consistency gap</dt>
-            <dd class="findings__num">38.7% <span>vs</span> 5.9%</dd>
-            <dd>The leading model reaches 38.7% pass@3 but only 5.9% pass^3, winning all three trials on 7 of 46 positions.</dd>
-          </div>
-          <div>
-            <dt>Simulation gap</dt>
-            <dd class="findings__num">49.3%</dd>
-            <dd>Of comparable cases, the real defender replies differently from the line the agent simulated.</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
-
-    <!-- Research themes -->
+    <!-- Research: one card per project, newest first -->
     <section class="section section--tint" id="research">
       <div class="wrap">
-        <header class="section__head">
-          <p class="overline">Research</p>
-          <h2>Questions we keep coming back&nbsp;to</h2>
-          <p class="section__sub">Each study targets one question and ships with its harness and data.</p>
+        <header class="section__head section__head--row">
+          <div>
+            <p class="overline">Research</p>
+            <h2>Questions we keep coming back&nbsp;to</h2>
+          </div>
+          <a class="btn btn--text" href="https://github.com/orgs/floatai/repositories" target="_blank" rel="noopener">All repositories <span aria-hidden="true">→</span></a>
         </header>
         <div class="themes">
           <article class="theme">
@@ -167,9 +88,10 @@
                 <text x="30" y="30" class="t-mono t-muted" text-anchor="end" transform="rotate(-90 30 30)">loss</text>
               </svg>
             </figure>
-            <h3>What is a repeated token worth?</h3>
+            <p class="theme__meta">Pretraining · arXiv 2026</p>
+            <h3><a class="theme__title" href="/repeated-tokens/">What is a repeated token worth?</a></h3>
             <p>Public text grows more slowly than compute. We price a repeated token against fresh data and find the epoch count past which it is worth half as much, across models from 14M to 2B parameters.</p>
-            <a class="theme__link" href="https://arxiv.org/abs/2610.05591" target="_blank" rel="noopener">Multi-epoch scaling <span aria-hidden="true">→</span></a>
+            <span class="theme__link" aria-hidden="true">Multi-epoch scaling →</span>
           </article>
           <article class="theme">
             <figure class="theme__art" aria-hidden="true">
@@ -185,9 +107,10 @@
                 <text x="160" y="164" class="t-mono" text-anchor="middle">observe</text>
               </svg>
             </figure>
-            <h3>Can an agent finish the game, not just find the move?</h3>
-            <p>The agent plays a full game against an engine through a small command protocol, under per-turn budgets, and is scored on the final outcome.</p>
-            <a class="theme__link" href="https://arxiv.org/abs/2610.02425" target="_blank" rel="noopener">XiangqiBench <span aria-hidden="true">→</span></a>
+            <p class="theme__meta">Agents · arXiv 2026</p>
+            <h3><a class="theme__title" href="/xiangqibench/">Can an agent finish the game, not just find the move?</a></h3>
+            <p>Agents play xiangqi endgames to checkmate against an engine. Across 12 frontier LLMs, playing the right first move, pass@k and self-simulated lines each overstate closed-loop success.</p>
+            <span class="theme__link" aria-hidden="true">XiangqiBench →</span>
           </article>
           <article class="theme">
             <figure class="theme__art" aria-hidden="true">
@@ -204,9 +127,10 @@
                 <text x="160" y="156" class="t-mono t-muted" text-anchor="middle">count("r") → ?</text>
               </svg>
             </figure>
-            <h3>What do models know about the letters inside their tokens?</h3>
+            <p class="theme__meta">Tokenization · Findings of EMNLP 2024</p>
+            <h3><a class="theme__title" href="/tkeval/">What do models know about the letters inside their tokens?</a></h3>
             <p>Models see subwords, not characters. We probe what LLMs know about token structure, and how much accuracy they lose under character- and token-level typos.</p>
-            <a class="theme__link" href="#pub-tkeval">TKEval <span aria-hidden="true">→</span></a>
+            <span class="theme__link" aria-hidden="true">TKEval →</span>
           </article>
           <article class="theme">
             <figure class="theme__art" aria-hidden="true">
@@ -222,80 +146,66 @@
                 <g class="t-mono"><text x="240" y="38" class="t-accent">python</text><text x="240" y="66">java</text><text x="240" y="94" class="t-accent">go</text><text x="240" y="122">swift</text><text x="240" y="150">kotlin</text></g>
               </svg>
             </figure>
-            <h3>Does code generation transfer beyond English prompts?</h3>
+            <p class="theme__meta">Multilingual · LREC-COLING 2024</p>
+            <h3><a class="theme__title" href="/humaneval-xl/">Does code generation transfer beyond English prompts?</a></h3>
             <p>Most code benchmarks are English-in, code-out. We pose the same problems in 23 natural languages and 12 programming languages and compare the results.</p>
-            <a class="theme__link" href="#pub-humaneval">HumanEval-XL <span aria-hidden="true">→</span></a>
+            <span class="theme__link" aria-hidden="true">HumanEval-XL →</span>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Publications -->
+    <!-- Publications: citation index -->
     <section class="section" id="publications">
       <div class="wrap">
         <header class="section__head">
           <p class="overline">Publications</p>
           <h2>Papers, with the code and data to reproduce&nbsp;them</h2>
         </header>
-        <ol class="pubs">
-          <li class="pub" id="pub-repeat">
-            <div class="pub__meta">
-              <span class="pub__year">2026</span>
-              <span class="pub__venue">arXiv preprint</span>
-            </div>
+        <ol class="pubs pubs--compact">
+          <li class="pub">
+            <div class="pub__meta"><span class="pub__year">2026</span><span class="pub__venue">arXiv preprint</span></div>
             <div class="pub__body">
               <h3><a href="https://arxiv.org/abs/2610.05591" target="_blank" rel="noopener">What Is a Repeated Token Worth? The Scaling Geometry of Multi-Epoch Pretraining</a></h3>
               <p class="pub__authors">Yekun Chai, Haoyi Xiong</p>
-              <p>Against fresh data at equal compute, the cost of repetition follows one variable: extra epochs divided by unique tokens per parameter. A second epoch is worth nearly a fresh one, and repeats fall to half value past a critical epoch count that grows with the training budget per parameter but hardly with model size.</p>
               <ul class="links">
+                <li><a href="/repeated-tokens/">Project</a></li>
                 <li><a href="https://arxiv.org/abs/2610.05591" target="_blank" rel="noopener">Paper</a></li>
-                <li><a href="https://arxiv.org/pdf/2610.05591" target="_blank" rel="noopener">PDF</a></li>
               </ul>
             </div>
           </li>
-          <li class="pub" id="pub-xiangqi">
-            <div class="pub__meta">
-              <span class="pub__year">2026</span>
-              <span class="pub__venue">arXiv preprint</span>
-            </div>
+          <li class="pub">
+            <div class="pub__meta"><span class="pub__year">2026</span><span class="pub__venue">arXiv preprint</span></div>
             <div class="pub__body">
               <h3><a href="https://arxiv.org/abs/2610.02425" target="_blank" rel="noopener">Finding the Move Is Not Winning the Game: XiangqiBench for Closed-Loop Evaluation of LLM Agents</a></h3>
               <p class="pub__authors">Yekun Chai, Qiwei Peng, Haoyi Xiong</p>
-              <p>An LLM agent must deliver checkmate from 119 tactical endgames against an engine defender. Across 8,568 trajectories from 12 frontier LLMs, finding the right first move, high pass@k and self-simulated lines each overstate closed-loop success.</p>
               <ul class="links">
+                <li><a href="/xiangqibench/">Project</a></li>
                 <li><a href="https://arxiv.org/abs/2610.02425" target="_blank" rel="noopener">Paper</a></li>
                 <li><a href="https://github.com/floatai/xiangqibench" target="_blank" rel="noopener">Code</a></li>
-                <li><a href="https://pypi.org/project/xiangqibench/" target="_blank" rel="noopener">PyPI</a></li>
               </ul>
             </div>
           </li>
-          <li class="pub" id="pub-tkeval">
-            <div class="pub__meta">
-              <span class="pub__year">2024</span>
-              <span class="pub__venue">Findings of EMNLP 2024</span>
-            </div>
+          <li class="pub">
+            <div class="pub__meta"><span class="pub__year">2024</span><span class="pub__venue">Findings of EMNLP 2024</span></div>
             <div class="pub__body">
               <h3><a href="https://aclanthology.org/2024.findings-emnlp.86/" target="_blank" rel="noopener">Tokenization Falling Short: On Subword Robustness in Large Language Models</a></h3>
               <p class="pub__authors">Yekun Chai, Yewei Fang, Qiwei Peng, Xuhong Li</p>
-              <p>Three test sets on what subword tokenization hides from LLMs: problems that need character access, probes of token structure, and robustness to character- and token-level typos.</p>
               <ul class="links">
+                <li><a href="/tkeval/">Project</a></li>
                 <li><a href="https://aclanthology.org/2024.findings-emnlp.86/" target="_blank" rel="noopener">Paper</a></li>
-                <li><a href="https://arxiv.org/abs/2406.11687" target="_blank" rel="noopener">arXiv</a></li>
                 <li><a href="https://github.com/floatai/TKEval" target="_blank" rel="noopener">Code</a></li>
                 <li><a href="https://huggingface.co/datasets/floatai/TKEval" target="_blank" rel="noopener">Dataset</a></li>
               </ul>
             </div>
           </li>
-          <li class="pub" id="pub-humaneval">
-            <div class="pub__meta">
-              <span class="pub__year">2024</span>
-              <span class="pub__venue">LREC-COLING 2024</span>
-            </div>
+          <li class="pub">
+            <div class="pub__meta"><span class="pub__year">2024</span><span class="pub__venue">LREC-COLING 2024</span></div>
             <div class="pub__body">
               <h3><a href="https://aclanthology.org/2024.lrec-main.735/" target="_blank" rel="noopener">HumanEval-XL: A Multilingual Code Generation Benchmark for Cross-lingual Natural Language Generalization</a></h3>
               <p class="pub__authors">Qiwei Peng, Yekun Chai, Xuhong Li</p>
-              <p>22,080 execution-based prompts connecting 23 natural languages with 12 programming languages, fully parallel across languages, with an average of 8.33 test cases per problem.</p>
               <ul class="links">
+                <li><a href="/humaneval-xl/">Project</a></li>
                 <li><a href="https://aclanthology.org/2024.lrec-main.735/" target="_blank" rel="noopener">Paper</a></li>
                 <li><a href="https://github.com/floatai/HumanEval-XL" target="_blank" rel="noopener">Code</a></li>
                 <li><a href="https://huggingface.co/datasets/floatai/HumanEval-XL" target="_blank" rel="noopener">Dataset</a></li>
@@ -306,49 +216,12 @@
       </div>
     </section>
 
-    <!-- Projects -->
-    <section class="section section--tint" id="projects">
-      <div class="wrap">
-        <header class="section__head section__head--row">
-          <div>
-            <p class="overline">Open source</p>
-            <h2>Benchmarks and harnesses you can run&nbsp;today</h2>
-          </div>
-          <a class="btn btn--text" href="https://github.com/orgs/floatai/repositories" target="_blank" rel="noopener">All repositories <span aria-hidden="true">→</span></a>
-        </header>
-        <div class="repos">
-          <a class="repo" href="https://github.com/floatai/xiangqibench" target="_blank" rel="noopener" data-repo="xiangqibench">
-            <span class="repo__tag">Agents</span>
-            <h3 class="repo__name">xiangqibench</h3>
-            <p>Closed-loop evaluation of LLM agents on xiangqi endgames. OpenAI-compatible, Azure and Anthropic endpoints.</p>
-            <pre class="repo__code"><code data-prompt="$">pip install xiangqibench</code></pre>
-            <div class="repo__foot"><span>Python</span><span>MIT</span><span>PyPI</span></div>
-          </a>
-          <a class="repo" href="https://github.com/floatai/TKEval" target="_blank" rel="noopener" data-repo="TKEval">
-            <span class="repo__tag">Robustness</span>
-            <h3 class="repo__name">TKEval</h3>
-            <p>Evaluation suite for subword robustness: character-level tasks, token-structure probes and typographical variation.</p>
-            <pre class="repo__code"><code data-prompt="$">git clone https://huggingface.co/datasets/floatai/TKEval</code></pre>
-            <div class="repo__foot"><span>Python</span><span>MIT</span><span>HF dataset</span></div>
-          </a>
-          <a class="repo" href="https://github.com/floatai/HumanEval-XL" target="_blank" rel="noopener" data-repo="HumanEval-XL">
-            <span class="repo__tag">Multilingual</span>
-            <h3 class="repo__name">HumanEval-XL</h3>
-            <p>Execution-based multilingual code generation benchmark across 23 natural and 12 programming languages.</p>
-            <pre class="repo__code"><code data-prompt="&gt;&gt;&gt;">load_dataset("floatai/HumanEval-XL", "python")</code></pre>
-            <div class="repo__foot"><span>Python</span><span>MIT</span><span>HF dataset</span></div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Network -->
     <section class="section section--dark" id="network">
       <div class="wrap network">
         <div class="network__intro">
           <p class="overline overline--light">Network</p>
           <h2>An open network for LLM&nbsp;research</h2>
-          <p>FloatAI connects researchers in Beijing, Copenhagen, London and Edinburgh. There is no application form. The work happens in public repositories, and anyone can take part.</p>
+          <p>FloatAI connects researchers in Beijing, Copenhagen, Zurich, London, Edinburgh and beyond. There is no application form. The work happens in public repositories, and anyone can take part.</p>
           <div class="network__cta">
             <a class="btn btn--light" href="https://github.com/orgs/floatai/discussions" target="_blank" rel="noopener">Start a discussion</a>
             <a class="btn btn--text-light" href="https://huggingface.co/floatai" target="_blank" rel="noopener">Hugging Face <span aria-hidden="true">→</span></a>
@@ -387,10 +260,10 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <picture>
-            <source srcset="assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
-            <img src="assets/brand/floatai-lockup.svg" alt="FloatAI" width="104" height="28" />
+            <source srcset="/assets/brand/floatai-lockup-dark.svg" media="(prefers-color-scheme: dark)" />
+            <img src="/assets/brand/floatai-lockup.svg" alt="FloatAI" width="104" height="28" />
           </picture>
-          <span>Beijing · Copenhagen · London · Edinburgh</span>
+          <span>Beijing · Copenhagen · Zurich · London · Edinburgh · and beyond</span>
         </div>
         <nav class="footer__links" aria-label="Footer">
           <a href="https://github.com/floatai" target="_blank" rel="noopener">GitHub</a>
@@ -402,6 +275,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/site.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
 </body>
 </html>

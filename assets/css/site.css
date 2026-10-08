@@ -210,7 +210,8 @@ p, figure { margin: 0; }
 .pubx__cat { color: var(--ink-2); }
 .pubx__title { font-family: var(--serif); font-size: 17.5px; line-height: 1.4; color: var(--ink); transition: color .15s; }
 .pubx a:hover .pubx__title { color: var(--blue); }
-.pubx a[target] .pubx__title::after { content: "\2009↗"; font: 12px var(--sans); color: var(--ink-3); }
+.pubx a[target] .pubx__title::after { content: "\2009↗"; font: 13px var(--sans); color: var(--ink-2); }
+.pubx__tag { display: inline-block; margin-left: 10px; padding: 1px 7px; border: 1px solid color-mix(in srgb, var(--blue) 35%, transparent); border-radius: 999px; font: 500 10px/1.5 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--blue); vertical-align: 2px; white-space: nowrap; }
 
 /* Project pages */
 .crumbs { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--ink-3); }

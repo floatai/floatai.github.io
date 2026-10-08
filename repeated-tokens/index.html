@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/site.css?v=20261009d" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261009e" />
 </head>
 <body>
   <header class="nav">
@@ -50,44 +50,33 @@
   </header>
 
   <main>
-    <section class="wrap page-head">
-      <nav class="crumbs" aria-label="Breadcrumb"><a href="/#research">Research</a><span aria-hidden="true">/</span><span>Pretraining</span></nav>
-      <p class="overline">Pretraining · October 2026</p>
-      <h1 class="page-title">What is a repeated token&nbsp;worth?</h1>
-      <p class="page-paper">The scaling geometry of multi-epoch pretraining</p>
-      <p class="page-authors">Yekun Chai<sup>1,2</sup>, Haoyi Xiong<sup>3</sup></p>
-      <p class="page-affil"><span><sup>1</sup>FloatAI</span><span><sup>2</sup>ETH Zurich</span><span><sup>3</sup>Independent Researcher</span></p>
-      <p class="page-venue">arXiv preprint 2610.05591</p>
-      <div class="page-actions">
-        <a class="btn btn--primary" href="https://arxiv.org/abs/2610.05591" target="_blank" rel="noopener">Paper</a>
-        <a class="btn btn--ghost" href="https://arxiv.org/pdf/2610.05591" target="_blank" rel="noopener">PDF</a>
-        <a class="btn btn--ghost" href="#calculator">Calculator</a>
-        <a class="btn btn--ghost" href="#citation">BibTeX</a>
-      </div>
-      <div class="page-stats">
-        <div><b>14M–2B</b><span>parameters across all sweeps</span></div>
-        <div><b>175</b><span>runs in the budget × epochs grid, 140 of them repeated</span></div>
-        <div><b>up to 32</b><span>epochs over a fixed corpus, 64 for the smallest models</span></div>
-        <div><b>7</b><span>SlimPajama sources, from code to books</span></div>
-      </div>
-    </section>
+    <article class="art">
+      <header class="art__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/#research">Research</a><span aria-hidden="true">/</span><span>Pretraining</span></nav>
+        <p class="art__meta"><span>Pretraining</span><time datetime="2026-10">Oct 2026</time></p>
+        <h1 class="page-title">What is a repeated token&nbsp;worth?</h1>
+        <p class="art__dek">Public text grows more slowly than compute, so pretraining increasingly reuses data. Training models from 14M to 2B parameters on repeated tokens, we find that a second epoch is worth almost as much as fresh data, that the cost of repetition follows a single variable, and that repeats fall to half the value of fresh tokens after a critical epoch count set by the training budget per parameter, and hardly at all by model size.</p>
+        <div class="art__byline">
+          <p class="page-authors">Yekun Chai<sup>1,2</sup>, Haoyi Xiong<sup>3</sup></p>
+          <p class="page-affil"><span><sup>1</sup>FloatAI</span><span><sup>2</sup>ETH Zurich</span><span><sup>3</sup>Independent Researcher</span></p>
+          <p class="art__links"><a href="https://arxiv.org/abs/2610.05591" target="_blank" rel="noopener">Paper</a><a href="https://arxiv.org/pdf/2610.05591" target="_blank" rel="noopener">PDF</a><a href="#calculator">Calculator</a><a href="#citation">Cite</a></p>
+        </div>
+      </header>
 
-    <nav class="toc" aria-label="On this page">
-      <div class="wrap toc__inner">
-        <a href="#overview">Overview</a>
-        <a href="#prices">Two prices</a>
-        <a href="#laws">Fitted laws</a>
-        <a href="#calculator">Calculator</a>
-        <a href="#evidence">Evidence</a>
-        <a href="#beyond">Beyond counts</a>
-        <a href="#practice">In practice</a>
-        <a href="#setup">Setup</a>
-        <a href="#citation">Citation</a>
-      </div>
-    </nav>
+      <nav class="toc" aria-label="On this page">
+        <div class="wrap toc__inner">
+          <a href="#overview">Overview</a>
+          <a href="#prices">Pricing</a>
+          <a href="#laws">Laws</a>
+          <a href="#calculator">Calculator</a>
+          <a href="#evidence">Evidence</a>
+          <a href="#beyond">Beyond counts</a>
+          <a href="#practice">In practice</a>
+          <a href="#setup">Setup</a>
+        </div>
+      </nav>
 
-    <div class="wrap">
-      <figure class="page-figure page-figure--chart" style="margin-top:56px">
+      <figure class="art__fig art__wide">
         <svg class="chart" viewBox="0 0 640 360" role="img" aria-labelledby="rt-hero-t">
         <title id="rt-hero-t">Loss change from repeating one billion unique tokens, relative to one epoch, for eight model sizes from 14M to 2B. Small models keep improving up to 16 or 32 epochs; 1B and 2B models are best near 4 epochs and lose ground quickly after.</title>
         <defs><clipPath id="rt-clip"><rect x="64" y="22" width="486" height="292"/></clipPath></defs>
@@ -131,73 +120,42 @@
         <text class="lbl" x="558" y="289.1">31M</text>
         <text class="lbl" x="558" y="303.1">59M</text>
         </svg>
-        <figcaption>Repeating the same 1B unique CommonCrawl tokens, relative to each model’s own single epoch (lower is better; Table 9). Dots mark the best measured epoch count. Small models keep gaining up to 16–32 epochs; at 1B and 2B the gain peaks near four epochs and reverses. Quadratic fits place the minima at 15.3, 7.9, 5.8, 4.1 and 3.6 epochs from 127M to 2B.</figcaption>
+        <figcaption><b>Figure 1.</b> Repeating the same 1B unique CommonCrawl tokens, relative to each model’s own single epoch (lower is better; Table 9). Dots mark the best measured epoch count. Small models keep gaining up to 16–32 epochs; at 1B and 2B the gain peaks near four epochs and reverses. Quadratic fits place the minima at 15.3, 7.9, 5.8, 4.1 and 3.6 epochs from 127M to 2B.</figcaption>
       </figure>
-    </div>
 
-    <div class="wrap">
-      <section class="block" id="overview">
-        <h2 class="block__label">Overview</h2>
-        <div class="block__body">
-          <p>As pretraining increasingly repeats data, every run faces three questions: how many epochs to take, how that number should change with model size, and whether anything besides the epoch count matters.</p>
-          <p>We answer them by pricing a repeated token against two references at the same model size. Against fresh data at equal compute, the cost of repetition follows a single variable: the number of extra epochs divided by the unique tokens per parameter. Against the same data seen once, a second epoch is worth nearly as much as a fresh one, and repeated tokens fall to half the value of fresh ones after a critical epoch count that grows with the training budget per parameter but hardly with model size.</p>
-          <p>The same variable explains size trends that appear to conflict in earlier work. Larger models tolerate fewer epochs when the corpus is fixed, but not when unique data grow with the model. And counts alone do not determine loss: the order, allocation and source of the repeats all change the result.</p>
-        </div>
+      <section id="overview">
+        <p>As pretraining increasingly repeats data, every run faces three questions: how many epochs to take, how that number should change with model size, and whether anything besides the epoch count matters.</p>
+        <p>We answer them by pricing a repeated token against two references at the same model size. Against fresh data at equal compute, the cost of repetition follows a single variable: the number of extra epochs divided by the unique tokens per parameter. Against the same data seen once, a second epoch is worth nearly as much as a fresh one, and repeated tokens fall to half the value of fresh ones after a critical epoch count that grows with the training budget per parameter but hardly with model size.</p>
+        <p>The same variable explains size trends that appear to conflict in earlier work. Larger models tolerate fewer epochs when the corpus is fixed, but not when unique data grow with the model. And counts alone do not determine loss: the order, allocation and source of the repeats all change the result.</p>
       </section>
 
-      <section class="block" id="prices">
-        <h2 class="block__label">Two prices</h2>
-        <div class="block__body">
-          <p class="lede">Every repeated run of <var>R</var> epochs over <var>U</var> unique tokens, <var>D</var> = <var>RU</var> in total, is compared with two one-epoch runs of the same model.</p>
-          <div class="duo" style="margin-top:28px">
-            <div>
-              <small>Value · data-matched</small>
-              <b>η = (U<sub>eq</sub> − U) / (D − U)</b>
-              <p>Baseline: one epoch on the same <var>U</var> tokens. <var>U</var><sub>eq</sub> is the fresh budget that reaches the same loss, so η is the fresh-token equivalent of each repeated token: 1 if repeats were as good as fresh data, 0 if worthless.</p>
-            </div>
-            <div>
-              <small>Cost · compute-matched</small>
-              <b>ΔL = L(N, U, R) − L(N, D, 1)</b>
-              <p>Baseline: one epoch on <var>D</var> fresh tokens at the same compute and schedule. ΔL is the extra held-out loss, in bits per byte, paid for repeating instead of collecting new data.</p>
-            </div>
-          </div>
-        </div>
+      <section id="prices">
+        <h2>Two ways to price a repeated token</h2>
+        <p>Every repeated run of <var>R</var> epochs over <var>U</var> unique tokens, <var>D</var> = <var>RU</var> in total, is compared with two one-epoch runs of the same model.</p>
+        <p><b>Value, data-matched.</b> The baseline is one epoch on the same <var>U</var> tokens. If <var>U</var><sub>eq</sub> is the fresh budget that reaches the same loss, then</p>
+        <p class="eqn"><span>η = (<var>U</var><sub>eq</sub> − <var>U</var>) / (<var>D</var> − <var>U</var>)</span><span class="eqn__n">(1)</span></p>
+        <p>is the fresh-token equivalent of each repeated token: 1 if repeats were as good as fresh data, 0 if they were worthless.</p>
+        <p><b>Cost, compute-matched.</b> The baseline is one epoch on <var>D</var> fresh tokens at the same compute and schedule. The price of repeating instead of collecting new data is the extra held-out loss, in bits per byte:</p>
+        <p class="eqn"><span>ΔL = L(<var>N</var>, <var>U</var>, <var>R</var>) − L(<var>N</var>, <var>D</var>, 1)</span><span class="eqn__n">(2)</span></p>
       </section>
 
-      <section class="block" id="laws">
-        <h2 class="block__label">Fitted laws</h2>
-        <div class="block__body">
-          <div class="eqs">
-            <div class="eq">
-              <p class="eq__tag">Cost of repetition <span>Eq. 3 · §4.2</span></p>
-              <p class="eq__f">ΔL = 0.0203 · <var>z</var><sup>1.07</sup></p>
-              <p><var>z</var> = (<var>R</var> − 1) <var>N</var><sub>total</sub> / <var>U</var>: extra epochs divided by unique tokens per parameter. Fitted to the 113 of 140 repeated runs above the 0.002 bpb resolution, R² = 0.96; no further size term is needed once embeddings are counted.</p>
-            </div>
-            <div class="eq">
-              <p class="eq__tag">Critical epochs <span>Eq. 4 · §4.3</span></p>
-              <p class="eq__f"><var>R</var><sub>c</sub> ≈ 2.7 · (<var>D</var>/<var>N</var>)<sup>0.24</sup></p>
-              <p>The epoch count at which a repeated token is worth half a fresh one (η = ½). Fits 35 measured crossings to 8% RMS: 4.0–5.3 epochs up to 20 tokens per parameter, 6.9–8.3 at 100, 10.0–11.8 at 300.</p>
-            </div>
-            <div class="eq">
-              <p class="eq__tag">Allocation at fixed U <span>Eq. 5 · §4.4</span></p>
-              <p class="eq__f"><var>N</var><sub>opt</sub> = √(<var>C</var>/6τ), <var>R</var><sub>opt</sub> = √(τ<var>C</var>/6) / <var>U</var></p>
-              <p>With unique data fixed, compute goes to model size and epochs in roughly equal shares (fitted <var>N</var> ∝ <var>C</var><sup>0.52–0.53</sup>, <var>R</var> ∝ <var>C</var><sup>0.47–0.48</sup>), holding τ = <var>D</var>/<var>N</var> at 16–24, until loss stops improving near <var>R</var><sub>c</sub>.</p>
-            </div>
-            <div class="eq">
-              <p class="eq__tag">Best epochs at fixed U <span>App. K</span></p>
-              <p class="eq__f"><var>R</var>* ≈ 4.5 · (<var>U</var>/<var>N</var>)<sup>0.51</sup></p>
-              <p>Loss-minimizing epoch count in the fixed-corpus sweeps from 14M to 2B (R²<sub>log</sub> = 0.94). Because it depends on <var>U</var>/<var>N</var>, a fixed corpus shifts the optimum to fewer epochs as models grow.</p>
-            </div>
-          </div>
-          <p class="note"><b>Range of validity.</b> Eqs. 3 and 4 are fitted on CommonCrawl with GPT-2 byte-level BPE, 23M–361M non-embedding parameters, 5–300 training tokens per parameter and 2–16 epochs, without weight decay or dropout. The constants may shift under other data or regularization.</p>
-        </div>
+      <section id="laws">
+        <h2>One variable sets the cost; tokens per parameter set the limit</h2>
+        <p>Define the load <var>z</var> = (<var>R</var> − 1) <var>N</var><sub>total</sub> / <var>U</var>: extra epochs divided by unique tokens per parameter. Across the grid, the cost of repetition is a power law in <var>z</var> alone:</p>
+        <p class="eqn"><span>ΔL = 0.0203 · <var>z</var><sup>1.07</sup></span><span class="eqn__n">(3)</span></p>
+        <p>It fits the 113 of 140 repeated runs above the 0.002 bpb resolution with R² = 0.96, and needs no further size term once embeddings are counted.<sup class="fn"><a href="#fn1" id="fnr1">1</a></sup></p>
+        <p>The value of a repeat crosses one half, η = ½, at a critical epoch count that depends on tokens per parameter <var>D</var>/<var>N</var>:</p>
+        <p class="eqn"><span><var>R</var><sub>c</sub> ≈ 2.7 · (<var>D</var>/<var>N</var>)<sup>0.24</sup></span><span class="eqn__n">(4)</span></p>
+        <p>It fits 35 measured crossings to 8% RMS: 4.0–5.3 epochs up to 20 tokens per parameter, 6.9–8.3 at 100, and 10.0–11.8 at 300.</p>
+        <p>With unique data fixed, compute goes to model size and epochs in roughly equal shares, holding τ = <var>D</var>/<var>N</var> at 16–24 until loss stops improving near <var>R</var><sub>c</sub>:</p>
+        <p class="eqn"><span><var>N</var><sub>opt</sub> = √(<var>C</var>/6τ), &nbsp;<var>R</var><sub>opt</sub> = √(τ<var>C</var>/6) / <var>U</var></span><span class="eqn__n">(5)</span></p>
+        <p>Fitted exponents are <var>N</var> ∝ <var>C</var><sup>0.52–0.53</sup> and <var>R</var> ∝ <var>C</var><sup>0.47–0.48</sup>. In the fixed-corpus sweeps from 14M to 2B, the loss-minimizing epoch count is <var>R</var>* ≈ 4.5 (<var>U</var>/<var>N</var>)<sup>0.51</sup> (R²<sub>log</sub> = 0.94), so a fixed corpus shifts the optimum to fewer epochs as models grow.</p>
       </section>
 
-      <section class="block block--wide" id="calculator">
-        <h2 class="block__label">Calculator</h2>
-        <div class="block__body">
-          <p class="lede" style="max-width:760px">Price a planned run with Eqs. 3 and 4. Pick a model from the paper’s grid or enter your own parameter counts.</p>
-          <form class="calc" id="calc" style="margin-top:28px" onsubmit="return false">
+      <section id="calculator" class="art__wide">
+        <h2>Price your own run</h2>
+        <p>Apply Eqs. 3 and 4 to a planned run. Pick a model from the paper’s grid or enter your own parameter counts.</p>
+        <form class="calc" id="calc" onsubmit="return false">
             <div class="calc__in">
               <div class="field">
                 <span class="field__label" id="preset-l">Model</span>
@@ -235,25 +193,28 @@
               <ul class="flags" id="o-flags"></ul>
             </div>
           </form>
-        </div>
       </section>
 
-      <section class="block block--wide" id="evidence">
-        <h2 class="block__label">Evidence</h2>
-        <div class="block__body">
-          <h3 class="sub" style="margin-top:0">The cost of repetition across the grid</h3>
-          <p class="small" style="max-width:760px;color:var(--ink-2)">Excess loss over fresh data at equal compute, in 10<sup>−3</sup> bits per byte (Figure 12a). Switch to Eq. 3 to see how much of the grid one variable explains.</p>
-          <div class="toolbar" style="margin-top:20px">
+      <section id="evidence" class="art__wide">
+        <h2>One variable explains most of the grid</h2>
+        <p>Excess loss over fresh data at equal compute, in 10<sup>−3</sup> bits per byte. Switch to the Eq. 3 fit to see how much of the grid the load <var>z</var> explains on its own.</p>
+        <figure class="art__fig">
+          <div class="toolbar">
             <div class="toolbar__group"><span class="toolbar__label" id="sz-l">Model</span><div class="seg seg--mono" role="group" aria-labelledby="sz-l" id="grid-size"></div></div>
             <div class="toolbar__group"><div class="seg" role="group" aria-label="Values" id="grid-mode"><button type="button" data-mode="m" aria-pressed="true">Measured</button><button type="button" data-mode="p" aria-pressed="false">Eq. 3 fit</button></div></div>
           </div>
           <div class="heat-scroll"><table class="heat" id="grid-heat"></table></div>
           <div class="toolbar" style="margin:14px 0 0"><span class="src" id="grid-note"></span><span class="legend"><span>2</span><span class="legend__ramp" aria-hidden="true"></span><span>4,000</span></span></div>
+          <figcaption><b>Figure 2.</b> Measured excess loss for each budget and epoch count (paper, Figure 12a), against the prediction of Eq. 3.</figcaption>
+        </figure>
+      </section>
 
-          <h3 class="sub">A second epoch is nearly free; the fourth is not</h3>
-          <div class="tbl-scroll" style="margin-top:16px">
-            <table class="tbl" style="max-width:760px">
-              <caption>Value of a repeated token η at U = 1B CommonCrawl tokens (Table 10). Brackets give the range under alternative exponents. Across the main grid, a second epoch is worth 0.87–1.02 fresh tokens at every budget.</caption>
+      <section>
+        <h2>A second epoch is nearly free; the fourth is not</h2>
+        <p>Across the main grid, a second epoch is worth 0.87–1.02 fresh tokens at every budget. By four epochs the value falls, and it falls fastest for the largest models.</p>
+        <div class="tbl-scroll">
+            <table class="tbl">
+              <caption><b>Table 1.</b> Value of a repeated token η at U = 1B CommonCrawl tokens (paper, Table 10). Brackets give the range under alternative exponents.</caption>
               <thead><tr><th scope="col">Model</th><th scope="col">Two epochs</th><th scope="col">Four epochs</th></tr></thead>
               <tbody>
                 <tr><th scope="row">59M</th><td>0.95 <span class="muted">[0.76, 1.05]</span></td><td>0.81 <span class="muted">[0.75, 0.83]</span></td></tr>
@@ -263,11 +224,14 @@
               </tbody>
             </table>
           </div>
+      </section>
 
-          <h3 class="sub">Scale the data with the model, and the best epoch count holds</h3>
-          <div class="tbl-scroll" style="margin-top:16px">
-            <table class="tbl" style="max-width:760px">
-              <caption>Loss-minimizing epochs when unique data grow with the model, U = 2.5N (Table 8). On CommonCrawl the optimum stays near four epochs from 23M to 1.2B; on lower-entropy GitHub code it is lower and drifts down.</caption>
+      <section>
+        <h2>Scale the data with the model, and the best epoch count holds</h2>
+        <p>When unique data grow with the model, the optimum on CommonCrawl stays near four epochs from 23M to 1.2B. On lower-entropy GitHub code it is lower and drifts down.</p>
+        <div class="tbl-scroll">
+            <table class="tbl">
+              <caption><b>Table 2.</b> Loss-minimizing epochs when unique data grow with the model, U = 2.5N (paper, Table 8).</caption>
               <thead><tr><th scope="col">Model</th><th scope="col">CommonCrawl</th><th scope="col">GitHub</th></tr></thead>
               <tbody>
                 <tr><th scope="row">23M</th><td>3.72</td><td>3.06</td></tr>
@@ -280,70 +244,50 @@
               </tbody>
             </table>
           </div>
-        </div>
       </section>
 
-      <section class="block" id="beyond">
-        <h2 class="block__label">Beyond counts</h2>
-        <div class="block__body">
-          <p class="lede">At identical token counts, how the repeats are laid out still changes loss.</p>
-          <dl class="findings" style="margin-top:32px">
-            <div>
-              <dt>Order</dt>
-              <dd class="findings__num">+0.46 bpb</dd>
-              <dd>Replaying shards consecutively instead of spacing them across epochs, at 511M and 16 epochs. Reshuffling every epoch changes loss by less than 0.01.</dd>
-            </div>
-            <div>
-              <dt>Allocation</dt>
-              <dd class="findings__num">+0.0039 bpb</dd>
-              <dd>Concentrating repeats on fewer samples, a third of the data four times versus half twice; 95% CI [+0.0033, +0.0045], positive in all 18 paired differences.</dd>
-            </div>
-            <div>
-              <dt>Source</dt>
-              <dd class="findings__num">r = −0.89</dd>
-              <dd>Correlation between a source’s token entropy and its loss rise at 16 epochs. GitHub code rises 0.16 bpb above its minimum; Books does not rise.</dd>
-            </div>
-            <div>
-              <dt>Re-tokenization</dt>
-              <dd class="findings__num">−0.154 bpb</dd>
-              <dd>BPE-dropout (p = 0.05) on repeats at 16 epochs. It costs 0.021 bpb at one epoch and 0.010 at four, so it pays only under heavy repetition.</dd>
-            </div>
-          </dl>
-          <p class="note"><b>Partial repetition</b> follows a different law. Drawing a fraction <var>f</var> of the budget from a repeated subset costs ΔL ∝ <var>f</var><sup>1.63</sup> <var>z</var><sub>sub</sub><sup>0.53</sup> (R² = 0.89); Eq. 3 scaled by <var>f</var> overstates it about fourfold, so it serves as a conservative bound.</p>
-        </div>
+      <section id="beyond">
+        <h2>Counts are not the whole story</h2>
+        <p>At identical token counts, how the repeats are laid out still changes loss.</p>
+        <ul class="art__list">
+          <li><b>Order.</b> Replaying shards consecutively instead of spacing them across epochs costs +0.46 bpb at 511M and 16 epochs. Reshuffling every epoch changes loss by less than 0.01.</li>
+          <li><b>Allocation.</b> Concentrating repeats on fewer samples, a third of the data four times rather than half of it twice, costs +0.0039 bpb (95% CI [+0.0033, +0.0045]), positive in all 18 paired differences.</li>
+          <li><b>Source.</b> A source’s token entropy correlates with its loss rise at 16 epochs (r = −0.89). GitHub code rises 0.16 bpb above its minimum; Books does not rise.</li>
+          <li><b>Re-tokenization.</b> BPE-dropout (p = 0.05) on repeats lowers loss by 0.154 bpb at 16 epochs, but costs 0.021 at one epoch and 0.010 at four, so it pays only under heavy repetition.<sup class="fn"><a href="#fn2" id="fnr2">2</a></sup></li>
+        </ul>
       </section>
 
-      <section class="block" id="practice">
-        <h2 class="block__label">In practice</h2>
-        <div class="block__body">
-          <ul class="questions">
-            <li><div><b>Transfer epoch counts with data, not size.</b><span>With unique data fixed, larger models should take fewer epochs; when unique data grow with the model, the best epoch count barely changes. To reuse an epoch count on a larger model, scale the unique data with it.</span></div></li>
-            <li><div><b>Larger budgets per parameter tolerate more repetition.</b><span>Repeats fall to half the value of fresh tokens after about four to five epochs up to 20 tokens per parameter, and about ten at 300.</span></div></li>
-            <li><div><b>Grow model and epochs together, up to <var>R</var><sub>c</sub>.</b><span>With unique data fixed, extra compute goes to both in roughly equal shares until loss stops improving near the critical epoch count. Ignoring the cost of repetition loses at most 0.002 bpb up to that point.</span></div></li>
-            <li><div><b>Spread and shuffle repeats.</b><span>Space repeats across epochs and samples, repeat lower-entropy sources less, and re-tokenize only under heavy repetition. Compare such choices at separately annealed horizons; intermediate checkpoints can misrank them.</span></div></li>
-          </ul>
-        </div>
+      <section id="practice">
+        <h2>What this means for a training run</h2>
+        <ol class="art__list art__list--num">
+          <li><b>Transfer epoch counts with data, not size.</b> With unique data fixed, larger models should take fewer epochs; when unique data grow with the model, the best epoch count barely changes. To reuse an epoch count on a larger model, scale the unique data with it.</li>
+          <li><b>Larger budgets per parameter tolerate more repetition.</b> Repeats fall to half the value of fresh tokens after about four to five epochs up to 20 tokens per parameter, and about ten at 300.</li>
+          <li><b>Grow model and epochs together, up to <var>R</var><sub>c</sub>.</b> With unique data fixed, extra compute goes to both in roughly equal shares until loss stops improving near the critical epoch count. Ignoring the cost of repetition loses at most 0.002 bpb up to that point.</li>
+          <li><b>Spread and shuffle repeats.</b> Space repeats across epochs and samples, repeat lower-entropy sources less, and re-tokenize only under heavy repetition. Compare such choices at separately annealed horizons; intermediate checkpoints can misrank them.</li>
+        </ol>
       </section>
 
-      <section class="block" id="setup">
-        <h2 class="block__label">Setup</h2>
-        <div class="block__body">
-          <dl class="facts">
-            <div><dt>Grid</dt><dd>Five sizes from 23M to 361M non-embedding parameters; 5–300 tokens per parameter; 1, 2, 4, 8 and 16 epochs with U = D/R</dd></div>
-            <div><dt>Sweeps</dt><dd>Fixed corpus (14M–2B, up to 32 epochs), U = 2.5N (23M–1.2B), D = 20N partial repetition, order, source entropy and re-tokenization studies</dd></div>
-            <div><dt>Models</dt><dd>Decoder-only Transformers with grouped-query attention, RoPE, ReLU² MLPs and tied embeddings; context 1,024</dd></div>
-            <div><dt>Optimizer</dt><dd>Muon for hidden matrices, Adam elsewhere; no weight decay, dropout or clipping; learning rate annealed to each run’s horizon</dd></div>
-            <div><dt>Data</dt><dd>SlimPajama: CommonCrawl, C4, GitHub, Books, arXiv, Wikipedia and StackExchange; GPT-2 byte-level BPE</dd></div>
-            <div><dt>Metric</dt><dd>Bits per byte on held-out test sets of each source; paired studies use three or more replicates</dd></div>
-            <div><dt>Compute</dt><dd>Eight H800 GPUs</dd></div>
-          </dl>
-          <p class="src" style="margin-top:18px">Limitations: the models are far smaller than frontier systems, and since weight decay lowers the cost of repetition, the constants of Eqs. 3 and 4 may shift under other regularization.</p>
-        </div>
+      <section id="setup">
+        <h2>How we measured</h2>
+        <dl class="facts">
+          <div><dt>Grid</dt><dd>Five sizes from 23M to 361M non-embedding parameters; 5–300 tokens per parameter; 1, 2, 4, 8 and 16 epochs with U = D/R; 175 runs</dd></div>
+          <div><dt>Sweeps</dt><dd>Fixed corpus (14M–2B, up to 32 epochs), U = 2.5N (23M–1.2B), D = 20N partial repetition, order, source entropy and re-tokenization studies</dd></div>
+          <div><dt>Models</dt><dd>Decoder-only Transformers with grouped-query attention, RoPE, ReLU² MLPs and tied embeddings; context 1,024</dd></div>
+          <div><dt>Optimizer</dt><dd>Muon for hidden matrices, Adam elsewhere; no weight decay, dropout or clipping; learning rate annealed to each run’s horizon</dd></div>
+          <div><dt>Data</dt><dd>SlimPajama: CommonCrawl, C4, GitHub, Books, arXiv, Wikipedia and StackExchange; GPT-2 byte-level BPE</dd></div>
+          <div><dt>Metric</dt><dd>Bits per byte on held-out test sets of each source; paired studies use three or more replicates</dd></div>
+          <div><dt>Compute</dt><dd>Eight H800 GPUs</dd></div>
+        </dl>
+        <p>The models are far smaller than frontier systems, and since weight decay lowers the cost of repetition, the constants of Eqs. 3 and 4 may shift under other regularization.</p>
       </section>
 
-      <section class="block" id="citation">
-        <h2 class="block__label">Citation</h2>
-        <div class="block__body">
+      <section class="art__end" id="citation">
+        <h2>Learn more</h2>
+        <ul class="art__res">
+          <li><a href="https://arxiv.org/abs/2610.05591" target="_blank" rel="noopener">What Is a Repeated Token Worth? The Scaling Geometry of Multi-Epoch Pretraining</a><span>arXiv 2610.05591</span></li>
+        </ul>
+        <details class="art__cite">
+          <summary>Cite this work</summary>
           <pre class="code"><code>@misc{chai2026repeated,
   title         = {What Is a Repeated Token Worth? The Scaling Geometry of
                    Multi-Epoch Pretraining},
@@ -354,10 +298,13 @@
   primaryClass  = {cs.CL},
   url           = {https://arxiv.org/abs/2610.05591}
 }</code></pre>
-        </div>
+        </details>
+        <ol class="art__notes">
+          <li id="fn1">Eqs. 3 and 4 are fitted on CommonCrawl with GPT-2 byte-level BPE, 23M–361M non-embedding parameters, 5–300 training tokens per parameter and 2–16 epochs, without weight decay or dropout. The constants may shift under other data or regularization. <a href="#fnr1" aria-label="Back to text">↩</a></li>
+          <li id="fn2">Partial repetition follows a different law. Drawing a fraction <var>f</var> of the budget from a repeated subset costs ΔL ∝ <var>f</var><sup>1.63</sup> <var>z</var><sub>sub</sub><sup>0.53</sup> (R² = 0.89); Eq. 3 scaled by <var>f</var> overstates it about fourfold, so it serves as a conservative bound. <a href="#fnr2" aria-label="Back to text">↩</a></li>
+        </ol>
       </section>
-
-    </div>
+    </article>
     <nav class="wrap pager" aria-label="More research">
       <a class="pager__prev" href="/humaneval-xl/"><small>Previous</small><span>HumanEval-XL</span></a>
       <a class="pager__all" href="/#research">All research</a>
@@ -384,7 +331,7 @@
     </div>
   </footer>
 
-  <script src="/assets/js/site.js?v=20261009d" defer></script>
-  <script src="/repeated-tokens/page.js?v=20261009d" defer></script>
+  <script src="/assets/js/site.js?v=20261009e" defer></script>
+  <script src="/repeated-tokens/page.js?v=20261009e" defer></script>
 </body>
 </html>

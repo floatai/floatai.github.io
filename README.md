@@ -23,13 +23,17 @@ The site is plain HTML, CSS and JavaScript. There is no build step and no depend
 ## Layout
 
 ```
-index.html              the homepage
-<project>/index.html    one page per project, e.g. xiangqibench/, tkeval/
-assets/css/site.css     styles; light and dark themes follow prefers-color-scheme
-assets/js/site.js       hero graph, xiangqi board, copy buttons, scroll reveal
-assets/brand/           logo files from the FloatAI brand kit
-favicon.ico, *.png      favicons and touch icon
-.nojekyll               serve files as-is, without Jekyll
+index.html                 the homepage
+<project>/index.html       one page per project, e.g. xiangqibench/, tkeval/
+404.html                   not-found page
+assets/css/site.css        styles; light and dark themes follow prefers-color-scheme
+assets/js/site.js          hero graph, xiangqi board, copy buttons, scroll reveal
+assets/brand/              logo files from the FloatAI brand kit
+assets/img/og/             1200×630 share cards, one per page
+scripts/make_og_cards.py   renders the share cards (optional, needs Playwright)
+sitemap.xml, robots.txt    for search engines
+favicon.ico, *.png         favicons and touch icon
+.nojekyll                  serve files as-is, without Jekyll
 ```
 
 ## Preview locally
@@ -51,7 +55,8 @@ To add a project:
 1. Copy an existing project folder, for example `repeated-tokens/`, to a new lowercase slug and rewrite its `index.html`.
 2. In `index.html`, add an `<article class="theme">` to `.themes` linking to `/<slug>/`, with an inline SVG illustration.
 3. Add an `<li class="pub">` at the top of `.pubs`, with authors, venue and a Project link.
-4. Update the "More research" links at the bottom of the other project pages.
+4. Update the "More research" links at the bottom of the other project pages, the list in `404.html`, and `sitemap.xml`.
+5. Add the page to `PAGES` in `scripts/make_og_cards.py`, run it to render `assets/img/og/<slug>.png`, and point the page's `og:image` to it.
 
 Keep entries newest first. Copy follows the existing style: state what a study measures and what it found, and use numbers from the paper rather than adjectives.
 

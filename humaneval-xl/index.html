@@ -9,8 +9,23 @@
   <meta name="theme-color" content="#0c1016" media="(prefers-color-scheme: dark)" />
   <meta property="og:title" content="HumanEval-XL — FloatAI" />
   <meta property="og:description" content="A multilingual code generation benchmark for cross-lingual natural language generalization." />
-  <meta property="og:image" content="https://floatai.github.io/assets/brand/avatar-512.png" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="FloatAI" />
   <meta property="og:url" content="https://floatai.github.io/humaneval-xl/" />
+  <meta property="og:image" content="https://floatai.github.io/assets/img/og/humaneval-xl.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://floatai.github.io/humaneval-xl/" />
+  <meta name="citation_title" content="HumanEval-XL: A Multilingual Code Generation Benchmark for Cross-lingual Natural Language Generalization" />
+  <meta name="citation_author" content="Peng, Qiwei" />
+  <meta name="citation_author" content="Chai, Yekun" />
+  <meta name="citation_author" content="Li, Xuhong" />
+  <meta name="citation_publication_date" content="2024/05" />
+  <meta name="citation_conference_title" content="Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (LREC-COLING 2024)" />
+  <meta name="citation_firstpage" content="8383" />
+  <meta name="citation_lastpage" content="8394" />
+  <meta name="citation_pdf_url" content="https://aclanthology.org/2024.lrec-main.735.pdf" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -92,10 +107,12 @@
       <section class="block">
         <h2 class="block__label">Get started</h2>
         <div class="block__body">
+          <pre class="code"><code><span class="c"># the dataset ships a loading script, which datasets 4.x no longer runs</span>
+pip install "datasets&lt;4"</code></pre>
           <pre class="code"><code>from datasets import load_dataset
 
-<span class="c"># one programming language; one split per natural language</span>
-dataset = load_dataset("floatai/HumanEval-XL", "python")
+<span class="c"># one config per programming language, one split per natural language</span>
+dataset = load_dataset("floatai/HumanEval-XL", "python", trust_remote_code=True)
 print(dataset["Chinese"][0]["prompt"])</code></pre>
         </div>
       </section>
@@ -146,6 +163,7 @@ print(dataset["Chinese"][0]["prompt"])</code></pre>
           <a href="https://github.com/orgs/floatai/discussions" target="_blank" rel="noopener">Discussions</a>
         </nav>
       </div>
+      <p class="footer__note">© <span id="year">2026</span> FloatAI. See each repository for its license.</p>
     </div>
   </footer>
 

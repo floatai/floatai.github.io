@@ -24,17 +24,6 @@
     });
   }
 
-  document.querySelectorAll("[data-copy]").forEach((btn) => {
-    const hint = btn.querySelector(".copy__hint");
-    btn.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(btn.dataset.copy);
-        btn.classList.add("is-copied"); hint.textContent = "Copied";
-        setTimeout(() => { btn.classList.remove("is-copied"); hint.textContent = "Copy"; }, 1600);
-      } catch { /* clipboard unavailable */ }
-    });
-  });
-
   document.querySelectorAll("pre.code").forEach((pre) => {
     const btn = document.createElement("button");
     btn.type = "button"; btn.className = "code__copy"; btn.textContent = "Copy";
@@ -48,7 +37,7 @@
     pre.appendChild(btn);
   });
 
-  // Featured: a legal xiangqi position where the rook's move to the back rank is mate.
+  // A legal xiangqi position where the rook's move to the back rank is mate.
   // King on f10 has two flight squares: e10 (covered by the rook along the rank) and f9 (covered by the horse).
   const board = document.getElementById("board");
   if (board) {

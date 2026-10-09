@@ -10,7 +10,7 @@ from playwright.sync_api import sync_playwright
 
 BASE = "http://127.0.0.1:4173"
 OUT = Path(__file__).resolve().parent.parent / "assets" / "img" / "og"
-PAGES = {"home": "/", "xiangqibench": "/xiangqibench/", "repeated-tokens": "/repeated-tokens/", "tkeval": "/tkeval/", "humaneval-xl": "/humaneval-xl/"}
+PAGES = {"home": "/", "xiangqibench": "/research/xiangqibench/", "repeated-tokens": "/research/repeated-tokens/", "tkeval": "/research/tkeval/", "humaneval-xl": "/research/humaneval-xl/"}
 
 CARD = r"""
 (slug) => {

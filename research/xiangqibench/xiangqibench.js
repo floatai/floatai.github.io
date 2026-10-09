@@ -117,7 +117,7 @@
   const rpRoot = document.getElementById("rp-root");
   if (!lbRoot && !hmRoot && !rpRoot) return;
 
-  const load = (name) => fetch(`/xiangqibench/data/${name}.json`).then((r) => {
+  const load = (name) => fetch(`/research/xiangqibench/data/${name}.json`).then((r) => {
     if (!r.ok) throw new Error(`${name}.json: HTTP ${r.status}`);
     return r.json();
   });

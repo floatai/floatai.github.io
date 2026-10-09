@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://floatai.github.io/</loc><lastmod>2026-10-09</lastmod></url>
-  <url><loc>https://floatai.github.io/repeated-tokens/</loc><lastmod>2026-10-09</lastmod></url>
-  <url><loc>https://floatai.github.io/xiangqibench/</loc><lastmod>2026-10-09</lastmod></url>
-  <url><loc>https://floatai.github.io/tkeval/</loc><lastmod>2026-10-09</lastmod></url>
-  <url><loc>https://floatai.github.io/humaneval-xl/</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://floatai.github.io/research/repeated-tokens/</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://floatai.github.io/research/xiangqibench/</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://floatai.github.io/research/tkeval/</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://floatai.github.io/research/humaneval-xl/</loc><lastmod>2026-10-09</lastmod></url>
 </urlset>

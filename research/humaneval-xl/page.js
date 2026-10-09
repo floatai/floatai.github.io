@@ -24,7 +24,7 @@
     });
   }
 
-  const results = fetch("/humaneval-xl/data/results.json").then((r) => r.json());
+  const results = fetch("/research/humaneval-xl/data/results.json").then((r) => r.json());
 
   /* Leaderboard */
   results.then((R) => {
@@ -82,7 +82,7 @@
   /* Example viewer */
   const code = $("ex-code");
   if (!code) return;
-  const examples = fetch("/humaneval-xl/data/example.json").then((r) => r.json());
+  const examples = fetch("/research/humaneval-xl/data/example.json").then((r) => r.json());
   Promise.all([examples, results]).then(([E, R]) => {
     const pls = R.pls.map((p) => p.name), langs = R.langs;
     let pl = 0, nl = langs.findIndex((l) => l.name === "English");

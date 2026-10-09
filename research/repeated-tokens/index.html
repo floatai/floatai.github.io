@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/site.css?v=20261009o" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261009p" />
 </head>
 <body>
   <header class="nav">
@@ -74,13 +74,13 @@
 
     <nav class="toc" aria-label="On this page">
       <div class="wrap toc__inner">
+        <a href="#takeaways">Takeaways</a>
         <a href="#overview">Overview</a>
         <a href="#prices">Two prices</a>
         <a href="#laws">Fitted laws</a>
         <a href="#calculator">Calculator</a>
         <a href="#evidence">Evidence</a>
         <a href="#beyond">Beyond counts</a>
-        <a href="#practice">In practice</a>
         <a href="#citation">Citation</a>
       </div>
     </nav>
@@ -135,6 +135,18 @@
     </div>
 
     <div class="wrap">
+      <section class="block" id="takeaways">
+        <h2 class="block__label">Takeaways</h2>
+        <div class="block__body">
+          <ul class="questions">
+            <li><div><b>Transfer epoch counts with data, not size.</b><span>With unique data fixed, larger models should take fewer epochs; when unique data grow with the model, the best epoch count barely changes. To reuse an epoch count on a larger model, scale the unique data with it.</span></div></li>
+            <li><div><b>Larger budgets per parameter tolerate more repetition.</b><span>Repeats fall to half the value of fresh tokens after about four to five epochs up to 20 tokens per parameter, and about ten at 300.</span></div></li>
+            <li><div><b>Grow model and epochs together, up to the critical epoch count.</b><span>With unique data fixed, extra compute goes to both in roughly equal shares until loss stops improving. Ignoring the cost of repetition loses at most 0.002 bpb up to that point.</span></div></li>
+            <li><div><b>Spread and shuffle repeats.</b><span>Space repeats across epochs and samples, repeat lower-entropy sources less, and re-tokenize only under heavy repetition. Compare such choices at separately annealed horizons; intermediate checkpoints can misrank them.</span></div></li>
+          </ul>
+        </div>
+      </section>
+
       <section class="block" id="overview">
         <h2 class="block__label">Overview</h2>
         <div class="block__body">
@@ -312,19 +324,6 @@
         </div>
       </section>
 
-      <section class="block" id="practice">
-        <h2 class="block__label">In practice</h2>
-        <div class="block__body">
-          <ul class="questions">
-            <li><div><b>Transfer epoch counts with data, not size.</b><span>With unique data fixed, larger models should take fewer epochs; when unique data grow with the model, the best epoch count barely changes. To reuse an epoch count on a larger model, scale the unique data with it.</span></div></li>
-            <li><div><b>Larger budgets per parameter tolerate more repetition.</b><span>Repeats fall to half the value of fresh tokens after about four to five epochs up to 20 tokens per parameter, and about ten at 300.</span></div></li>
-            <li><div><b>Grow model and epochs together, up to <var>R</var><sub>c</sub>.</b><span>With unique data fixed, extra compute goes to both in roughly equal shares until loss stops improving near the critical epoch count. Ignoring the cost of repetition loses at most 0.002 bpb up to that point.</span></div></li>
-            <li><div><b>Spread and shuffle repeats.</b><span>Space repeats across epochs and samples, repeat lower-entropy sources less, and re-tokenize only under heavy repetition. Compare such choices at separately annealed horizons; intermediate checkpoints can misrank them.</span></div></li>
-          </ul>
-        </div>
-      </section>
-
-
       <section class="block" id="citation">
         <h2 class="block__label">Citation</h2>
         <div class="block__body">
@@ -368,7 +367,7 @@
     </div>
   </footer>
 
-  <script src="/assets/js/site.js?v=20261009o" defer></script>
-  <script src="/research/repeated-tokens/page.js?v=20261009o" defer></script>
+  <script src="/assets/js/site.js?v=20261009p" defer></script>
+  <script src="/research/repeated-tokens/page.js?v=20261009p" defer></script>
 </body>
 </html>

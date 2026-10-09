@@ -22,6 +22,14 @@
     });
   }
 
+  const pubList = document.querySelector(".pubx[data-bib]");
+  if (pubList) {
+    fetch(pubList.dataset.bib)
+      .then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then((text) => renderPubs(pubList, parseBib(text)))
+      .catch(() => { pubList.hidden = true; pubList.nextElementSibling?.removeAttribute("hidden"); });
+  }
+
   const tocLinks = [...document.querySelectorAll(".toc a[href^='#']")];
   if (tocLinks.length && "IntersectionObserver" in window) {
     const byId = new Map(tocLinks.map((a) => [a.getAttribute("href").slice(1), a]));
@@ -47,6 +55,82 @@
     });
     pre.appendChild(btn);
   });
+
+  function parseBib(text) {
+    const entries = [];
+    let i = 0;
+    const skipWs = () => { while (i < text.length && /\s/.test(text[i])) i++; };
+    const readBraced = () => {
+      let depth = 0, start = ++i;
+      for (; i < text.length; i++) {
+        if (text[i] === "{") depth++;
+        else if (text[i] === "}") { if (depth === 0) break; depth--; }
+      }
+      return text.slice(start, i++);
+    };
+    const readQuoted = () => {
+      let depth = 0, start = ++i;
+      for (; i < text.length; i++) {
+        if (text[i] === "{") depth++;
+        else if (text[i] === "}") depth--;
+        else if (text[i] === '"' && depth === 0) break;
+      }
+      return text.slice(start, i++);
+    };
+    while ((i = text.indexOf("@", i)) !== -1) {
+      const type = /^@(\w+)\s*\{/.exec(text.slice(i));
+      if (!type) { i++; continue; }
+      i += type[0].length;
+      const comma = text.indexOf(",", i);
+      const entry = { type: type[1].toLowerCase(), key: text.slice(i, comma).trim() };
+      i = comma + 1;
+      for (;;) {
+        skipWs();
+        if (text[i] === "}") { i++; break; }
+        const name = /^([\w-]+)\s*=\s*/.exec(text.slice(i));
+        if (!name) break;
+        i += name[0].length;
+        let value;
+        if (text[i] === "{") value = readBraced();
+        else if (text[i] === '"') value = readQuoted();
+        else { const bare = /^[\w.-]+/.exec(text.slice(i))[0]; i += bare.length; value = bare; }
+        entry[name[1].toLowerCase()] = value.replace(/\s+/g, " ").trim();
+        skipWs();
+        if (text[i] === ",") i++;
+      }
+      entries.push(entry);
+    }
+    return entries;
+  }
+
+  function renderPubs(list, entries) {
+    const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+    const clean = (s = "") => s
+      .replace(/\\["'`^~=.]\{?(\w)\}?/g, "$1")
+      .replace(/\\(o|O|ae|AE|ss|l|L)\b\s?/g, (_, c) => ({ o: "ø", O: "Ø", ae: "æ", AE: "Æ", ss: "ß", l: "ł", L: "Ł" })[c])
+      .replace(/[{}]/g, "")
+      .replace(/---/g, "—").replace(/--/g, "–");
+    const monthOf = (m = "") => {
+      const n = parseInt(m, 10);
+      return n >= 1 && n <= 12 ? n : MONTHS.indexOf(m.slice(0, 3).toLowerCase()) + 1;
+    };
+    const rows = entries
+      .map((e, order) => ({ e, order, year: parseInt(e.year, 10) || 0, month: monthOf(e.month) }))
+      .sort((a, b) => b.year - a.year || b.month - a.month || a.order - b.order);
+    list.replaceChildren(...rows.map(({ e, year, month }) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = e.page || e.url || "#";
+      if (!e.page) { a.target = "_blank"; a.rel = "noopener"; }
+      const time = document.createElement("time");
+      time.dateTime = month ? `${year}-${String(month).padStart(2, "0")}` : String(year);
+      time.textContent = month ? `${MONTHS[month - 1][0].toUpperCase()}${MONTHS[month - 1].slice(1)} ${year}` : String(year);
+      const span = (cls, text) => { const s = document.createElement("span"); s.className = cls; s.textContent = text; return s; };
+      a.append(time, span("pubx__cat", clean(e.category)), span("pubx__title", clean(e.title)), span("pubx__venue", clean(e.venue || e.booktitle || e.journal)));
+      li.append(a);
+      return li;
+    }));
+  }
 
   // Hero: a slowly drifting graph of research topics, densest on the right.
   const canvas = document.getElementById("graph");

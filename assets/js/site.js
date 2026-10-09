@@ -9,10 +9,22 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 
   const revealTargets = document.querySelectorAll(".section__head, .page-figure, .block, .theme, .pub, .steps li, .network__intro, .footer__statement");
+  const drawCharts = (root) => {
+    root.querySelectorAll(".chart .c-line").forEach((path, i) => {
+      path.setAttribute("pathLength", "1");
+      path.animate(
+        [{ strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDasharray: 1, strokeDashoffset: 0 }],
+        { duration: 1400, delay: 200 + i * 60, easing: "cubic-bezier(.22, 1, .36, 1)", fill: "backwards" },
+      ).finished.then(() => path.removeAttribute("pathLength"), () => {});
+    });
+    root.querySelectorAll(".chart .c-dot").forEach((dot) => {
+      dot.animate([{ opacity: 0 }, { opacity: getComputedStyle(dot).opacity }], { duration: 500, delay: 1300, fill: "backwards" });
+    });
+  };
   if ("IntersectionObserver" in window && !reduceMotion) {
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
-        if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+        if (e.isIntersecting) { e.target.classList.add("is-in"); drawCharts(e.target); io.unobserve(e.target); }
       }
     }, { rootMargin: "0px 0px -8% 0px" });
     revealTargets.forEach((el, i) => {

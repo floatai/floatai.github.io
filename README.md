@@ -30,6 +30,7 @@ research/<project>/        one page per project: index.html, page.js and data/
   xiangqibench/            boards, leaderboard, per-position heatmap and replays
   tkeval/                  tokenization probes and typo examples
   humaneval-xl/            prompt viewer and pass@1 leaderboard
+slides/                    the research talk: index.html, slides.css and slides.js
 <project>/index.html       redirects from the old top-level URLs to research/<project>/
 404.html                   not-found page
 assets/css/site.css        styles; light and dark themes follow prefers-color-scheme
@@ -78,6 +79,10 @@ Rows are sorted by `year` and `month`, newest first; entries from the same month
 5. Add the page to `PAGES` in `scripts/make_og_cards.py`, run it to render `assets/img/og/<slug>.png`, and point the page's `og:image` to it.
 
 After changing `assets/css/site.css`, `assets/js/site.js` or a `page.js`, bump the `?v=` suffix on the asset links in every `.html` file so browsers fetch the new version.
+
+### Edit the talk
+
+`slides/index.html` holds one `<section class="slide">` per slide on a 1600 × 1000 canvas that scales to the window. Use `slide--light` or `slide--dark` for the background, `slide--section` for a part divider, and `data-section` for the footer label. Elements with `rise` animate in when the slide opens. Keys: arrows or Space to move, G for the overview, F for fullscreen, L for a laser pointer, ? for help; `#n` in the URL opens slide n. The publication slide is a static copy of `publications.bib`, so update it when you add a paper.
 
 ### Write math
 

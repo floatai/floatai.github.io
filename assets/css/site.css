@@ -504,18 +504,18 @@ html:has(.toc) { scroll-padding-top: 128px; }
 .legend__ramp { width: 120px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--bg-tint), var(--blue)); border: 1px solid var(--line); }
 
 /* Equations */
+[data-math] .katex { font-size: 1.08em; }
+[data-math] p .katex, p[data-math] .katex { white-space: nowrap; }
+[data-math]:not(.is-typeset) { visibility: hidden; }
 .laws { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .law { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 32px; padding: 28px 0 30px; border-bottom: 1px solid var(--line); }
 .law__name { margin: 0; padding-top: 4px; font: 500 15px/1.4 var(--sans); color: var(--ink); }
 .law__ref { display: block; margin-top: 4px; font: 400 12px var(--mono); color: var(--ink-3); }
-.law__name .katex { font-size: 1.08em; }
 .law__eq { color: var(--ink); font-size: 16px; overflow-x: auto; overflow-y: hidden; }
 .law__eq .katex-display { margin: 0; padding: 2px 0; }
 .law__eq .katex { font-size: 1.24em; }
 .law__eq .katex .tag { color: var(--ink-3); font-size: .78em; }
 .law__body p { margin-top: 14px; font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 62ch; }
-.law__body p .katex { font-size: 1.06em; white-space: nowrap; }
-[data-math]:not(.is-typeset) { visibility: hidden; }
 @media (max-width: 720px) {
   .law { grid-template-columns: 1fr; gap: 14px; padding: 24px 0; }
   .law__ref { display: inline; margin: 0 0 0 8px; }
@@ -527,6 +527,9 @@ html:has(.toc) { scroll-padding-top: 128px; }
 .duo > div { padding: 22px 24px; border: 1px solid var(--line); border-radius: 16px; }
 .duo small { display: block; font-size: 12.5px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
 .duo b { display: block; margin-top: 10px; font-size: 17px; font-weight: 500; }
+.duo__eq { margin-top: 12px; font-size: 15px; color: var(--ink); overflow-x: auto; overflow-y: hidden; }
+.duo__eq .katex-display { margin: 0; padding: 2px 0; text-align: left; }
+.duo__eq .katex-display > .katex { text-align: left; font-size: 1.24em; }
 .duo p { margin-top: 8px; font-size: 14.5px; color: var(--ink-2); }
 .duo code, .tasks code, .io code { font-family: var(--mono); font-size: .92em; }
 

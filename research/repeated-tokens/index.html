@@ -29,8 +29,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous" />
-  <link rel="stylesheet" href="/assets/css/site.css?v=20261009r" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261009t" />
 </head>
 <body>
   <header class="nav">
@@ -159,18 +158,18 @@
 
       <section class="block" id="prices">
         <h2 class="block__label">Two prices</h2>
-        <div class="block__body">
-          <p class="lede">Every repeated run of <var>R</var> epochs over <var>U</var> unique tokens, <var>D</var> = <var>RU</var> in total, is compared with two one-epoch runs of the same model.</p>
+        <div class="block__body" data-math>
+          <p class="lede">Every repeated run of \(R\) epochs over \(U\) unique tokens, \(D = RU\) in total, is compared with two one-epoch runs of the same model.</p>
           <div class="duo" style="margin-top:28px">
             <div>
               <small>Value · data-matched</small>
-              <b>η = (U<sub>eq</sub> − U) / (D − U)</b>
-              <p>Baseline: one epoch on the same <var>U</var> tokens. <var>U</var><sub>eq</sub> is the fresh budget that reaches the same loss, so η is the fresh-token equivalent of each repeated token: 1 if repeats were as good as fresh data, 0 if worthless.</p>
+              <div class="duo__eq">\[ \eta = \frac{U_{\mathrm{eq}} - U}{D - U} \]</div>
+              <p>Baseline: one epoch on the same \(U\) tokens. \(U_{\mathrm{eq}}\) is the fresh budget that reaches the same loss, so \(\eta\) is the fresh-token equivalent of each repeated token: 1 if repeats were as good as fresh data, 0 if worthless.</p>
             </div>
             <div>
               <small>Cost · compute-matched</small>
-              <b>ΔL = L(N, U, R) − L(N, D, 1)</b>
-              <p>Baseline: one epoch on <var>D</var> fresh tokens at the same compute and schedule. ΔL is the extra held-out loss, in bits per byte, paid for repeating instead of collecting new data.</p>
+              <div class="duo__eq">\[ \Delta L = L(N, U, R) - L(N, D, 1) \]</div>
+              <p>Baseline: one epoch on \(D\) fresh tokens at the same compute and schedule. \(\Delta L\) is the extra held-out loss, in bits per byte, paid for repeating instead of collecting new data.</p>
             </div>
           </div>
         </div>
@@ -191,7 +190,7 @@
               <h3 class="law__name">Critical epochs <span class="law__ref">§4.3</span></h3>
               <div class="law__body">
                 <div class="law__eq">\[ R_c \approx 2.7 \left(\frac{D}{N}\right)^{0.24} \tag{4} \]</div>
-                <p>The epoch count at which a repeated token is worth half a fresh one (\(\eta = \tfrac12\)). Fits 35 measured crossings to 8% RMS: 4.0–5.3 epochs up to 20 tokens per parameter, 6.9–8.3 at 100, 10.0–11.8 at 300.</p>
+                <p>The epoch count at which a repeated token is worth half a fresh one \((\eta = \tfrac12)\). Fits 35 measured crossings to 8% RMS: 4.0–5.3 epochs up to 20 tokens per parameter, 6.9–8.3 at 100, 10.0–11.8 at 300.</p>
               </div>
             </li>
             <li class="law">
@@ -205,7 +204,7 @@
               <h3 class="law__name">Best epochs at fixed \(U\) <span class="law__ref">App. K</span></h3>
               <div class="law__body">
                 <div class="law__eq">\[ R^{\star} \approx 4.5 \left(\frac{U}{N}\right)^{0.51} \tag{K.1} \]</div>
-                <p>Loss-minimizing epoch count in the fixed-corpus sweeps from 14M to 2B (\(R^2_{\log} = 0.94\)). Because it depends on \(U/N\), a fixed corpus shifts the optimum to fewer epochs as models grow.</p>
+                <p>Loss-minimizing epoch count in the fixed-corpus sweeps from 14M to 2B \((R^2_{\log} = 0.94)\). Because it depends on \(U/N\), a fixed corpus shifts the optimum to fewer epochs as models grow.</p>
               </div>
             </li>
           </ol>
@@ -262,7 +261,7 @@
         <h2 class="block__label">Evidence</h2>
         <div class="block__body">
           <h3 class="sub" style="margin-top:0">The cost of repetition across the grid</h3>
-          <p class="small" style="max-width:760px;color:var(--ink-2)">Excess loss over fresh data at equal compute, in 10<sup>−3</sup> bits per byte (Figure 12a). Switch to Eq. 3 to see how much of the grid one variable explains.</p>
+          <p class="small" style="max-width:760px;color:var(--ink-2)" data-math>Excess loss over fresh data at equal compute, in \(10^{-3}\) bits per byte (Figure 12a). Switch to Eq. 3 to see how much of the grid one variable explains.</p>
           <div class="toolbar" style="margin-top:20px">
             <div class="toolbar__group"><span class="toolbar__label" id="sz-l">Model</span><div class="seg seg--mono" role="group" aria-labelledby="sz-l" id="grid-size"></div></div>
             <div class="toolbar__group"><div class="seg" role="group" aria-label="Values" id="grid-mode"><button type="button" data-mode="m" aria-pressed="true">Measured</button><button type="button" data-mode="p" aria-pressed="false">Eq. 3 fit</button></div></div>
@@ -329,7 +328,7 @@
               <dd>BPE-dropout (p = 0.05) on repeats at 16 epochs. It costs 0.021 bpb at one epoch and 0.010 at four, so it pays only under heavy repetition.</dd>
             </div>
           </dl>
-          <p class="note"><b>Partial repetition</b> follows a different law. Drawing a fraction <var>f</var> of the budget from a repeated subset costs ΔL ∝ <var>f</var><sup>1.63</sup> <var>z</var><sub>sub</sub><sup>0.53</sup> (R² = 0.89); Eq. 3 scaled by <var>f</var> overstates it about fourfold, so it serves as a conservative bound.</p>
+          <p class="note" data-math><b>Partial repetition</b> follows a different law. Drawing a fraction \(f\) of the budget from a repeated subset costs \(\Delta L \propto f^{1.63}\, z_{\mathrm{sub}}^{0.53}\) \((R^2 = 0.89)\); Eq. 3 scaled by \(f\) overstates it about fourfold, so it serves as a conservative bound.</p>
         </div>
       </section>
 
@@ -376,9 +375,7 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" defer></script>
-  <script src="/assets/js/site.js?v=20261009r" defer></script>
-  <script src="/research/repeated-tokens/page.js?v=20261009r" defer></script>
+  <script src="/assets/js/site.js?v=20261009t" defer></script>
+  <script src="/research/repeated-tokens/page.js?v=20261009t" defer></script>
 </body>
 </html>

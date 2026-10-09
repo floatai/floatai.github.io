@@ -3,16 +3,33 @@
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
-  document.querySelectorAll("[data-math]").forEach((el) => {
-    try {
-      window.renderMathInElement?.(el, {
+  const mathRoots = document.querySelectorAll("[data-math]");
+  if (mathRoots.length) {
+    const base = "/assets/vendor/katex/";
+    const reveal = () => mathRoots.forEach((el) => el.classList.add("is-typeset"));
+    const fallback = setTimeout(reveal, 3000);
+    const load = (src) => new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = base + src;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.append(s);
+    });
+    const css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = base + "katex.min.css";
+    const cssReady = new Promise((resolve) => { css.onload = css.onerror = resolve; });
+    document.head.append(css);
+    const typeset = load("katex.min.js")
+      .then(() => load("contrib/auto-render.min.js"))
+      .then(() => mathRoots.forEach((el) => window.renderMathInElement(el, {
         delimiters: [{ left: "\\[", right: "\\]", display: true }, { left: "\\(", right: "\\)", display: false }],
         throwOnError: false,
-      });
-    } finally {
-      el.classList.add("is-typeset");
-    }
-  });
+      })));
+    Promise.all([cssReady, typeset])
+      .catch(() => {})
+      .finally(() => { clearTimeout(fallback); reveal(); });
+  }
 
   const nav = document.querySelector(".nav");
   const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);

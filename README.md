@@ -33,7 +33,8 @@ research/<project>/        one page per project: index.html, page.js and data/
 <project>/index.html       redirects from the old top-level URLs to research/<project>/
 404.html                   not-found page
 assets/css/site.css        styles; light and dark themes follow prefers-color-scheme
-assets/js/site.js          hero graph, copy buttons, scroll reveal, publication list
+assets/js/site.js          hero graph, copy buttons, scroll reveal, publication list, math
+assets/vendor/katex/       KaTeX 0.16.22 (MIT), loaded only on pages with math
 assets/brand/              logo files from the FloatAI brand kit
 assets/img/og/             1200×630 share cards, one per page
 scripts/make_og_cards.py   renders the share cards (optional, needs Playwright)
@@ -77,6 +78,15 @@ Rows are sorted by `year` and `month`, newest first; entries from the same month
 5. Add the page to `PAGES` in `scripts/make_og_cards.py`, run it to render `assets/img/og/<slug>.png`, and point the page's `og:image` to it.
 
 After changing `assets/css/site.css`, `assets/js/site.js` or a `page.js`, bump the `?v=` suffix on the asset links in every `.html` file so browsers fetch the new version.
+
+### Write math
+
+Put `data-math` on any element and write LaTeX inside it: `\( … \)` for inline math, `\[ … \]` for display math, and `\tag{3}` for an equation number. `site.js` loads KaTeX from `assets/vendor/katex/` only when a page has a `data-math` element, so pages without math don't download it. Example:
+
+```html
+<p data-math>The excess loss grows as \(\Delta L \propto z^{1.07}\).</p>
+<div data-math>\[ R_c \approx 2.7 \left(\frac{D}{N}\right)^{0.24} \tag{4} \]</div>
+```
 
 Copy follows the existing style: state what a study measures and what it found, and use numbers from the paper rather than adjectives.
 

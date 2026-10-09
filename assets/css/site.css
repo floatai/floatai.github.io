@@ -504,15 +504,23 @@ html:has(.toc) { scroll-padding-top: 128px; }
 .legend__ramp { width: 120px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--bg-tint), var(--blue)); border: 1px solid var(--line); }
 
 /* Equations */
-.eqs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.eq { min-width: 0; padding: 24px 26px 26px; border-radius: 16px; background: var(--bg-tint); }
-.eq .eq__tag { margin: 0; }
-.eq__tag { display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); }
-.eq__tag span { font: 400 12px var(--mono); letter-spacing: 0; text-transform: none; color: var(--ink-3); }
-.eq .eq__f { margin-top: 14px; font-family: var(--serif); font-weight: 300; font-size: clamp(18px, 1.5vw, 20px); line-height: 1.25; letter-spacing: -0.01em; color: var(--ink); }
-.eq__f var { font-style: italic; }
-.eq__f sup, .eq__f sub { font-size: .55em; }
-.eq p { margin-top: 12px; font-size: 14.5px; color: var(--ink-2); }
+.laws { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.law { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 32px; padding: 28px 0 30px; border-bottom: 1px solid var(--line); }
+.law__name { margin: 0; padding-top: 4px; font: 500 15px/1.4 var(--sans); color: var(--ink); }
+.law__ref { display: block; margin-top: 4px; font: 400 12px var(--mono); color: var(--ink-3); }
+.law__name .katex { font-size: 1.08em; }
+.law__eq { color: var(--ink); font-size: 16px; overflow-x: auto; overflow-y: hidden; }
+.law__eq .katex-display { margin: 0; padding: 2px 0; }
+.law__eq .katex { font-size: 1.24em; }
+.law__eq .katex .tag { color: var(--ink-3); font-size: .78em; }
+.law__body p { margin-top: 14px; font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 62ch; }
+.law__body p .katex { font-size: 1.06em; white-space: nowrap; }
+[data-math]:not(.is-typeset) { visibility: hidden; }
+@media (max-width: 720px) {
+  .law { grid-template-columns: 1fr; gap: 14px; padding: 24px 0; }
+  .law__ref { display: inline; margin: 0 0 0 8px; }
+  .law__eq { font-size: 13px; }
+}
 
 /* Two-up comparison */
 .duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }

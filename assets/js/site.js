@@ -3,6 +3,17 @@
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
+  document.querySelectorAll("[data-math]").forEach((el) => {
+    try {
+      window.renderMathInElement?.(el, {
+        delimiters: [{ left: "\\[", right: "\\]", display: true }, { left: "\\(", right: "\\)", display: false }],
+        throwOnError: false,
+      });
+    } finally {
+      el.classList.add("is-typeset");
+    }
+  });
+
   const nav = document.querySelector(".nav");
   const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);
   onScroll();

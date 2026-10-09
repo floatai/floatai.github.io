@@ -29,7 +29,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/site.css?v=20261009q" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261009r" />
 </head>
 <body>
   <header class="nav">
@@ -178,28 +179,36 @@
       <section class="block" id="laws">
         <h2 class="block__label">Fitted laws</h2>
         <div class="block__body">
-          <div class="eqs">
-            <div class="eq">
-              <p class="eq__tag">Cost of repetition <span>Eq. 3 · §4.2</span></p>
-              <p class="eq__f">ΔL = 0.0203 · <var>z</var><sup>1.07</sup></p>
-              <p><var>z</var> = (<var>R</var> − 1) <var>N</var><sub>total</sub> / <var>U</var>: extra epochs divided by unique tokens per parameter. Fitted to the 113 of 140 repeated runs above the 0.002 bpb resolution, R² = 0.96; no further size term is needed once embeddings are counted.</p>
-            </div>
-            <div class="eq">
-              <p class="eq__tag">Critical epochs <span>Eq. 4 · §4.3</span></p>
-              <p class="eq__f"><var>R</var><sub>c</sub> ≈ 2.7 · (<var>D</var>/<var>N</var>)<sup>0.24</sup></p>
-              <p>The epoch count at which a repeated token is worth half a fresh one (η = ½). Fits 35 measured crossings to 8% RMS: 4.0–5.3 epochs up to 20 tokens per parameter, 6.9–8.3 at 100, 10.0–11.8 at 300.</p>
-            </div>
-            <div class="eq">
-              <p class="eq__tag">Allocation at fixed U <span>Eq. 5 · §4.4</span></p>
-              <p class="eq__f"><var>N</var><sub>opt</sub> = √(<var>C</var>/6τ)<br /><var>R</var><sub>opt</sub> = √(τ<var>C</var>/6) / <var>U</var></p>
-              <p>With unique data fixed, compute goes to model size and epochs in roughly equal shares (fitted <var>N</var> ∝ <var>C</var><sup>0.52–0.53</sup>, <var>R</var> ∝ <var>C</var><sup>0.47–0.48</sup>), holding τ = <var>D</var>/<var>N</var> at 16–24, until loss stops improving near <var>R</var><sub>c</sub>.</p>
-            </div>
-            <div class="eq">
-              <p class="eq__tag">Best epochs at fixed U <span>App. K</span></p>
-              <p class="eq__f"><var>R</var>* ≈ 4.5 · (<var>U</var>/<var>N</var>)<sup>0.51</sup></p>
-              <p>Loss-minimizing epoch count in the fixed-corpus sweeps from 14M to 2B (R²<sub>log</sub> = 0.94). Because it depends on <var>U</var>/<var>N</var>, a fixed corpus shifts the optimum to fewer epochs as models grow.</p>
-            </div>
-          </div>
+          <ol class="laws" data-math>
+            <li class="law">
+              <h3 class="law__name">Cost of repetition <span class="law__ref">§4.2</span></h3>
+              <div class="law__body">
+                <div class="law__eq">\[ \Delta L = 0.0203\, z^{1.07}, \qquad z = \frac{(R-1)\,N_{\mathrm{total}}}{U} \tag{3} \]</div>
+                <p>Excess loss over fresh data grows with \(z\), the extra epochs per unique token per parameter. Fitted to the 113 of 140 repeated runs above the 0.002 bpb resolution, \(R^2 = 0.96\); no further size term is needed once embeddings are counted.</p>
+              </div>
+            </li>
+            <li class="law">
+              <h3 class="law__name">Critical epochs <span class="law__ref">§4.3</span></h3>
+              <div class="law__body">
+                <div class="law__eq">\[ R_c \approx 2.7 \left(\frac{D}{N}\right)^{0.24} \tag{4} \]</div>
+                <p>The epoch count at which a repeated token is worth half a fresh one (\(\eta = \tfrac12\)). Fits 35 measured crossings to 8% RMS: 4.0–5.3 epochs up to 20 tokens per parameter, 6.9–8.3 at 100, 10.0–11.8 at 300.</p>
+              </div>
+            </li>
+            <li class="law">
+              <h3 class="law__name">Allocation at fixed \(U\) <span class="law__ref">§4.4</span></h3>
+              <div class="law__body">
+                <div class="law__eq">\[ N_{\mathrm{opt}} = \sqrt{\frac{C}{6\tau}}, \qquad R_{\mathrm{opt}} = \frac{1}{U}\sqrt{\frac{\tau C}{6}} \tag{5} \]</div>
+                <p>With unique data fixed, compute goes to model size and epochs in roughly equal shares (fitted \(N \propto C^{0.52\text{–}0.53}\), \(R \propto C^{0.47\text{–}0.48}\)), holding \(\tau = D/N\) at 16–24 until loss stops improving near \(R_c\).</p>
+              </div>
+            </li>
+            <li class="law">
+              <h3 class="law__name">Best epochs at fixed \(U\) <span class="law__ref">App. K</span></h3>
+              <div class="law__body">
+                <div class="law__eq">\[ R^{\star} \approx 4.5 \left(\frac{U}{N}\right)^{0.51} \tag{K.1} \]</div>
+                <p>Loss-minimizing epoch count in the fixed-corpus sweeps from 14M to 2B (\(R^2_{\log} = 0.94\)). Because it depends on \(U/N\), a fixed corpus shifts the optimum to fewer epochs as models grow.</p>
+              </div>
+            </li>
+          </ol>
           <p class="note"><b>Range of validity.</b> Eqs. 3 and 4 are fitted on CommonCrawl with GPT-2 byte-level BPE, 23M–361M non-embedding parameters, 5–300 training tokens per parameter and 2–16 epochs, without weight decay or dropout. The constants may shift under other data or regularization.</p>
         </div>
       </section>
@@ -367,7 +376,9 @@
     </div>
   </footer>
 
-  <script src="/assets/js/site.js?v=20261009q" defer></script>
-  <script src="/research/repeated-tokens/page.js?v=20261009q" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" defer></script>
+  <script src="/assets/js/site.js?v=20261009r" defer></script>
+  <script src="/research/repeated-tokens/page.js?v=20261009r" defer></script>
 </body>
 </html>

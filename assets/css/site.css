@@ -458,9 +458,21 @@ html:has(.toc) { scroll-padding-top: 128px; }
 .chart .c-dot { fill: var(--blue); }
 .chart .c-ref { stroke: var(--ink-3); stroke-dasharray: 3 4; fill: none; }
 .chart .c-zone { fill: var(--blue-soft); }
+.chart .c-line--mute { stroke: var(--ink-3); stroke-width: 1.6; }
+.chart .c-dot--mute { fill: var(--ink-3); opacity: .55; }
+.chart .c-min { fill: var(--bg-tint); stroke: var(--blue); stroke-width: 1.6; }
 .page-figure--chart { display: block; place-items: normal; padding: clamp(24px, 4vw, 56px); }
 .page-figure--chart svg { max-width: 760px; margin-inline: auto; }
 .page-figure--chart figcaption { margin-inline: auto; max-width: 640px; }
+.fig-trio__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); }
+.fig-trio__k { margin: 0 0 10px; font-size: 14px; font-weight: 500; color: var(--ink); }
+.fig-trio__k b { margin-right: 8px; font: 500 12.5px var(--mono); color: var(--ink-3); }
+.fig-trio .chart .tick { font-size: 11px; }
+.fig-trio figcaption { max-width: 760px; }
+@media (max-width: 900px) {
+  .fig-trio__grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .fig-trio__panel svg { max-width: 460px; }
+}
 
 /* Data tables */
 .tbl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }

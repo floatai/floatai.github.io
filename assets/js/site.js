@@ -154,11 +154,6 @@
       const n = parseInt(m, 10);
       return n >= 1 && n <= 12 ? n : MONTHS.indexOf(m.slice(0, 3).toLowerCase()) + 1;
     };
-    const authorsOf = (s = "") => {
-      const names = s.split(/\s+and\s+/).map((n) => n.trim()).filter(Boolean)
-        .map((n) => n.includes(",") ? n.split(",").reverse().map((p) => p.trim()).join(" ") : n);
-      return names.length > 6 ? `${names.slice(0, 3).join(", ")} et al.` : names.join(", ");
-    };
     const rows = entries
       .map((e, order) => ({ e, order, year: parseInt(e.year, 10) || 0, month: monthOf(e.month) }))
       .sort((a, b) => b.year - a.year || b.month - a.month || a.order - b.order);
@@ -171,9 +166,7 @@
       time.dateTime = month ? `${year}-${String(month).padStart(2, "0")}` : String(year);
       time.textContent = month ? `${MONTHS[month - 1][0].toUpperCase()}${MONTHS[month - 1].slice(1)} ${year}` : String(year);
       const span = (cls, text) => { const s = document.createElement("span"); s.className = cls; s.textContent = text; return s; };
-      const main = span("pubx__main", "");
-      main.append(span("pubx__title", clean(e.title)), span("pubx__authors", authorsOf(clean(e.author))));
-      a.append(time, span("pubx__cat", clean(e.category)), main, span("pubx__venue", clean(e.venue || e.booktitle || e.journal)));
+      a.append(time, span("pubx__cat", clean(e.category)), span("pubx__title", clean(e.title)), span("pubx__venue", clean(e.venue || e.booktitle || e.journal)));
       li.append(a);
       return li;
     }));

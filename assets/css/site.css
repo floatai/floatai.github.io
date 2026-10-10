@@ -212,10 +212,6 @@ p, figure { margin: 0; }
 .pubx a:hover .pubx__title { color: var(--blue); }
 .pubx__title::after { content: "\2009→"; font: 13px var(--sans); color: var(--blue); }
 .pubx a[target] .pubx__title::after { content: "\2009↗"; color: var(--ink-3); }
-.pubx__main { display: block; min-width: 0; }
-.pubx__title { display: block; }
-.pubx__authors { display: block; margin-top: 3px; font-size: 13px; line-height: 1.45; color: var(--ink-3); }
-
 /* Project pages */
 .crumbs { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--ink-3); }
 .crumbs a { color: var(--ink-2); }
@@ -678,7 +674,7 @@ html:has(.toc) { scroll-padding-top: 128px; }
   .network { grid-template-columns: minmax(0, 1fr); }
   .pubx__head { display: none; }
   .pubx a { grid-template-columns: auto 1fr; gap: 6px 16px; }
-  .pubx__main { grid-column: 1 / -1; grid-row: 2; }
+  .pubx__title { grid-column: 1 / -1; grid-row: 2; }
   .pubx__venue { grid-column: 1 / -1; text-align: left; }
   .section__head--row { flex-direction: column; align-items: flex-start; }
   .hero__canvas, .hero::after { display: none; }

@@ -13,7 +13,7 @@ OUT = Path(__file__).resolve().parent.parent / "assets" / "img" / "og"
 PAGES = {"home": "/", "xiangqibench": "/research/xiangqibench/", "repeated-tokens": "/research/repeated-tokens/", "tkeval": "/research/tkeval/", "humaneval-xl": "/research/humaneval-xl/"}
 
 CARD = r"""
-(slug) => {
+([slug, homeArt]) => {
   const isHome = slug === 'home';
   const q = (s) => document.querySelector(s);
   let title, meta, art;
@@ -25,7 +25,8 @@ CARD = r"""
   } else {
     title = q('.page-title').innerHTML;
     meta = q('.page-head .overline').textContent.trim();
-    art = `<div class="one">${q('.page-figure svg').outerHTML}</div>`;
+    const fig = q('.page-figure svg');
+    art = `<div class="one">${fig ? fig.outerHTML : homeArt}</div>`;
   }
   const url = 'floatai.github.io' + (isHome ? '' : '/' + slug);
   document.body.innerHTML = `
@@ -60,10 +61,15 @@ CARD = r"""
 
 with sync_playwright() as p:
     b = p.chromium.launch()
+    home = b.new_page()
+    home.goto(BASE + "/", wait_until="networkidle")
+    # Pages without a hero chart reuse their homepage card art.
+    cards = home.evaluate("Object.fromEntries([...document.querySelectorAll('.theme')].map(t => [t.querySelector('.theme__title').getAttribute('href'), t.querySelector('.theme__art svg').outerHTML]))")
+    home.close()
     for slug, path in PAGES.items():
         pg = b.new_page(viewport={"width": 1200, "height": 630}, device_scale_factor=1, color_scheme="light")
         pg.goto(BASE + path, wait_until="networkidle")
-        pg.evaluate(CARD, slug)
+        pg.evaluate(CARD, [slug, cards.get(path, "")])
         pg.evaluate("document.fonts.ready.then(() => true)")
         pg.wait_for_timeout(800)
         fam = pg.evaluate("[...document.fonts].filter(f => f.status === 'loaded').map(f => f.family + ' ' + f.weight + ' ' + f.style)")

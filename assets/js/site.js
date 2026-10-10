@@ -154,6 +154,11 @@
       const n = parseInt(m, 10);
       return n >= 1 && n <= 12 ? n : MONTHS.indexOf(m.slice(0, 3).toLowerCase()) + 1;
     };
+    const authorsOf = (s = "") => {
+      const names = s.split(/\s+and\s+/).map((n) => n.trim()).filter(Boolean)
+        .map((n) => n.includes(",") ? n.split(",").reverse().map((p) => p.trim()).join(" ") : n);
+      return names.length > 6 ? `${names.slice(0, 3).join(", ")} et al.` : names.join(", ");
+    };
     const rows = entries
       .map((e, order) => ({ e, order, year: parseInt(e.year, 10) || 0, month: monthOf(e.month) }))
       .sort((a, b) => b.year - a.year || b.month - a.month || a.order - b.order);
@@ -166,7 +171,9 @@
       time.dateTime = month ? `${year}-${String(month).padStart(2, "0")}` : String(year);
       time.textContent = month ? `${MONTHS[month - 1][0].toUpperCase()}${MONTHS[month - 1].slice(1)} ${year}` : String(year);
       const span = (cls, text) => { const s = document.createElement("span"); s.className = cls; s.textContent = text; return s; };
-      a.append(time, span("pubx__cat", clean(e.category)), span("pubx__title", clean(e.title)), span("pubx__venue", clean(e.venue || e.booktitle || e.journal)));
+      const main = span("pubx__main", "");
+      main.append(span("pubx__title", clean(e.title)), span("pubx__authors", authorsOf(clean(e.author))));
+      a.append(time, span("pubx__cat", clean(e.category)), main, span("pubx__venue", clean(e.venue || e.booktitle || e.journal)));
       li.append(a);
       return li;
     }));
@@ -181,8 +188,8 @@
   let w, h, dpr, nodes = [], pointer = { x: -1e4, y: -1e4 };
 
   const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  let blue, ink;
-  const readColors = () => { blue = css("--blue"); ink = css("--ink-3"); };
+  let blue, ink, bg;
+  const readColors = () => { blue = css("--blue"); ink = css("--ink-3"); bg = css("--bg"); };
   readColors();
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readColors);
 
@@ -240,16 +247,20 @@
       }
     }
 
-    ctx.font = '400 12px "IBM Plex Sans", system-ui, sans-serif';
     for (const n of nodes) {
       ctx.fillStyle = n.label ? blue : ink;
       ctx.globalAlpha = n.label ? 0.95 : 0.45;
       ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill();
-      if (n.label) {
-        ctx.globalAlpha = 0.85;
-        ctx.fillStyle = ink;
-        ctx.fillText(n.label, n.x + 10, n.y + 4);
-      }
+    }
+    ctx.font = '400 12px "IBM Plex Sans", system-ui, sans-serif';
+    ctx.lineWidth = 4; ctx.lineJoin = "round"; ctx.strokeStyle = bg;
+    for (const n of nodes) {
+      if (!n.label) continue;
+      ctx.globalAlpha = 1;
+      ctx.strokeText(n.label, n.x + 10, n.y + 4);
+      ctx.globalAlpha = 0.85;
+      ctx.fillStyle = ink;
+      ctx.fillText(n.label, n.x + 10, n.y + 4);
     }
     ctx.globalAlpha = 1;
 

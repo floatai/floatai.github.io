@@ -30,12 +30,13 @@ research/<project>/        one page per project: index.html, page.js and data/
   xiangqibench/            boards, leaderboard, per-position heatmap and replays
   tkeval/                  tokenization probes and typo examples
   humaneval-xl/            prompt viewer and pass@1 leaderboard
-slides/                    the research talk: index.html, slides.css and slides.js
+slides/                    the research talk on reveal.js: index.html, slides.css (theme) and slides.js
 <project>/index.html       redirects from the old top-level URLs to research/<project>/
 404.html                   not-found page
 assets/css/site.css        styles; light and dark themes follow prefers-color-scheme
 assets/js/site.js          hero graph, copy buttons, scroll reveal, publication list, math
 assets/vendor/katex/       KaTeX 0.16.22 (MIT), loaded only on pages with math
+assets/vendor/reveal/      reveal.js 6.0.2 (MIT): core and the speaker-notes plugin
 assets/brand/              logo files from the FloatAI brand kit
 assets/img/og/             1200×630 share cards, one per page
 scripts/make_og_cards.py   renders the share cards (optional, needs Playwright)
@@ -82,7 +83,7 @@ After changing `assets/css/site.css`, `assets/js/site.js` or a `page.js`, bump t
 
 ### Edit the talk
 
-`slides/index.html` holds one `<section class="slide">` per slide on a 1600 × 1000 canvas that scales to the window. Use `slide--light` or `slide--dark` for the background, `slide--section` for a part divider, and `data-section` for the footer label. Elements with `rise` animate in when the slide opens. Keys: arrows or Space to move, G for the overview, F for fullscreen, L for a laser pointer, ? for help; `#n` in the URL opens slide n. The publication slide is a static copy of `publications.bib`, so update it when you add a paper.
+`slides/index.html` is a [reveal.js](https://revealjs.com) deck. Each slide is a `<section id="…">` wrapping one `<div class="slide">` on a 1600 × 1000 canvas; the `id` becomes the URL, such as `/slides/#/tkeval`. Use `slide--cover` or `slide--center` for centred slides, `data-section` for the footer label, and `<aside class="notes">` for speaker notes. Elements with `rise` animate in when the slide opens; add `class="fragment fade-up"` to reveal an element on the next key press, and put `data-auto-animate` on two adjacent sections, with matching `data-id` attributes, to morph an element between them. Keys: arrows or Space to move, S for the speaker view (notes, timer, next slide), O for the overview, F for fullscreen, L for a laser pointer, ? for help. Open `/slides/?print-pdf` and print to save a PDF. The publication slide is a static copy of `publications.bib`, so update it when you add a paper.
 
 ### Write math
 

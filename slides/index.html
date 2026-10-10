@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FloatAI Research Talk</title>
-  <meta name="description" content="FloatAI research talk: what a repeated token is worth, closed-loop agent evaluation, subword robustness and multilingual code generation." />
-  <meta name="theme-color" content="#05070c" />
-  <meta property="og:title" content="FloatAI Research Talk" />
-  <meta property="og:description" content="Measure what models actually do. Then share it openly." />
+  <title>FloatAI · Research overview</title>
+  <meta name="description" content="FloatAI, an open research network studying how large language models learn, read and act, and how to evaluate them. A research overview in slides." />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="FloatAI · Research overview" />
+  <meta property="og:description" content="An open research network studying how large language models learn, read and act, and how to evaluate them." />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="FloatAI" />
   <meta property="og:url" content="https://floatai.github.io/slides/" />
@@ -21,101 +21,120 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/slides/slides.css?v=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/vendor/reveal/reveal.css" />
+  <link rel="stylesheet" href="/slides/slides.css?v=3" />
 </head>
 <body>
-  <a class="chrome back" href="/">← floatai.github.io</a>
-  <main class="deck" aria-label="FloatAI research talk">
-    <div class="stage">
+  <a class="chrome fades back" href="/">← floatai.github.io</a>
+  <div class="reveal" aria-label="FloatAI research overview">
+    <div class="slides">
 
       <!-- 1 · Cover -->
-      <section class="slide slide--dark slide--cover" data-title="FloatAI Research Talk">
-        <p class="kicker rise">FloatAI · Research talk · October 2026</p>
-        <h1 class="cover__title rise">Measure what models<br /><em>actually do.</em></h1>
-        <p class="cover__sub rise">How large language models learn, read and act, and how to evaluate them: four studies from an open research network.</p>
-        <div class="cover__by rise"><img src="/assets/brand/floatai-lockup-dark.svg" alt="FloatAI" /><span>Beijing · Copenhagen · Zurich · London · Edinburgh</span></div>
-        <p class="cover__hint rise">Press <kbd>→</kbd> or <kbd>Space</kbd> to begin · <kbd>G</kbd> overview · <kbd>?</kbd> help</p>
-      </section>
-
-      <!-- 2 · Agenda -->
-      <section class="slide slide--light" data-section="Agenda">
-        <p class="kicker rise">Research agenda</p>
-        <h2 class="title rise">Four questions we keep coming back to</h2>
-        <p class="lede rise">Each study replaces a convenient proxy with the outcome it stands for, then measures the gap.</p>
-        <div class="cards cards--4">
-          <article class="card rise"><p class="card__tag">I · Pretraining</p><h3 class="card__title">What is a repeated token worth?</h3><p>Pricing repeated data against fresh data, from 14M to 2B parameters.</p><p class="card__meta">Repeated tokens · Aurora-M</p></article>
-          <article class="card rise"><p class="card__tag">II · Agents</p><h3 class="card__title">Can an agent finish the game?</h3><p>Closed-loop checkmates against an engine, not single-move accuracy.</p><p class="card__meta">XiangqiBench</p></article>
-          <article class="card rise"><p class="card__tag">III · Tokenization</p><h3 class="card__title">What do models know about letters?</h3><p>Probing the characters inside tokens, and what typos cost.</p><p class="card__meta">TKEval · Subword compositionality</p></article>
-          <article class="card rise"><p class="card__tag">IV · Multilingual</p><h3 class="card__title">Does code transfer beyond English?</h3><p>The same problems in 23 natural and 12 programming languages.</p><p class="card__meta">HumanEval-XL · CodeMixBench</p></article>
+      <section id="cover" data-title="FloatAI">
+        <div class="slide slide--cover">
+          <img class="cover__mark rise" src="/assets/brand/floatai-icon.svg" alt="" />
+          <h1 class="cover__title rise">FloatAI</h1>
+          <p class="cover__sub rise">An open research network studying how large language models learn, read and act.</p>
+          <p class="cover__meta rise">Research overview · October 2026</p>
         </div>
+        <aside class="notes">Welcome. Fifteen minutes: who we are, how we work, then four studies, one slide each. Press S for this view, O for the overview.</aside>
       </section>
 
-      <!-- 3 · Thesis -->
-      <section class="slide slide--light" data-section="Thesis">
-        <p class="kicker rise">The thesis</p>
-        <h2 class="title rise">A proxy that looks like progress <em>is not the outcome</em></h2>
-        <div class="gap rise">
-          <div class="gap__h">Area</div><div class="gap__h">What usually gets measured</div><div class="gap__h"></div><div class="gap__h">What we measure instead</div>
-          <div class="gap__area">Pretraining</div><div>Tokens seen, however often repeated</div><div class="gap__arrow">→</div><div class="gap__out">What a repeated token is worth against fresh data</div>
-          <div class="gap__area">Agents</div><div>The right first move; pass@k</div><div class="gap__arrow">→</div><div class="gap__out">Checkmate against a live defender, in every trial</div>
-          <div class="gap__area">Tokenization</div><div>Accuracy on clean benchmark text</div><div class="gap__arrow">→</div><div class="gap__out">Knowledge of characters, and the cost of typos</div>
-          <div class="gap__area">Multilingual</div><div>English prompts, many programming languages</div><div class="gap__arrow">→</div><div class="gap__out">The same 80 problems in 23 natural languages</div>
+      <!-- 2 · Mission -->
+      <section id="mission" data-title="Mission">
+        <div class="slide slide--center">
+          <p class="kicker rise">Our mission</p>
+          <h2 class="statement rise">Measure what language models <span class="glow">actually do.</span></h2>
+          <p class="lede rise">Then release the data and code, so that anyone can check the answer.</p>
         </div>
+        <aside class="notes">One sentence to remember. Benchmarks often measure a proxy; we try to measure the outcome itself, and we publish everything needed to reproduce it.</aside>
       </section>
 
-      <!-- 4 · Numbers -->
-      <section class="slide slide--dark" data-section="Overview">
-        <p class="kicker rise">The work, by the numbers</p>
-        <h2 class="title rise">Open benchmarks, released with the data</h2>
-        <div class="stats stats--3">
-          <div class="stat rise"><p class="stat__k">Papers</p><p class="stat__v">11</p><p>Since 2024, at EMNLP, ICML, LREC-COLING and COLING, plus two 2026 preprints.</p></div>
-          <div class="stat rise"><p class="stat__k">Pretraining runs</p><p class="stat__v">175</p><p>A budget × epochs grid from 14M to 2B parameters, 140 of them repeated.</p></div>
-          <div class="stat rise"><p class="stat__k">Agent trajectories</p><p class="stat__v">8,568</p><p>Multi-turn games from 12 frontier LLMs under two observation protocols.</p></div>
-          <div class="stat rise"><p class="stat__k">Parallel prompts</p><p class="stat__v">22,080</p><p>HumanEval-XL: 23 natural × 12 programming languages, each with tests.</p></div>
-          <div class="stat rise"><p class="stat__k">Token-structure items</p><p class="stat__v">1,400</p><p>Seven TKEval probes of the characters inside and across tokens.</p></div>
-          <div class="stat rise"><p class="stat__k">Natural languages</p><p class="stat__v">23</p><p>In 11 families, from English and Chinese to Tagalog and Estonian.</p></div>
+      <!-- 3 · Who we are -->
+      <section id="who" data-section="About">
+        <div class="slide">
+          <p class="kicker rise">Who we are</p>
+          <h2 class="title rise">A small, open network of researchers</h2>
+          <div class="tiles tiles--3">
+            <div class="tile rise"><p class="lbl">People</p><h3>Five cities, one repository</h3><p>Researchers in Beijing, Copenhagen, Zurich, London and Edinburgh, working across universities and labs.</p></div>
+            <div class="tile rise"><p class="lbl">Projects</p><h3>One question each</h3><p>Every project starts from a single question that a controlled experiment can answer.</p></div>
+            <div class="tile rise"><p class="lbl">Output</p><h3>Open by default</h3><p>Benchmarks, datasets and evaluation code ship with the paper.</p></div>
+          </div>
         </div>
+        <aside class="notes">We are not a company lab. Collaboration happens in public repositories; a project is defined by its question, not by a team.</aside>
       </section>
 
-      <!-- 5 · Section I -->
-      <section class="slide slide--dark slide--section" data-title="I · Pretraining">
-        <p class="kicker rise">Part I · Pretraining</p>
-        <div class="section__num rise">I</div>
-        <h2 class="section__title rise">What is a repeated token worth?</h2>
-        <p class="section__q rise">Chai and Xiong · The scaling geometry of multi-epoch pretraining · arXiv 2610.05591</p>
-      </section>
-
-      <!-- 6 · The question -->
-      <section class="slide slide--light" data-section="I · Pretraining">
-        <p class="kicker rise">The question</p>
-        <h2 class="title rise">Public text grows more slowly than compute</h2>
-        <p class="lede rise">So pretraining increasingly repeats data, and every run faces three questions.</p>
-        <ol class="points">
-          <li class="rise"><span>How many <b>epochs</b> should a run take over the data it has?</span></li>
-          <li class="rise"><span>How should that number <b>change with model size</b>?</span></li>
-          <li class="rise"><span>Does anything <b>besides the epoch count</b> matter: order, allocation, source?</span></li>
-        </ol>
-      </section>
-
-      <!-- 7 · Two prices -->
-      <section class="slide slide--light slide--mid" data-section="I · Pretraining" data-math>
-        <p class="kicker rise">Method</p>
-        <h2 class="title rise">Price a repeated token twice</h2>
-        <p class="lede rise">Each run of \(R\) epochs over \(U\) unique tokens, \(D = RU\) in total, is compared with two one-epoch runs of the same model.</p>
-        <div class="cards cards--2">
-          <div class="eqbox rise"><p class="eqbox__k">Value · data-matched <span>baseline: one epoch on U</span></p>\[ \eta = \frac{U_{\mathrm{eq}} - U}{D - U} \]<p>\(U_{\mathrm{eq}}\) is the fresh budget that reaches the same loss. \(\eta = 1\) if repeats were as good as fresh data, 0 if worthless.</p></div>
-          <div class="eqbox rise"><p class="eqbox__k">Cost · compute-matched <span>baseline: one epoch on D</span></p>\[ \Delta L = L(N, U, R) - L(N, D, 1) \]<p>The extra held-out loss, in bits per byte, paid for repeating instead of collecting new data at the same compute.</p></div>
+      <!-- 4 · Research areas -->
+      <section id="areas" data-section="About">
+        <div class="slide">
+          <p class="kicker rise">Research areas</p>
+          <h2 class="title rise">Six questions, from pretraining to agents</h2>
+          <div class="tiles tiles--6">
+            <div class="tile rise"><p class="lbl">Pretraining</p><h3>How should training reuse a finite corpus?</h3><p class="meta">Repeated tokens · Aurora-M</p></div>
+            <div class="tile rise"><p class="lbl">Agents</p><h3>Do agents finish what they start?</h3><p class="meta">XiangqiBench</p></div>
+            <div class="tile rise"><p class="lbl">Tokenization</p><h3>What do models know below the token?</h3><p class="meta">TKEval · Subword compositionality</p></div>
+            <div class="tile rise"><p class="lbl">Multilingual</p><h3>Does capability transfer across languages?</h3><p class="meta">HumanEval-XL · CodeMixBench · Debiasing</p></div>
+            <div class="tile rise"><p class="lbl">Efficiency</p><h3>How much KV cache does inference need?</h3><p class="meta">EvolKV</p></div>
+            <div class="tile rise"><p class="lbl">Interpretability</p><h3>Which inputs drive a generation?</h3><p class="meta">GiLOT</p></div>
+          </div>
         </div>
+        <aside class="notes">Each area is phrased as a question. Point to the papers under each tile; the four studies later come from the first four tiles.</aside>
       </section>
 
-      <!-- 8 · Chart -->
-      <section class="slide slide--light" data-section="I · Pretraining">
-        <p class="kicker rise">Evidence · 1B unique CommonCrawl tokens</p>
-        <h2 class="title rise">Small models keep gaining; <em>large ones reverse</em> after four epochs</h2>
-        <div class="split">
-          <div class="panel rise">
-            <svg class="chart" viewBox="0 0 640 360" role="img" aria-labelledby="s-rt-t">
+      <!-- 5 · How we work -->
+      <section id="how" data-section="About">
+        <div class="slide">
+          <p class="kicker rise">How we work</p>
+          <h2 class="title rise">Four habits behind every project</h2>
+          <div class="tiles tiles--2">
+            <div class="tile tile--row rise"><p class="lbl">01</p><div><h3>Measure the outcome, not a proxy</h3><p>A correct first move is not a won game.</p></div></div>
+            <div class="tile tile--row rise"><p class="lbl">02</p><div><h3>Change one thing at a time</h3><p>Parallel prompts, matched compute, fixed tasks.</p></div></div>
+            <div class="tile tile--row rise"><p class="lbl">03</p><div><h3>Report reliability with the average</h3><p>pass^k beside pass@k; intervals beside point estimates.</p></div></div>
+            <div class="tile tile--row rise"><p class="lbl">04</p><div><h3>Release what it takes to check us</h3><p>Data and code with the paper; negative results welcome.</p></div></div>
+          </div>
+        </div>
+        <aside class="notes">These habits explain the shape of every result that follows. Habit one is the thread through all four studies.</aside>
+      </section>
+
+      <!-- 6 · At a glance -->
+      <section id="numbers" data-section="About">
+        <div class="slide">
+          <p class="kicker rise">At a glance</p>
+          <h2 class="title rise">Since 2024</h2>
+          <div class="stats stats--4">
+            <div class="stat rise"><p class="v glow" data-count="11">11</p><p>papers at EMNLP, ICML and COLING</p></div>
+            <div class="stat rise"><p class="v glow" data-count="4">4</p><p>open benchmarks, from code to games</p></div>
+            <div class="stat rise"><p class="v glow" data-count="22,080">22,080</p><p>parallel coding prompts, 23 languages</p></div>
+            <div class="stat rise"><p class="v glow" data-count="175">175</p><p>controlled pretraining runs, 14M to 2B</p></div>
+          </div>
+        </div>
+        <aside class="notes">Numbers in brief. The 175 runs and 22,080 prompts reappear in the studies.</aside>
+      </section>
+
+      <!-- 7 · Selected work -->
+      <section id="work" data-section="Selected work" data-auto-animate>
+        <div class="slide">
+          <p class="kicker rise">Selected work</p>
+          <h2 class="title rise">Four studies, four proxies replaced</h2>
+          <ol class="toc">
+            <li class="rise"><b data-id="p1">What is a repeated token worth?</b><span>Pretraining · 2026</span></li>
+            <li class="rise"><b>Finding the move is not winning the game</b><span>Agents · 2026</span></li>
+            <li class="rise"><b>Tokenization falling short</b><span>Tokenization · EMNLP 2024</span></li>
+            <li class="rise"><b>HumanEval-XL</b><span>Multilingual · LREC-COLING 2024</span></li>
+          </ol>
+        </div>
+        <aside class="notes">Each study replaces a convenient proxy with the outcome we care about. One slide each: the claim, the figure, three takeaways.</aside>
+      </section>
+
+      <!-- 8 · Repeated tokens -->
+      <section id="repeated-tokens" data-section="01 · Pretraining" data-auto-animate>
+        <div class="slide">
+          <p class="kicker"><span class="kicker__n">01</span> <span data-id="p1">What is a repeated token worth?</span></p>
+          <h2 class="title rise">A repeated token is worth half a fresh one after four to five epochs</h2>
+          <div class="paper">
+            <figure class="figure rise">
+              <svg class="chart" viewBox="0 0 640 360" role="img" aria-labelledby="s-rt-t">
         <title id="s-rt-t">Loss change from repeating one billion unique tokens, relative to one epoch, for eight model sizes from 14M to 2B. Small models keep improving up to 16 or 32 epochs; 1B and 2B models are best near 4 epochs and lose ground quickly after.</title>
         <defs><clipPath id="s-rt-clip"><rect x="64" y="22" width="486" height="292"/></clipPath></defs>
         <path class="grid" d="M64 294.0H548"/>
@@ -149,8 +168,8 @@
         <circle class="c-dot" style="opacity:0.79" cx="354.4" cy="298.1" r="3.5"/>
         <circle class="c-dot c-dot--hi" style="opacity:0.90" cx="257.6" cy="276.9" r="3.5"/>
         <circle class="c-dot c-dot--hi" style="opacity:1.00" cx="257.6" cy="276.0" r="3.5"/>
-        <text class="lbl t-ember-fill" x="558" y="28.0">2B <tspan class="tick">(+496)</tspan></text>
-        <text class="lbl t-ember-fill" x="558" y="42.0">1B <tspan class="tick">(+191)</tspan></text>
+        <text class="lbl hi" x="558" y="28.0">2B <tspan class="tick">(+496)</tspan></text>
+        <text class="lbl hi" x="558" y="42.0">1B <tspan class="tick">(+191)</tspan></text>
         <text class="lbl" x="558" y="133.5">511M</text>
         <text class="lbl" x="558" y="217.9">252M</text>
         <text class="lbl" x="558" y="245.1">14M</text>
@@ -158,554 +177,489 @@
         <text class="lbl" x="558" y="289.1">31M</text>
         <text class="lbl" x="558" y="303.1">59M</text>
         </svg>
+              <figcaption>Loss change from repeating 1B unique tokens, relative to one epoch, 14M to 2B parameters. Chai and Xiong, arXiv 2610.05591.</figcaption>
+            </figure>
+            <ol class="takeaways">
+              <li class="fragment fade-up"><b>A second epoch is nearly free.</b><span>Worth 0.87–1.02 fresh tokens at every budget.</span></li>
+              <li class="fragment fade-up"><b>Scale epochs with data, not model size.</b><span>The best epoch count stays near four.</span></li>
+              <li class="fragment fade-up"><b>Spread repeats out.</b><span>Back-to-back replay costs 0.46 bpb.</span></li>
+            </ol>
           </div>
-          <div>
-            <div class="stat rise"><p class="stat__k">Second epoch</p><p class="stat__v">0.87–1.02</p><p>fresh tokens per repeated token, at every budget in the main grid.</p></div>
-            <div class="stat rise" style="margin-top:36px"><p class="stat__k">Best epoch count</p><p class="stat__v">15.3 <span class="arrow">→</span> 3.6</p><p>Quadratic minima from 127M to 2B parameters, with the corpus held fixed.</p></div>
+        </div>
+        <aside class="notes">Proxy replaced: counting tokens seen. 175 matched runs. Blue lines are the largest models: gains flatten, then reverse after about four epochs. Reveal the three takeaways one by one.</aside>
+      </section>
+
+      <!-- 9 · XiangqiBench -->
+      <section id="xiangqibench" data-section="02 · Agents">
+        <div class="slide">
+          <p class="kicker rise"><span class="kicker__n">02</span> <span>Finding the move is not winning the game</span></p>
+          <h2 class="title rise">Agents that find the right move rarely finish the game</h2>
+          <div class="paper">
+            <figure class="figure rise">
+              <div class="legend"><span><i style="background:var(--accent-2)"></i>pass@3 · won at least once</span><span><i style="background:var(--accent)"></i>pass^3 · won every trial</span></div>
+              <div class="bars">
+            <div class="bar rise"><span>Gemini 3.1 Pro</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:96.8%"></i><i class="bar__fill bar__fill--all" style="width:14.8%"></i></span><span class="bar__nums"><b>38.7</b> / 5.9</span></div>
+            <div class="bar rise"><span>GPT-5.5</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:44.0%"></i><i class="bar__fill bar__fill--all" style="width:6.2%"></i></span><span class="bar__nums"><b>17.6</b> / 2.5</span></div>
+            <div class="bar rise"><span>Qwen 3.7 Max</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:33.5%"></i><i class="bar__fill bar__fill--all" style="width:2.0%"></i></span><span class="bar__nums"><b>13.4</b> / 0.8</span></div>
+            <div class="bar rise"><span>Claude Opus 4.7</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:27.3%"></i><i class="bar__fill bar__fill--all" style="width:2.0%"></i></span><span class="bar__nums"><b>10.9</b> / 0.8</span></div>
+            <div class="bar rise"><span>DeepSeek V4 Pro</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:12.5%"></i><i class="bar__fill bar__fill--all" style="width:4.2%"></i></span><span class="bar__nums"><b>5.0</b> / 1.7</span></div>
+            <div class="bar rise"><span>Seed 2.0 Pro</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:6.2%"></i><i class="bar__fill bar__fill--all" style="width:0.0%"></i></span><span class="bar__nums"><b>2.5</b> / 0.0</span></div>
+            <div class="bar rise"><span>Kimi K2.5</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:4.2%"></i><i class="bar__fill bar__fill--all" style="width:0.0%"></i></span><span class="bar__nums"><b>1.7</b> / 0.0</span></div>
+            <div class="bar rise"><span>DeepSeek R1</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:4.2%"></i><i class="bar__fill bar__fill--all" style="width:0.0%"></i></span><span class="bar__nums"><b>1.7</b> / 0.0</span></div>
+              </div>
+              <figcaption>Checkmate rate (%) on 119 xiangqi endgames against an engine, three trials each. Chai, Peng and Xiong, arXiv 2610.02425.</figcaption>
+            </figure>
+            <ol class="takeaways">
+              <li class="fragment fade-up"><b>The right move is not a win.</b><span>26.1% open correctly; 13.9% of those mate.</span></li>
+              <li class="fragment fade-up"><b>Coverage is not reliability.</b><span>Best model: 38.7% at least once, 5.9% every time.</span></li>
+              <li class="fragment fade-up"><b>Self-simulation misleads.</b><span>49.3% of defender replies leave the agent’s plan.</span></li>
+            </ol>
           </div>
         </div>
+        <aside class="notes">Proxy replaced: first-move accuracy. Dark bars are pass@3, bright bars pass^3. The gap between them is the story.</aside>
       </section>
 
-      <!-- 9 · Laws -->
-      <section class="slide slide--light slide--mid" data-section="I · Pretraining" data-math>
-        <p class="kicker rise">Fitted laws</p>
-        <h2 class="title rise">One variable prices the cost of repetition</h2>
-        <div class="cards cards--2">
-          <div class="eqbox rise"><p class="eqbox__k">Cost of repetition <span>Eq. 3 · §4.2</span></p>\[ \Delta L = 0.0203\, z^{1.07}, \quad z = \frac{(R-1)\,N_{\mathrm{total}}}{U} \]<p>Extra epochs per unique token per parameter. Fitted to 113 of 140 repeated runs, \(R^2 = 0.96\); no size term once embeddings are counted.</p></div>
-          <div class="eqbox rise"><p class="eqbox__k">Critical epochs <span>Eq. 4 · §4.3</span></p>\[ R_c \approx 2.7 \left(\frac{D}{N}\right)^{0.24} \]<p>Where a repeat is worth half a fresh token: 4.0–5.3 epochs up to 20 tokens per parameter, about ten at 300. 8% RMS over 35 crossings.</p></div>
-        </div>
-        <p class="src rise">Fitted on CommonCrawl, GPT-2 BPE, 23M–361M non-embedding parameters, 5–300 tokens per parameter, 2–16 epochs.</p>
-      </section>
-
-      <!-- 10 · Takeaways -->
-      <section class="slide slide--dark" data-section="I · Pretraining">
-        <p class="kicker rise">Takeaways</p>
-        <h2 class="title rise">What to do with a fixed corpus</h2>
-        <ol class="points">
-          <li class="rise"><span><b>Transfer epoch counts with data, not size.</b> When unique data grow with the model, the best epoch count barely moves.</span></li>
-          <li class="rise"><span><b>Larger budgets tolerate more repetition.</b> Half value after four to five epochs at 20 tokens per parameter, about ten at 300.</span></li>
-          <li class="rise"><span><b>Grow model and epochs together</b>, in roughly equal shares, up to the critical epoch count.</span></li>
-          <li class="rise"><span><b>Spread and shuffle repeats.</b> Replaying shards back to back costs +0.46 bpb at 511M and 16 epochs.</span></li>
-        </ol>
-      </section>
-
-      <!-- 11 · Section II -->
-      <section class="slide slide--dark slide--section" data-title="II · Agents">
-        <p class="kicker rise">Part II · Agents</p>
-        <div class="section__num rise">II</div>
-        <h2 class="section__title rise">Finding the move is not winning the game</h2>
-        <p class="section__q rise">Chai, Peng and Xiong · XiangqiBench for closed-loop evaluation of LLM agents · arXiv 2610.02425</p>
-      </section>
-
-      <!-- 12 · Setup -->
-      <section class="slide slide--light" data-section="II · Agents">
-        <p class="kicker rise">Setup</p>
-        <h2 class="title rise">An agent must deliver checkmate while the engine answers</h2>
-        <div class="panel rise">
-          <div class="flow">
-            <div class="flow__node"><b>119 endgames</b><span>forced mates in 3–11 plies, from a 1570 manual</span></div>
-            <i class="flow__arrow"></i>
-            <div class="flow__node"><b>LLM agent in a REPL</b><span>move · query state · simulate ahead</span></div>
-            <i class="flow__arrow"></i>
-            <div class="flow__node"><b>Pikafish defender</b><span>depth 18, replies every ply</span></div>
-            <i class="flow__arrow"></i>
-            <div class="flow__node flow__node--ink"><b>Checkmate</b><span>scored on the outcome</span></div>
+      <!-- 10 · TKEval -->
+      <section id="tkeval" data-section="03 · Tokenization">
+        <div class="slide">
+          <p class="kicker rise"><span class="kicker__n">03</span> <span>Tokenization falling short</span></p>
+          <h2 class="title rise">Models know little about the characters inside their tokens</h2>
+          <div class="paper">
+            <figure class="figure rise">
+              <svg class="chart" viewBox="0 0 640 260" role="img" aria-labelledby="s-tk-t">
+        <title id="s-tk-t">Two angle diagrams. The embedding of “assignment” and the sum of the embeddings of “assign” and “ment” are 78.16 degrees apart, cosine 0.21. “import” and “im” plus “port” are 82.47 degrees apart, cosine 0.13.</title>
+        <defs><marker id="s-tk-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="f-accent"/></marker>
+        <marker id="s-tk-ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="f-ink"/></marker></defs>
+        <path class="c-zone" d="M60 200L105.7 195.2A46 46 0 0 0 64.7 154.2Z"/>
+        <path class="s-accent" stroke-width="1.2" fill="none" d="M105.7 195.2A46 46 0 0 0 64.7 154.2"/>
+        <path class="s-accent" stroke-width="2" d="M60 200L249.0 180.1" marker-end="url(#s-tk-ar)"/>
+        <path class="s-ink" stroke-width="2" d="M60 200L76.6 37.4" marker-end="url(#s-tk-ar2)"/>
+        <circle cx="60" cy="200" r="3" class="f-ink"/>
+        <text class="t-mono t-accent" x="245.0" y="202.1" text-anchor="end">“assignment”</text>
+        <text class="t-mono" x="86.6" y="41.4">“assign” + “ment”</text>
+        <text class="lbl" x="102.4" y="161.5">78.16°</text>
+        <text class="tick" x="60" y="230">cosine 0.21</text>
+        <path class="c-zone" d="M380 200L425.7 195.2A46 46 0 0 0 381.2 154.0Z"/>
+        <path class="s-accent" stroke-width="1.2" fill="none" d="M425.7 195.2A46 46 0 0 0 381.2 154.0"/>
+        <path class="s-accent" stroke-width="2" d="M380 200L569.0 180.1" marker-end="url(#s-tk-ar)"/>
+        <path class="s-ink" stroke-width="2" d="M380 200L384.4 36.7" marker-end="url(#s-tk-ar2)"/>
+        <circle cx="380" cy="200" r="3" class="f-ink"/>
+        <text class="t-mono t-accent" x="565.0" y="202.1" text-anchor="end">“import”</text>
+        <text class="t-mono" x="394.4" y="40.7">“im” + “port”</text>
+        <text class="lbl" x="420.7" y="160.0">82.47°</text>
+        <text class="tick" x="380" y="230">cosine 0.13</text>
+        </svg>
+              <figcaption>A word’s embedding is nearly orthogonal to the sum of its subword embeddings. Chai, Fang, Peng and Li, Findings of EMNLP 2024.</figcaption>
+            </figure>
+            <ol class="takeaways">
+              <li class="fragment fade-up"><b>Scale helps, but does not close the gap.</b><span>Counting from the end peaks at 52%; subsequences near 4%.</span></li>
+              <li class="fragment fade-up"><b>Typos bias every model.</b><span>Character noise hurts more than token-level changes.</span></li>
+              <li class="fragment fade-up"><b>Moderate BPE-dropout helps.</b><span>p = 0.2 often beats the baseline.</span></li>
+            </ol>
           </div>
-          <p class="flow__loop">the agent sees the defender’s reply, then plays again, until mate or the ply limit</p>
         </div>
-        <div class="stats stats--4" style="margin-top:44px">
-          <div class="stat rise"><p class="stat__k">Models</p><p class="stat__v">12</p><p>frontier LLMs, each playing Red</p></div>
-          <div class="stat rise"><p class="stat__k">Trajectories</p><p class="stat__v">8,568</p><p>multi-turn games in total</p></div>
-          <div class="stat rise"><p class="stat__k">Trials</p><p class="stat__v">3</p><p>per position, for pass^k</p></div>
-          <div class="stat rise"><p class="stat__k">Protocols</p><p class="stat__v">2</p><p>sighted and restricted</p></div>
-        </div>
+        <aside class="notes">Proxy replaced: word-level accuracy. The figure shows why spelling is hard: subword pieces do not add up to the word.</aside>
       </section>
 
-      <!-- 13 · Four gaps -->
-      <section class="slide slide--dark" data-section="II · Agents">
-        <p class="kicker rise">Findings</p>
-        <h2 class="title rise">Three signals of competence each <em>overstate</em> winning</h2>
-        <div class="stats stats--2" style="gap:40px 80px">
-          <div class="stat rise"><p class="stat__k">Conversion gap</p><p class="stat__v">26.1% <span class="arrow">→</span> 13.9%</p><p>Trials that play the reference first move, and the share of those that end in a win.</p></div>
-          <div class="stat stat--hi rise"><p class="stat__k">Consistency gap</p><p class="stat__v">38.7% <small>vs</small> 5.9%</p><p>The leading model’s pass@3 against pass^3: it wins all three trials on 7 of 46 positions.</p></div>
-          <div class="stat rise"><p class="stat__k">Simulation gap</p><p class="stat__v">32.3%</p><p>of accepted simulation calls stop on an illegal move.</p></div>
-          <div class="stat rise"><p class="stat__k">Opponent mismatch</p><p class="stat__v">49.3%</p><p>of defender replies depart from the line the agent simulated for them.</p></div>
-        </div>
-      </section>
-
-      <!-- 14 · Leaderboard -->
-      <section class="slide slide--light" data-section="II · Agents">
-        <p class="kicker rise">Leaderboard · sighted · 119 positions × 3 trials</p>
-        <h2 class="title rise">Coverage is not reliability</h2>
-        <div class="legend rise" style="margin-top:30px"><span><i style="background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)"></i>pass@3 · won at least once</span><span><i style="background:var(--ember)"></i>pass^3 · won every time</span></div>
-        <div class="bars" style="margin-top:26px">
-            <div class="bar rise"><span>Gemini 3.1 Pro</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:96.8%"></i><i class="bar__fill bar__fill--all" style="width:14.8%"></i></span><span class="bar__nums"><b>38.7</b> · 5.9</span></div>
-            <div class="bar rise"><span>GPT-5.5</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:44.0%"></i><i class="bar__fill bar__fill--all" style="width:6.2%"></i></span><span class="bar__nums"><b>17.6</b> · 2.5</span></div>
-            <div class="bar rise"><span>Qwen 3.7 Max</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:33.5%"></i><i class="bar__fill bar__fill--all" style="width:2.0%"></i></span><span class="bar__nums"><b>13.4</b> · 0.8</span></div>
-            <div class="bar rise"><span>Claude Opus 4.7</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:27.3%"></i><i class="bar__fill bar__fill--all" style="width:2.0%"></i></span><span class="bar__nums"><b>10.9</b> · 0.8</span></div>
-            <div class="bar rise"><span>DeepSeek V4 Pro</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:12.5%"></i><i class="bar__fill bar__fill--all" style="width:4.2%"></i></span><span class="bar__nums"><b>5.0</b> · 1.7</span></div>
-            <div class="bar rise"><span>Seed 2.0 Pro</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:6.2%"></i><i class="bar__fill bar__fill--all" style="width:0.0%"></i></span><span class="bar__nums"><b>2.5</b> · 0.0</span></div>
-            <div class="bar rise"><span>Kimi K2.5</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:4.2%"></i><i class="bar__fill bar__fill--all" style="width:0.0%"></i></span><span class="bar__nums"><b>1.7</b> · 0.0</span></div>
-            <div class="bar rise"><span>DeepSeek R1</span><span class="bar__track"><i class="bar__fill bar__fill--at" style="width:4.2%"></i><i class="bar__fill bar__fill--all" style="width:0.0%"></i></span><span class="bar__nums"><b>1.7</b> · 0.0</span></div>
-        </div>
-        <p class="src rise">56 of the 119 positions are never won by any model under sighted observation. Bootstrap intervals are in the paper.</p>
-      </section>
-
-      <!-- 15 · Section III -->
-      <section class="slide slide--dark slide--section" data-title="III · Tokenization">
-        <p class="kicker rise">Part III · Tokenization</p>
-        <div class="section__num rise">III</div>
-        <h2 class="section__title rise">Tokenization falling short</h2>
-        <p class="section__q rise">Chai, Fang, Peng and Li · On subword robustness in large language models · Findings of EMNLP 2024</p>
-      </section>
-
-      <!-- 16 · Probes -->
-      <section class="slide slide--light" data-section="III · Tokenization">
-        <p class="kicker rise">TKEval · 7 probes × 200 items</p>
-        <h2 class="title rise">Models read subwords, <em>not characters</em></h2>
-        <p class="lede rise">So we ask what they know about the letters inside their own tokens, and the substrings shared across them.</p>
-        <div class="cards cards--3" style="margin-top:40px;gap:18px">
-          <div class="probe rise"><p class="probe__k">Character count <span>inside</span></p><p class="probe__q">Which character appears 3 times in ‘messrs’?</p><p class="probe__a">→ <b>s</b></p></div>
-          <div class="probe rise"><p class="probe__k">N-th character <span>inside</span></p><p class="probe__q">What is the 4th character of ‘myron’?</p><p class="probe__a">→ <b>o</b></p></div>
-          <div class="probe rise"><p class="probe__k">From the end <span>inside</span></p><p class="probe__q">2nd character from the end of ‘pensioner’?</p><p class="probe__a">→ <b>e</b></p></div>
-          <div class="probe rise"><p class="probe__k">Common substrings <span>across</span></p><p class="probe__q">Common substrings of ‘critical’ and ‘conscious’?</p><p class="probe__a">→ <b>i, c</b></p></div>
-          <div class="probe rise"><p class="probe__k">Longest substring <span>across</span></p><p class="probe__q">Longest common substring of ‘cow’ and ‘condition’?</p><p class="probe__a">→ <b>co</b></p></div>
-          <div class="probe rise"><p class="probe__k">Subsequence <span>across</span></p><p class="probe__q">Longest common subsequence of ‘illustrate’ and ‘critical’?</p><p class="probe__a">→ <b>ita</b></p></div>
-        </div>
-      </section>
-
-      <!-- 17 · Findings -->
-      <section class="slide slide--dark" data-section="III · Tokenization">
-        <p class="kicker rise">Findings</p>
-        <h2 class="title rise">Scale helps, but does not lift the curse</h2>
-        <div class="stats stats--4">
-          <div class="stat rise"><p class="stat__k">Character count</p><p class="stat__v">0 <span class="arrow">→</span> 81%</p><p>Llama 3 8B from zero to three examples; gains come from the first one.</p></div>
-          <div class="stat rise"><p class="stat__k">From the end</p><p class="stat__v">52%</p><p>Best one-shot score, by GPT-4 Turbo. Counting backwards is harder for every model.</p></div>
-          <div class="stat stat--hi rise"><p class="stat__k">Subsequences</p><p class="stat__v">1 <span class="arrow">→</span> 4%</p><p>Llama 3 8B: non-contiguous patterns stay far below contiguous ones.</p></div>
-          <div class="stat rise"><p class="stat__k">BPE-dropout</p><p class="stat__v">p = 0.2</p><p>Moderate subword regularization often beats the baseline; high rates hurt.</p></div>
-        </div>
-        <ol class="points points--tight" style="margin-top:52px">
-          <li class="rise"><span><b>Noise hurts more than reordering</b>, and characters more than tokens, regardless of model size.</span></li>
-        </ol>
-      </section>
-
-      <!-- 18 · Section IV -->
-      <section class="slide slide--dark slide--section" data-title="IV · Multilingual">
-        <p class="kicker rise">Part IV · Multilingual</p>
-        <div class="section__num rise">IV</div>
-        <h2 class="section__title rise">Does code generation transfer beyond English?</h2>
-        <p class="section__q rise">Peng, Chai and Li · HumanEval-XL · LREC-COLING 2024</p>
-      </section>
-
-      <!-- 19 · Heatmap -->
-      <section class="slide slide--light" data-section="IV · Multilingual">
-        <p class="kicker rise">HumanEval-XL · GPT-4 pass@1</p>
-        <h2 class="title rise">Same 80 problems; only the language changes</h2>
-        <div class="panel rise" style="margin-top:34px;padding:28px 32px">
-          <div class="heat">
+      <!-- 11 · HumanEval-XL -->
+      <section id="humaneval-xl" data-section="04 · Multilingual">
+        <div class="slide">
+          <p class="kicker rise"><span class="kicker__n">04</span> <span>HumanEval-XL</span></p>
+          <h2 class="title rise">With the task fixed, the prompt’s language still moves the score</h2>
+          <div class="paper paper--stack">
+            <figure class="figure rise">
+              <div class="heat">
             <span></span>
-            <span class="heat__nl" title="English">EN</span>
-            <span class="heat__nl" title="Russian">RU</span>
-            <span class="heat__nl" title="Chinese">ZH</span>
-            <span class="heat__nl" title="German">DE</span>
-            <span class="heat__nl" title="Spanish">ES</span>
-            <span class="heat__nl" title="French">FR</span>
-            <span class="heat__nl" title="Italian">IT</span>
-            <span class="heat__nl" title="Portuguese">PT</span>
-            <span class="heat__nl" title="Greek">EL</span>
-            <span class="heat__nl" title="Hungarian">HU</span>
-            <span class="heat__nl" title="Dutch">NL</span>
-            <span class="heat__nl" title="Finnish">FI</span>
-            <span class="heat__nl" title="Indonesian">ID</span>
-            <span class="heat__nl" title="Turkish">TR</span>
-            <span class="heat__nl" title="Arabic">AR</span>
-            <span class="heat__nl" title="Vietnamese">VI</span>
-            <span class="heat__nl" title="Bulgarian">BG</span>
-            <span class="heat__nl" title="Persian">FA</span>
-            <span class="heat__nl" title="Malay">MS</span>
-            <span class="heat__nl" title="Hebrew">HE</span>
-            <span class="heat__nl" title="Estonian">ET</span>
-            <span class="heat__nl" title="Tagalog">TL</span>
-            <span class="heat__nl" title="Afrikaans">AF</span>
-            <span class="heat__pl">Python</span>
-            <span class="heat__c" style="--v:0.983" title="Python · English: 82.5"></span>
-            <span class="heat__c" style="--v:0.864" title="Python · Russian: 73.75"></span>
-            <span class="heat__c" style="--v:0.932" title="Python · Chinese: 78.75"></span>
-            <span class="heat__c" style="--v:0.949" title="Python · German: 80"></span>
-            <span class="heat__c" style="--v:0.932" title="Python · Spanish: 78.75"></span>
-            <span class="heat__c" style="--v:0.915" title="Python · French: 77.5"></span>
-            <span class="heat__c" style="--v:0.966" title="Python · Italian: 81.25"></span>
-            <span class="heat__c" style="--v:0.932" title="Python · Portuguese: 78.75"></span>
-            <span class="heat__c" style="--v:0.831" title="Python · Greek: 71.25"></span>
-            <span class="heat__c" style="--v:1.000" title="Python · Hungarian: 83.75"></span>
-            <span class="heat__c" style="--v:0.932" title="Python · Dutch: 78.75"></span>
-            <span class="heat__c" style="--v:0.864" title="Python · Finnish: 73.75"></span>
-            <span class="heat__c" style="--v:0.898" title="Python · Indonesian: 76.25"></span>
-            <span class="heat__c" style="--v:0.864" title="Python · Turkish: 73.75"></span>
-            <span class="heat__c" style="--v:0.864" title="Python · Arabic: 73.75"></span>
-            <span class="heat__c" style="--v:0.966" title="Python · Vietnamese: 81.25"></span>
-            <span class="heat__c" style="--v:0.881" title="Python · Bulgarian: 75"></span>
-            <span class="heat__c" style="--v:0.932" title="Python · Persian: 78.75"></span>
-            <span class="heat__c" style="--v:0.983" title="Python · Malay: 82.5"></span>
-            <span class="heat__c" style="--v:0.898" title="Python · Hebrew: 76.25"></span>
-            <span class="heat__c" style="--v:0.966" title="Python · Estonian: 81.25"></span>
-            <span class="heat__c" style="--v:0.983" title="Python · Tagalog: 82.5"></span>
-            <span class="heat__c" style="--v:0.949" title="Python · Afrikaans: 80"></span>
-            <span class="heat__pl">Java</span>
-            <span class="heat__c" style="--v:0.780" title="Java · English: 67.5"></span>
-            <span class="heat__c" style="--v:0.763" title="Java · Russian: 66.25"></span>
-            <span class="heat__c" style="--v:0.729" title="Java · Chinese: 63.75"></span>
-            <span class="heat__c" style="--v:0.712" title="Java · German: 62.5"></span>
-            <span class="heat__c" style="--v:0.712" title="Java · Spanish: 62.5"></span>
-            <span class="heat__c" style="--v:0.644" title="Java · French: 57.5"></span>
-            <span class="heat__c" style="--v:0.729" title="Java · Italian: 63.75"></span>
-            <span class="heat__c" style="--v:0.847" title="Java · Portuguese: 72.5"></span>
-            <span class="heat__c" style="--v:0.661" title="Java · Greek: 58.75"></span>
-            <span class="heat__c" style="--v:0.627" title="Java · Hungarian: 56.25"></span>
-            <span class="heat__c" style="--v:0.729" title="Java · Dutch: 63.75"></span>
-            <span class="heat__c" style="--v:0.712" title="Java · Finnish: 62.5"></span>
-            <span class="heat__c" style="--v:0.661" title="Java · Indonesian: 58.75"></span>
-            <span class="heat__c" style="--v:0.695" title="Java · Turkish: 61.25"></span>
-            <span class="heat__c" style="--v:0.593" title="Java · Arabic: 53.75"></span>
-            <span class="heat__c" style="--v:0.678" title="Java · Vietnamese: 60"></span>
-            <span class="heat__c" style="--v:0.678" title="Java · Bulgarian: 60"></span>
-            <span class="heat__c" style="--v:0.695" title="Java · Persian: 61.25"></span>
-            <span class="heat__c" style="--v:0.695" title="Java · Malay: 61.25"></span>
-            <span class="heat__c" style="--v:0.763" title="Java · Hebrew: 66.25"></span>
-            <span class="heat__c" style="--v:0.610" title="Java · Estonian: 55"></span>
-            <span class="heat__c" style="--v:0.814" title="Java · Tagalog: 70"></span>
-            <span class="heat__c" style="--v:0.661" title="Java · Afrikaans: 58.75"></span>
-            <span class="heat__pl">JavaScript</span>
-            <span class="heat__c" style="--v:0.949" title="JavaScript · English: 80"></span>
-            <span class="heat__c" style="--v:0.966" title="JavaScript · Russian: 81.25"></span>
-            <span class="heat__c" style="--v:0.898" title="JavaScript · Chinese: 76.25"></span>
-            <span class="heat__c" style="--v:0.898" title="JavaScript · German: 76.25"></span>
-            <span class="heat__c" style="--v:0.881" title="JavaScript · Spanish: 75"></span>
-            <span class="heat__c" style="--v:0.847" title="JavaScript · French: 72.5"></span>
-            <span class="heat__c" style="--v:0.932" title="JavaScript · Italian: 78.75"></span>
-            <span class="heat__c" style="--v:0.966" title="JavaScript · Portuguese: 81.25"></span>
-            <span class="heat__c" style="--v:0.814" title="JavaScript · Greek: 70"></span>
-            <span class="heat__c" style="--v:0.966" title="JavaScript · Hungarian: 81.25"></span>
-            <span class="heat__c" style="--v:0.881" title="JavaScript · Dutch: 75"></span>
-            <span class="heat__c" style="--v:0.915" title="JavaScript · Finnish: 77.5"></span>
-            <span class="heat__c" style="--v:0.881" title="JavaScript · Indonesian: 75"></span>
-            <span class="heat__c" style="--v:0.864" title="JavaScript · Turkish: 73.75"></span>
-            <span class="heat__c" style="--v:0.797" title="JavaScript · Arabic: 68.75"></span>
-            <span class="heat__c" style="--v:0.898" title="JavaScript · Vietnamese: 76.25"></span>
-            <span class="heat__c" style="--v:0.932" title="JavaScript · Bulgarian: 78.75"></span>
-            <span class="heat__c" style="--v:0.864" title="JavaScript · Persian: 73.75"></span>
-            <span class="heat__c" style="--v:0.864" title="JavaScript · Malay: 73.75"></span>
-            <span class="heat__c" style="--v:0.847" title="JavaScript · Hebrew: 72.5"></span>
-            <span class="heat__c" style="--v:0.932" title="JavaScript · Estonian: 78.75"></span>
-            <span class="heat__c" style="--v:0.915" title="JavaScript · Tagalog: 77.5"></span>
-            <span class="heat__c" style="--v:0.915" title="JavaScript · Afrikaans: 77.5"></span>
-            <span class="heat__pl">TypeScript</span>
-            <span class="heat__c" style="--v:0.881" title="TypeScript · English: 75"></span>
-            <span class="heat__c" style="--v:0.814" title="TypeScript · Russian: 70"></span>
-            <span class="heat__c" style="--v:0.797" title="TypeScript · Chinese: 68.75"></span>
-            <span class="heat__c" style="--v:0.814" title="TypeScript · German: 70"></span>
-            <span class="heat__c" style="--v:0.864" title="TypeScript · Spanish: 73.75"></span>
-            <span class="heat__c" style="--v:0.831" title="TypeScript · French: 71.25"></span>
-            <span class="heat__c" style="--v:0.847" title="TypeScript · Italian: 72.5"></span>
-            <span class="heat__c" style="--v:0.831" title="TypeScript · Portuguese: 71.25"></span>
-            <span class="heat__c" style="--v:0.746" title="TypeScript · Greek: 65"></span>
-            <span class="heat__c" style="--v:0.898" title="TypeScript · Hungarian: 76.25"></span>
-            <span class="heat__c" style="--v:0.814" title="TypeScript · Dutch: 70"></span>
-            <span class="heat__c" style="--v:0.864" title="TypeScript · Finnish: 73.75"></span>
-            <span class="heat__c" style="--v:0.831" title="TypeScript · Indonesian: 71.25"></span>
-            <span class="heat__c" style="--v:0.797" title="TypeScript · Turkish: 68.75"></span>
-            <span class="heat__c" style="--v:0.763" title="TypeScript · Arabic: 66.25"></span>
-            <span class="heat__c" style="--v:0.814" title="TypeScript · Vietnamese: 70"></span>
-            <span class="heat__c" style="--v:0.814" title="TypeScript · Bulgarian: 70"></span>
-            <span class="heat__c" style="--v:0.847" title="TypeScript · Persian: 72.5"></span>
-            <span class="heat__c" style="--v:0.831" title="TypeScript · Malay: 71.25"></span>
-            <span class="heat__c" style="--v:0.831" title="TypeScript · Hebrew: 71.25"></span>
-            <span class="heat__c" style="--v:0.847" title="TypeScript · Estonian: 72.5"></span>
-            <span class="heat__c" style="--v:0.847" title="TypeScript · Tagalog: 72.5"></span>
-            <span class="heat__c" style="--v:0.814" title="TypeScript · Afrikaans: 70"></span>
-            <span class="heat__pl">C#</span>
-            <span class="heat__c" style="--v:0.559" title="C# · English: 51.25"></span>
-            <span class="heat__c" style="--v:0.678" title="C# · Russian: 60"></span>
-            <span class="heat__c" style="--v:0.644" title="C# · Chinese: 57.5"></span>
-            <span class="heat__c" style="--v:0.712" title="C# · German: 62.5"></span>
-            <span class="heat__c" style="--v:0.729" title="C# · Spanish: 63.75"></span>
-            <span class="heat__c" style="--v:0.644" title="C# · French: 57.5"></span>
-            <span class="heat__c" style="--v:0.627" title="C# · Italian: 56.25"></span>
-            <span class="heat__c" style="--v:0.729" title="C# · Portuguese: 63.75"></span>
-            <span class="heat__c" style="--v:0.593" title="C# · Greek: 53.75"></span>
-            <span class="heat__c" style="--v:0.644" title="C# · Hungarian: 57.5"></span>
-            <span class="heat__c" style="--v:0.627" title="C# · Dutch: 56.25"></span>
-            <span class="heat__c" style="--v:0.627" title="C# · Finnish: 56.25"></span>
-            <span class="heat__c" style="--v:0.627" title="C# · Indonesian: 56.25"></span>
-            <span class="heat__c" style="--v:0.610" title="C# · Turkish: 55"></span>
-            <span class="heat__c" style="--v:0.627" title="C# · Arabic: 56.25"></span>
-            <span class="heat__c" style="--v:0.661" title="C# · Vietnamese: 58.75"></span>
-            <span class="heat__c" style="--v:0.661" title="C# · Bulgarian: 58.75"></span>
-            <span class="heat__c" style="--v:0.644" title="C# · Persian: 57.5"></span>
-            <span class="heat__c" style="--v:0.678" title="C# · Malay: 60"></span>
-            <span class="heat__c" style="--v:0.593" title="C# · Hebrew: 53.75"></span>
-            <span class="heat__c" style="--v:0.627" title="C# · Estonian: 56.25"></span>
-            <span class="heat__c" style="--v:0.729" title="C# · Tagalog: 63.75"></span>
-            <span class="heat__c" style="--v:0.576" title="C# · Afrikaans: 52.5"></span>
-            <span class="heat__pl">Go</span>
-            <span class="heat__c" style="--v:0.508" title="Go · English: 47.5"></span>
-            <span class="heat__c" style="--v:0.542" title="Go · Russian: 50"></span>
-            <span class="heat__c" style="--v:0.508" title="Go · Chinese: 47.5"></span>
-            <span class="heat__c" style="--v:0.424" title="Go · German: 41.25"></span>
-            <span class="heat__c" style="--v:0.475" title="Go · Spanish: 45"></span>
-            <span class="heat__c" style="--v:0.458" title="Go · French: 43.75"></span>
-            <span class="heat__c" style="--v:0.525" title="Go · Italian: 48.75"></span>
-            <span class="heat__c" style="--v:0.475" title="Go · Portuguese: 45"></span>
-            <span class="heat__c" style="--v:0.424" title="Go · Greek: 41.25"></span>
-            <span class="heat__c" style="--v:0.475" title="Go · Hungarian: 45"></span>
-            <span class="heat__c" style="--v:0.542" title="Go · Dutch: 50"></span>
-            <span class="heat__c" style="--v:0.458" title="Go · Finnish: 43.75"></span>
-            <span class="heat__c" style="--v:0.390" title="Go · Indonesian: 38.75"></span>
-            <span class="heat__c" style="--v:0.475" title="Go · Turkish: 45"></span>
-            <span class="heat__c" style="--v:0.458" title="Go · Arabic: 43.75"></span>
-            <span class="heat__c" style="--v:0.458" title="Go · Vietnamese: 43.75"></span>
-            <span class="heat__c" style="--v:0.508" title="Go · Bulgarian: 47.5"></span>
-            <span class="heat__c" style="--v:0.475" title="Go · Persian: 45"></span>
-            <span class="heat__c" style="--v:0.508" title="Go · Malay: 47.5"></span>
-            <span class="heat__c" style="--v:0.475" title="Go · Hebrew: 45"></span>
-            <span class="heat__c" style="--v:0.458" title="Go · Estonian: 43.75"></span>
-            <span class="heat__c" style="--v:0.407" title="Go · Tagalog: 40"></span>
-            <span class="heat__c" style="--v:0.424" title="Go · Afrikaans: 41.25"></span>
-            <span class="heat__pl">Kotlin</span>
-            <span class="heat__c" style="--v:0.729" title="Kotlin · English: 63.75"></span>
-            <span class="heat__c" style="--v:0.797" title="Kotlin · Russian: 68.75"></span>
-            <span class="heat__c" style="--v:0.780" title="Kotlin · Chinese: 67.5"></span>
-            <span class="heat__c" style="--v:0.797" title="Kotlin · German: 68.75"></span>
-            <span class="heat__c" style="--v:0.746" title="Kotlin · Spanish: 65"></span>
-            <span class="heat__c" style="--v:0.780" title="Kotlin · French: 67.5"></span>
-            <span class="heat__c" style="--v:0.797" title="Kotlin · Italian: 68.75"></span>
-            <span class="heat__c" style="--v:0.814" title="Kotlin · Portuguese: 70"></span>
-            <span class="heat__c" style="--v:0.729" title="Kotlin · Greek: 63.75"></span>
-            <span class="heat__c" style="--v:0.864" title="Kotlin · Hungarian: 73.75"></span>
-            <span class="heat__c" style="--v:0.729" title="Kotlin · Dutch: 63.75"></span>
-            <span class="heat__c" style="--v:0.746" title="Kotlin · Finnish: 65"></span>
-            <span class="heat__c" style="--v:0.712" title="Kotlin · Indonesian: 62.5"></span>
-            <span class="heat__c" style="--v:0.695" title="Kotlin · Turkish: 61.25"></span>
-            <span class="heat__c" style="--v:0.695" title="Kotlin · Arabic: 61.25"></span>
-            <span class="heat__c" style="--v:0.746" title="Kotlin · Vietnamese: 65"></span>
-            <span class="heat__c" style="--v:0.780" title="Kotlin · Bulgarian: 67.5"></span>
-            <span class="heat__c" style="--v:0.746" title="Kotlin · Persian: 65"></span>
-            <span class="heat__c" style="--v:0.729" title="Kotlin · Malay: 63.75"></span>
-            <span class="heat__c" style="--v:0.695" title="Kotlin · Hebrew: 61.25"></span>
-            <span class="heat__c" style="--v:0.746" title="Kotlin · Estonian: 65"></span>
-            <span class="heat__c" style="--v:0.763" title="Kotlin · Tagalog: 66.25"></span>
-            <span class="heat__c" style="--v:0.763" title="Kotlin · Afrikaans: 66.25"></span>
-            <span class="heat__pl">PHP</span>
-            <span class="heat__c" style="--v:0.932" title="PHP · English: 78.75"></span>
-            <span class="heat__c" style="--v:0.864" title="PHP · Russian: 73.75"></span>
-            <span class="heat__c" style="--v:0.847" title="PHP · Chinese: 72.5"></span>
-            <span class="heat__c" style="--v:0.932" title="PHP · German: 78.75"></span>
-            <span class="heat__c" style="--v:0.898" title="PHP · Spanish: 76.25"></span>
-            <span class="heat__c" style="--v:0.898" title="PHP · French: 76.25"></span>
-            <span class="heat__c" style="--v:0.983" title="PHP · Italian: 82.5"></span>
-            <span class="heat__c" style="--v:0.932" title="PHP · Portuguese: 78.75"></span>
-            <span class="heat__c" style="--v:0.881" title="PHP · Greek: 75"></span>
-            <span class="heat__c" style="--v:0.949" title="PHP · Hungarian: 80"></span>
-            <span class="heat__c" style="--v:0.881" title="PHP · Dutch: 75"></span>
-            <span class="heat__c" style="--v:0.898" title="PHP · Finnish: 76.25"></span>
-            <span class="heat__c" style="--v:0.932" title="PHP · Indonesian: 78.75"></span>
-            <span class="heat__c" style="--v:0.864" title="PHP · Turkish: 73.75"></span>
-            <span class="heat__c" style="--v:0.881" title="PHP · Arabic: 75"></span>
-            <span class="heat__c" style="--v:0.915" title="PHP · Vietnamese: 77.5"></span>
-            <span class="heat__c" style="--v:0.966" title="PHP · Bulgarian: 81.25"></span>
-            <span class="heat__c" style="--v:0.864" title="PHP · Persian: 73.75"></span>
-            <span class="heat__c" style="--v:0.898" title="PHP · Malay: 76.25"></span>
-            <span class="heat__c" style="--v:0.864" title="PHP · Hebrew: 73.75"></span>
-            <span class="heat__c" style="--v:0.932" title="PHP · Estonian: 78.75"></span>
-            <span class="heat__c" style="--v:0.898" title="PHP · Tagalog: 76.25"></span>
-            <span class="heat__c" style="--v:0.932" title="PHP · Afrikaans: 78.75"></span>
-            <span class="heat__pl">Ruby</span>
-            <span class="heat__c" style="--v:0.763" title="Ruby · English: 66.25"></span>
-            <span class="heat__c" style="--v:0.797" title="Ruby · Russian: 68.75"></span>
-            <span class="heat__c" style="--v:0.780" title="Ruby · Chinese: 67.5"></span>
-            <span class="heat__c" style="--v:0.847" title="Ruby · German: 72.5"></span>
-            <span class="heat__c" style="--v:0.763" title="Ruby · Spanish: 66.25"></span>
-            <span class="heat__c" style="--v:0.678" title="Ruby · French: 60"></span>
-            <span class="heat__c" style="--v:0.831" title="Ruby · Italian: 71.25"></span>
-            <span class="heat__c" style="--v:0.729" title="Ruby · Portuguese: 63.75"></span>
-            <span class="heat__c" style="--v:0.695" title="Ruby · Greek: 61.25"></span>
-            <span class="heat__c" style="--v:0.746" title="Ruby · Hungarian: 65"></span>
-            <span class="heat__c" style="--v:0.695" title="Ruby · Dutch: 61.25"></span>
-            <span class="heat__c" style="--v:0.746" title="Ruby · Finnish: 65"></span>
-            <span class="heat__c" style="--v:0.695" title="Ruby · Indonesian: 61.25"></span>
-            <span class="heat__c" style="--v:0.559" title="Ruby · Turkish: 51.25"></span>
-            <span class="heat__c" style="--v:0.593" title="Ruby · Arabic: 53.75"></span>
-            <span class="heat__c" style="--v:0.508" title="Ruby · Vietnamese: 47.5"></span>
-            <span class="heat__c" style="--v:0.797" title="Ruby · Bulgarian: 68.75"></span>
-            <span class="heat__c" style="--v:0.712" title="Ruby · Persian: 62.5"></span>
-            <span class="heat__c" style="--v:0.729" title="Ruby · Malay: 63.75"></span>
-            <span class="heat__c" style="--v:0.678" title="Ruby · Hebrew: 60"></span>
-            <span class="heat__c" style="--v:0.746" title="Ruby · Estonian: 65"></span>
-            <span class="heat__c" style="--v:0.763" title="Ruby · Tagalog: 66.25"></span>
-            <span class="heat__c" style="--v:0.797" title="Ruby · Afrikaans: 68.75"></span>
-            <span class="heat__pl">Perl</span>
-            <span class="heat__c" style="--v:0.712" title="Perl · English: 62.5"></span>
-            <span class="heat__c" style="--v:0.492" title="Perl · Russian: 46.25"></span>
-            <span class="heat__c" style="--v:0.576" title="Perl · Chinese: 52.5"></span>
-            <span class="heat__c" style="--v:0.610" title="Perl · German: 55"></span>
-            <span class="heat__c" style="--v:0.576" title="Perl · Spanish: 52.5"></span>
-            <span class="heat__c" style="--v:0.525" title="Perl · French: 48.75"></span>
-            <span class="heat__c" style="--v:0.576" title="Perl · Italian: 52.5"></span>
-            <span class="heat__c" style="--v:0.627" title="Perl · Portuguese: 56.25"></span>
-            <span class="heat__c" style="--v:0.525" title="Perl · Greek: 48.75"></span>
-            <span class="heat__c" style="--v:0.644" title="Perl · Hungarian: 57.5"></span>
-            <span class="heat__c" style="--v:0.542" title="Perl · Dutch: 50"></span>
-            <span class="heat__c" style="--v:0.576" title="Perl · Finnish: 52.5"></span>
-            <span class="heat__c" style="--v:0.610" title="Perl · Indonesian: 55"></span>
-            <span class="heat__c" style="--v:0.559" title="Perl · Turkish: 51.25"></span>
-            <span class="heat__c" style="--v:0.542" title="Perl · Arabic: 50"></span>
-            <span class="heat__c" style="--v:0.576" title="Perl · Vietnamese: 52.5"></span>
-            <span class="heat__c" style="--v:0.542" title="Perl · Bulgarian: 50"></span>
-            <span class="heat__c" style="--v:0.576" title="Perl · Persian: 52.5"></span>
-            <span class="heat__c" style="--v:0.610" title="Perl · Malay: 55"></span>
-            <span class="heat__c" style="--v:0.525" title="Perl · Hebrew: 48.75"></span>
-            <span class="heat__c" style="--v:0.576" title="Perl · Estonian: 52.5"></span>
-            <span class="heat__c" style="--v:0.576" title="Perl · Tagalog: 52.5"></span>
-            <span class="heat__c" style="--v:0.542" title="Perl · Afrikaans: 50"></span>
-            <span class="heat__pl">Swift</span>
-            <span class="heat__c" style="--v:0.576" title="Swift · English: 52.5"></span>
-            <span class="heat__c" style="--v:0.661" title="Swift · Russian: 58.75"></span>
-            <span class="heat__c" style="--v:0.576" title="Swift · Chinese: 52.5"></span>
-            <span class="heat__c" style="--v:0.610" title="Swift · German: 55"></span>
-            <span class="heat__c" style="--v:0.610" title="Swift · Spanish: 55"></span>
-            <span class="heat__c" style="--v:0.593" title="Swift · French: 53.75"></span>
-            <span class="heat__c" style="--v:0.627" title="Swift · Italian: 56.25"></span>
-            <span class="heat__c" style="--v:0.593" title="Swift · Portuguese: 53.75"></span>
-            <span class="heat__c" style="--v:0.559" title="Swift · Greek: 51.25"></span>
-            <span class="heat__c" style="--v:0.644" title="Swift · Hungarian: 57.5"></span>
-            <span class="heat__c" style="--v:0.627" title="Swift · Dutch: 56.25"></span>
-            <span class="heat__c" style="--v:0.610" title="Swift · Finnish: 55"></span>
-            <span class="heat__c" style="--v:0.661" title="Swift · Indonesian: 58.75"></span>
-            <span class="heat__c" style="--v:0.644" title="Swift · Turkish: 57.5"></span>
-            <span class="heat__c" style="--v:0.610" title="Swift · Arabic: 55"></span>
-            <span class="heat__c" style="--v:0.627" title="Swift · Vietnamese: 56.25"></span>
-            <span class="heat__c" style="--v:0.644" title="Swift · Bulgarian: 57.5"></span>
-            <span class="heat__c" style="--v:0.661" title="Swift · Persian: 58.75"></span>
-            <span class="heat__c" style="--v:0.610" title="Swift · Malay: 55"></span>
-            <span class="heat__c" style="--v:0.610" title="Swift · Hebrew: 55"></span>
-            <span class="heat__c" style="--v:0.627" title="Swift · Estonian: 56.25"></span>
-            <span class="heat__c" style="--v:0.627" title="Swift · Tagalog: 56.25"></span>
-            <span class="heat__c" style="--v:0.644" title="Swift · Afrikaans: 57.5"></span>
-            <span class="heat__pl">Scala</span>
-            <span class="heat__c" style="--v:0.254" title="Scala · English: 28.75"></span>
-            <span class="heat__c" style="--v:0.220" title="Scala · Russian: 26.25"></span>
-            <span class="heat__c" style="--v:0.119" title="Scala · Chinese: 18.75"></span>
-            <span class="heat__c" style="--v:0.220" title="Scala · German: 26.25"></span>
-            <span class="heat__c" style="--v:0.203" title="Scala · Spanish: 25"></span>
-            <span class="heat__c" style="--v:0.186" title="Scala · French: 23.75"></span>
-            <span class="heat__c" style="--v:0.136" title="Scala · Italian: 20"></span>
-            <span class="heat__c" style="--v:0.068" title="Scala · Portuguese: 15"></span>
-            <span class="heat__c" style="--v:0.119" title="Scala · Greek: 18.75"></span>
-            <span class="heat__c" style="--v:0.305" title="Scala · Hungarian: 32.5"></span>
-            <span class="heat__c" style="--v:0.186" title="Scala · Dutch: 23.75"></span>
-            <span class="heat__c" style="--v:0.254" title="Scala · Finnish: 28.75"></span>
-            <span class="heat__c" style="--v:0.153" title="Scala · Indonesian: 21.25"></span>
-            <span class="heat__c" style="--v:0.424" title="Scala · Turkish: 41.25"></span>
-            <span class="heat__c" style="--v:0.000" title="Scala · Arabic: 10"></span>
-            <span class="heat__c" style="--v:0.237" title="Scala · Vietnamese: 27.5"></span>
-            <span class="heat__c" style="--v:0.203" title="Scala · Bulgarian: 25"></span>
-            <span class="heat__c" style="--v:0.237" title="Scala · Persian: 27.5"></span>
-            <span class="heat__c" style="--v:0.169" title="Scala · Malay: 22.5"></span>
-            <span class="heat__c" style="--v:0.102" title="Scala · Hebrew: 17.5"></span>
-            <span class="heat__c" style="--v:0.254" title="Scala · Estonian: 28.75"></span>
-            <span class="heat__c" style="--v:0.153" title="Scala · Tagalog: 21.25"></span>
-            <span class="heat__c" style="--v:0.136" title="Scala · Afrikaans: 20"></span>
+          <span class="heat__nl" title="English">EN</span>
+          <span class="heat__nl" title="Russian">RU</span>
+          <span class="heat__nl" title="Chinese">ZH</span>
+          <span class="heat__nl" title="German">DE</span>
+          <span class="heat__nl" title="Spanish">ES</span>
+          <span class="heat__nl" title="French">FR</span>
+          <span class="heat__nl" title="Italian">IT</span>
+          <span class="heat__nl" title="Portuguese">PT</span>
+          <span class="heat__nl" title="Greek">EL</span>
+          <span class="heat__nl" title="Hungarian">HU</span>
+          <span class="heat__nl" title="Dutch">NL</span>
+          <span class="heat__nl" title="Finnish">FI</span>
+          <span class="heat__nl" title="Indonesian">ID</span>
+          <span class="heat__nl" title="Turkish">TR</span>
+          <span class="heat__nl" title="Arabic">AR</span>
+          <span class="heat__nl" title="Vietnamese">VI</span>
+          <span class="heat__nl" title="Bulgarian">BG</span>
+          <span class="heat__nl" title="Persian">FA</span>
+          <span class="heat__nl" title="Malay">MS</span>
+          <span class="heat__nl" title="Hebrew">HE</span>
+          <span class="heat__nl" title="Estonian">ET</span>
+          <span class="heat__nl" title="Tagalog">TL</span>
+          <span class="heat__nl" title="Afrikaans">AF</span>
+          <span class="heat__pl">Python</span>
+          <span class="heat__c" style="--v:0.983" title="Python · English: 82.5"></span>
+          <span class="heat__c" style="--v:0.864" title="Python · Russian: 73.75"></span>
+          <span class="heat__c" style="--v:0.932" title="Python · Chinese: 78.75"></span>
+          <span class="heat__c" style="--v:0.949" title="Python · German: 80"></span>
+          <span class="heat__c" style="--v:0.932" title="Python · Spanish: 78.75"></span>
+          <span class="heat__c" style="--v:0.915" title="Python · French: 77.5"></span>
+          <span class="heat__c" style="--v:0.966" title="Python · Italian: 81.25"></span>
+          <span class="heat__c" style="--v:0.932" title="Python · Portuguese: 78.75"></span>
+          <span class="heat__c" style="--v:0.831" title="Python · Greek: 71.25"></span>
+          <span class="heat__c" style="--v:1.000" title="Python · Hungarian: 83.75"></span>
+          <span class="heat__c" style="--v:0.932" title="Python · Dutch: 78.75"></span>
+          <span class="heat__c" style="--v:0.864" title="Python · Finnish: 73.75"></span>
+          <span class="heat__c" style="--v:0.898" title="Python · Indonesian: 76.25"></span>
+          <span class="heat__c" style="--v:0.864" title="Python · Turkish: 73.75"></span>
+          <span class="heat__c" style="--v:0.864" title="Python · Arabic: 73.75"></span>
+          <span class="heat__c" style="--v:0.966" title="Python · Vietnamese: 81.25"></span>
+          <span class="heat__c" style="--v:0.881" title="Python · Bulgarian: 75"></span>
+          <span class="heat__c" style="--v:0.932" title="Python · Persian: 78.75"></span>
+          <span class="heat__c" style="--v:0.983" title="Python · Malay: 82.5"></span>
+          <span class="heat__c" style="--v:0.898" title="Python · Hebrew: 76.25"></span>
+          <span class="heat__c" style="--v:0.966" title="Python · Estonian: 81.25"></span>
+          <span class="heat__c" style="--v:0.983" title="Python · Tagalog: 82.5"></span>
+          <span class="heat__c" style="--v:0.949" title="Python · Afrikaans: 80"></span>
+          <span class="heat__pl">Java</span>
+          <span class="heat__c" style="--v:0.780" title="Java · English: 67.5"></span>
+          <span class="heat__c" style="--v:0.763" title="Java · Russian: 66.25"></span>
+          <span class="heat__c" style="--v:0.729" title="Java · Chinese: 63.75"></span>
+          <span class="heat__c" style="--v:0.712" title="Java · German: 62.5"></span>
+          <span class="heat__c" style="--v:0.712" title="Java · Spanish: 62.5"></span>
+          <span class="heat__c" style="--v:0.644" title="Java · French: 57.5"></span>
+          <span class="heat__c" style="--v:0.729" title="Java · Italian: 63.75"></span>
+          <span class="heat__c" style="--v:0.847" title="Java · Portuguese: 72.5"></span>
+          <span class="heat__c" style="--v:0.661" title="Java · Greek: 58.75"></span>
+          <span class="heat__c" style="--v:0.627" title="Java · Hungarian: 56.25"></span>
+          <span class="heat__c" style="--v:0.729" title="Java · Dutch: 63.75"></span>
+          <span class="heat__c" style="--v:0.712" title="Java · Finnish: 62.5"></span>
+          <span class="heat__c" style="--v:0.661" title="Java · Indonesian: 58.75"></span>
+          <span class="heat__c" style="--v:0.695" title="Java · Turkish: 61.25"></span>
+          <span class="heat__c" style="--v:0.593" title="Java · Arabic: 53.75"></span>
+          <span class="heat__c" style="--v:0.678" title="Java · Vietnamese: 60"></span>
+          <span class="heat__c" style="--v:0.678" title="Java · Bulgarian: 60"></span>
+          <span class="heat__c" style="--v:0.695" title="Java · Persian: 61.25"></span>
+          <span class="heat__c" style="--v:0.695" title="Java · Malay: 61.25"></span>
+          <span class="heat__c" style="--v:0.763" title="Java · Hebrew: 66.25"></span>
+          <span class="heat__c" style="--v:0.610" title="Java · Estonian: 55"></span>
+          <span class="heat__c" style="--v:0.814" title="Java · Tagalog: 70"></span>
+          <span class="heat__c" style="--v:0.661" title="Java · Afrikaans: 58.75"></span>
+          <span class="heat__pl">JavaScript</span>
+          <span class="heat__c" style="--v:0.949" title="JavaScript · English: 80"></span>
+          <span class="heat__c" style="--v:0.966" title="JavaScript · Russian: 81.25"></span>
+          <span class="heat__c" style="--v:0.898" title="JavaScript · Chinese: 76.25"></span>
+          <span class="heat__c" style="--v:0.898" title="JavaScript · German: 76.25"></span>
+          <span class="heat__c" style="--v:0.881" title="JavaScript · Spanish: 75"></span>
+          <span class="heat__c" style="--v:0.847" title="JavaScript · French: 72.5"></span>
+          <span class="heat__c" style="--v:0.932" title="JavaScript · Italian: 78.75"></span>
+          <span class="heat__c" style="--v:0.966" title="JavaScript · Portuguese: 81.25"></span>
+          <span class="heat__c" style="--v:0.814" title="JavaScript · Greek: 70"></span>
+          <span class="heat__c" style="--v:0.966" title="JavaScript · Hungarian: 81.25"></span>
+          <span class="heat__c" style="--v:0.881" title="JavaScript · Dutch: 75"></span>
+          <span class="heat__c" style="--v:0.915" title="JavaScript · Finnish: 77.5"></span>
+          <span class="heat__c" style="--v:0.881" title="JavaScript · Indonesian: 75"></span>
+          <span class="heat__c" style="--v:0.864" title="JavaScript · Turkish: 73.75"></span>
+          <span class="heat__c" style="--v:0.797" title="JavaScript · Arabic: 68.75"></span>
+          <span class="heat__c" style="--v:0.898" title="JavaScript · Vietnamese: 76.25"></span>
+          <span class="heat__c" style="--v:0.932" title="JavaScript · Bulgarian: 78.75"></span>
+          <span class="heat__c" style="--v:0.864" title="JavaScript · Persian: 73.75"></span>
+          <span class="heat__c" style="--v:0.864" title="JavaScript · Malay: 73.75"></span>
+          <span class="heat__c" style="--v:0.847" title="JavaScript · Hebrew: 72.5"></span>
+          <span class="heat__c" style="--v:0.932" title="JavaScript · Estonian: 78.75"></span>
+          <span class="heat__c" style="--v:0.915" title="JavaScript · Tagalog: 77.5"></span>
+          <span class="heat__c" style="--v:0.915" title="JavaScript · Afrikaans: 77.5"></span>
+          <span class="heat__pl">TypeScript</span>
+          <span class="heat__c" style="--v:0.881" title="TypeScript · English: 75"></span>
+          <span class="heat__c" style="--v:0.814" title="TypeScript · Russian: 70"></span>
+          <span class="heat__c" style="--v:0.797" title="TypeScript · Chinese: 68.75"></span>
+          <span class="heat__c" style="--v:0.814" title="TypeScript · German: 70"></span>
+          <span class="heat__c" style="--v:0.864" title="TypeScript · Spanish: 73.75"></span>
+          <span class="heat__c" style="--v:0.831" title="TypeScript · French: 71.25"></span>
+          <span class="heat__c" style="--v:0.847" title="TypeScript · Italian: 72.5"></span>
+          <span class="heat__c" style="--v:0.831" title="TypeScript · Portuguese: 71.25"></span>
+          <span class="heat__c" style="--v:0.746" title="TypeScript · Greek: 65"></span>
+          <span class="heat__c" style="--v:0.898" title="TypeScript · Hungarian: 76.25"></span>
+          <span class="heat__c" style="--v:0.814" title="TypeScript · Dutch: 70"></span>
+          <span class="heat__c" style="--v:0.864" title="TypeScript · Finnish: 73.75"></span>
+          <span class="heat__c" style="--v:0.831" title="TypeScript · Indonesian: 71.25"></span>
+          <span class="heat__c" style="--v:0.797" title="TypeScript · Turkish: 68.75"></span>
+          <span class="heat__c" style="--v:0.763" title="TypeScript · Arabic: 66.25"></span>
+          <span class="heat__c" style="--v:0.814" title="TypeScript · Vietnamese: 70"></span>
+          <span class="heat__c" style="--v:0.814" title="TypeScript · Bulgarian: 70"></span>
+          <span class="heat__c" style="--v:0.847" title="TypeScript · Persian: 72.5"></span>
+          <span class="heat__c" style="--v:0.831" title="TypeScript · Malay: 71.25"></span>
+          <span class="heat__c" style="--v:0.831" title="TypeScript · Hebrew: 71.25"></span>
+          <span class="heat__c" style="--v:0.847" title="TypeScript · Estonian: 72.5"></span>
+          <span class="heat__c" style="--v:0.847" title="TypeScript · Tagalog: 72.5"></span>
+          <span class="heat__c" style="--v:0.814" title="TypeScript · Afrikaans: 70"></span>
+          <span class="heat__pl">C#</span>
+          <span class="heat__c" style="--v:0.559" title="C# · English: 51.25"></span>
+          <span class="heat__c" style="--v:0.678" title="C# · Russian: 60"></span>
+          <span class="heat__c" style="--v:0.644" title="C# · Chinese: 57.5"></span>
+          <span class="heat__c" style="--v:0.712" title="C# · German: 62.5"></span>
+          <span class="heat__c" style="--v:0.729" title="C# · Spanish: 63.75"></span>
+          <span class="heat__c" style="--v:0.644" title="C# · French: 57.5"></span>
+          <span class="heat__c" style="--v:0.627" title="C# · Italian: 56.25"></span>
+          <span class="heat__c" style="--v:0.729" title="C# · Portuguese: 63.75"></span>
+          <span class="heat__c" style="--v:0.593" title="C# · Greek: 53.75"></span>
+          <span class="heat__c" style="--v:0.644" title="C# · Hungarian: 57.5"></span>
+          <span class="heat__c" style="--v:0.627" title="C# · Dutch: 56.25"></span>
+          <span class="heat__c" style="--v:0.627" title="C# · Finnish: 56.25"></span>
+          <span class="heat__c" style="--v:0.627" title="C# · Indonesian: 56.25"></span>
+          <span class="heat__c" style="--v:0.610" title="C# · Turkish: 55"></span>
+          <span class="heat__c" style="--v:0.627" title="C# · Arabic: 56.25"></span>
+          <span class="heat__c" style="--v:0.661" title="C# · Vietnamese: 58.75"></span>
+          <span class="heat__c" style="--v:0.661" title="C# · Bulgarian: 58.75"></span>
+          <span class="heat__c" style="--v:0.644" title="C# · Persian: 57.5"></span>
+          <span class="heat__c" style="--v:0.678" title="C# · Malay: 60"></span>
+          <span class="heat__c" style="--v:0.593" title="C# · Hebrew: 53.75"></span>
+          <span class="heat__c" style="--v:0.627" title="C# · Estonian: 56.25"></span>
+          <span class="heat__c" style="--v:0.729" title="C# · Tagalog: 63.75"></span>
+          <span class="heat__c" style="--v:0.576" title="C# · Afrikaans: 52.5"></span>
+          <span class="heat__pl">Go</span>
+          <span class="heat__c" style="--v:0.508" title="Go · English: 47.5"></span>
+          <span class="heat__c" style="--v:0.542" title="Go · Russian: 50"></span>
+          <span class="heat__c" style="--v:0.508" title="Go · Chinese: 47.5"></span>
+          <span class="heat__c" style="--v:0.424" title="Go · German: 41.25"></span>
+          <span class="heat__c" style="--v:0.475" title="Go · Spanish: 45"></span>
+          <span class="heat__c" style="--v:0.458" title="Go · French: 43.75"></span>
+          <span class="heat__c" style="--v:0.525" title="Go · Italian: 48.75"></span>
+          <span class="heat__c" style="--v:0.475" title="Go · Portuguese: 45"></span>
+          <span class="heat__c" style="--v:0.424" title="Go · Greek: 41.25"></span>
+          <span class="heat__c" style="--v:0.475" title="Go · Hungarian: 45"></span>
+          <span class="heat__c" style="--v:0.542" title="Go · Dutch: 50"></span>
+          <span class="heat__c" style="--v:0.458" title="Go · Finnish: 43.75"></span>
+          <span class="heat__c" style="--v:0.390" title="Go · Indonesian: 38.75"></span>
+          <span class="heat__c" style="--v:0.475" title="Go · Turkish: 45"></span>
+          <span class="heat__c" style="--v:0.458" title="Go · Arabic: 43.75"></span>
+          <span class="heat__c" style="--v:0.458" title="Go · Vietnamese: 43.75"></span>
+          <span class="heat__c" style="--v:0.508" title="Go · Bulgarian: 47.5"></span>
+          <span class="heat__c" style="--v:0.475" title="Go · Persian: 45"></span>
+          <span class="heat__c" style="--v:0.508" title="Go · Malay: 47.5"></span>
+          <span class="heat__c" style="--v:0.475" title="Go · Hebrew: 45"></span>
+          <span class="heat__c" style="--v:0.458" title="Go · Estonian: 43.75"></span>
+          <span class="heat__c" style="--v:0.407" title="Go · Tagalog: 40"></span>
+          <span class="heat__c" style="--v:0.424" title="Go · Afrikaans: 41.25"></span>
+          <span class="heat__pl">Kotlin</span>
+          <span class="heat__c" style="--v:0.729" title="Kotlin · English: 63.75"></span>
+          <span class="heat__c" style="--v:0.797" title="Kotlin · Russian: 68.75"></span>
+          <span class="heat__c" style="--v:0.780" title="Kotlin · Chinese: 67.5"></span>
+          <span class="heat__c" style="--v:0.797" title="Kotlin · German: 68.75"></span>
+          <span class="heat__c" style="--v:0.746" title="Kotlin · Spanish: 65"></span>
+          <span class="heat__c" style="--v:0.780" title="Kotlin · French: 67.5"></span>
+          <span class="heat__c" style="--v:0.797" title="Kotlin · Italian: 68.75"></span>
+          <span class="heat__c" style="--v:0.814" title="Kotlin · Portuguese: 70"></span>
+          <span class="heat__c" style="--v:0.729" title="Kotlin · Greek: 63.75"></span>
+          <span class="heat__c" style="--v:0.864" title="Kotlin · Hungarian: 73.75"></span>
+          <span class="heat__c" style="--v:0.729" title="Kotlin · Dutch: 63.75"></span>
+          <span class="heat__c" style="--v:0.746" title="Kotlin · Finnish: 65"></span>
+          <span class="heat__c" style="--v:0.712" title="Kotlin · Indonesian: 62.5"></span>
+          <span class="heat__c" style="--v:0.695" title="Kotlin · Turkish: 61.25"></span>
+          <span class="heat__c" style="--v:0.695" title="Kotlin · Arabic: 61.25"></span>
+          <span class="heat__c" style="--v:0.746" title="Kotlin · Vietnamese: 65"></span>
+          <span class="heat__c" style="--v:0.780" title="Kotlin · Bulgarian: 67.5"></span>
+          <span class="heat__c" style="--v:0.746" title="Kotlin · Persian: 65"></span>
+          <span class="heat__c" style="--v:0.729" title="Kotlin · Malay: 63.75"></span>
+          <span class="heat__c" style="--v:0.695" title="Kotlin · Hebrew: 61.25"></span>
+          <span class="heat__c" style="--v:0.746" title="Kotlin · Estonian: 65"></span>
+          <span class="heat__c" style="--v:0.763" title="Kotlin · Tagalog: 66.25"></span>
+          <span class="heat__c" style="--v:0.763" title="Kotlin · Afrikaans: 66.25"></span>
+          <span class="heat__pl">PHP</span>
+          <span class="heat__c" style="--v:0.932" title="PHP · English: 78.75"></span>
+          <span class="heat__c" style="--v:0.864" title="PHP · Russian: 73.75"></span>
+          <span class="heat__c" style="--v:0.847" title="PHP · Chinese: 72.5"></span>
+          <span class="heat__c" style="--v:0.932" title="PHP · German: 78.75"></span>
+          <span class="heat__c" style="--v:0.898" title="PHP · Spanish: 76.25"></span>
+          <span class="heat__c" style="--v:0.898" title="PHP · French: 76.25"></span>
+          <span class="heat__c" style="--v:0.983" title="PHP · Italian: 82.5"></span>
+          <span class="heat__c" style="--v:0.932" title="PHP · Portuguese: 78.75"></span>
+          <span class="heat__c" style="--v:0.881" title="PHP · Greek: 75"></span>
+          <span class="heat__c" style="--v:0.949" title="PHP · Hungarian: 80"></span>
+          <span class="heat__c" style="--v:0.881" title="PHP · Dutch: 75"></span>
+          <span class="heat__c" style="--v:0.898" title="PHP · Finnish: 76.25"></span>
+          <span class="heat__c" style="--v:0.932" title="PHP · Indonesian: 78.75"></span>
+          <span class="heat__c" style="--v:0.864" title="PHP · Turkish: 73.75"></span>
+          <span class="heat__c" style="--v:0.881" title="PHP · Arabic: 75"></span>
+          <span class="heat__c" style="--v:0.915" title="PHP · Vietnamese: 77.5"></span>
+          <span class="heat__c" style="--v:0.966" title="PHP · Bulgarian: 81.25"></span>
+          <span class="heat__c" style="--v:0.864" title="PHP · Persian: 73.75"></span>
+          <span class="heat__c" style="--v:0.898" title="PHP · Malay: 76.25"></span>
+          <span class="heat__c" style="--v:0.864" title="PHP · Hebrew: 73.75"></span>
+          <span class="heat__c" style="--v:0.932" title="PHP · Estonian: 78.75"></span>
+          <span class="heat__c" style="--v:0.898" title="PHP · Tagalog: 76.25"></span>
+          <span class="heat__c" style="--v:0.932" title="PHP · Afrikaans: 78.75"></span>
+          <span class="heat__pl">Ruby</span>
+          <span class="heat__c" style="--v:0.763" title="Ruby · English: 66.25"></span>
+          <span class="heat__c" style="--v:0.797" title="Ruby · Russian: 68.75"></span>
+          <span class="heat__c" style="--v:0.780" title="Ruby · Chinese: 67.5"></span>
+          <span class="heat__c" style="--v:0.847" title="Ruby · German: 72.5"></span>
+          <span class="heat__c" style="--v:0.763" title="Ruby · Spanish: 66.25"></span>
+          <span class="heat__c" style="--v:0.678" title="Ruby · French: 60"></span>
+          <span class="heat__c" style="--v:0.831" title="Ruby · Italian: 71.25"></span>
+          <span class="heat__c" style="--v:0.729" title="Ruby · Portuguese: 63.75"></span>
+          <span class="heat__c" style="--v:0.695" title="Ruby · Greek: 61.25"></span>
+          <span class="heat__c" style="--v:0.746" title="Ruby · Hungarian: 65"></span>
+          <span class="heat__c" style="--v:0.695" title="Ruby · Dutch: 61.25"></span>
+          <span class="heat__c" style="--v:0.746" title="Ruby · Finnish: 65"></span>
+          <span class="heat__c" style="--v:0.695" title="Ruby · Indonesian: 61.25"></span>
+          <span class="heat__c" style="--v:0.559" title="Ruby · Turkish: 51.25"></span>
+          <span class="heat__c" style="--v:0.593" title="Ruby · Arabic: 53.75"></span>
+          <span class="heat__c" style="--v:0.508" title="Ruby · Vietnamese: 47.5"></span>
+          <span class="heat__c" style="--v:0.797" title="Ruby · Bulgarian: 68.75"></span>
+          <span class="heat__c" style="--v:0.712" title="Ruby · Persian: 62.5"></span>
+          <span class="heat__c" style="--v:0.729" title="Ruby · Malay: 63.75"></span>
+          <span class="heat__c" style="--v:0.678" title="Ruby · Hebrew: 60"></span>
+          <span class="heat__c" style="--v:0.746" title="Ruby · Estonian: 65"></span>
+          <span class="heat__c" style="--v:0.763" title="Ruby · Tagalog: 66.25"></span>
+          <span class="heat__c" style="--v:0.797" title="Ruby · Afrikaans: 68.75"></span>
+          <span class="heat__pl">Perl</span>
+          <span class="heat__c" style="--v:0.712" title="Perl · English: 62.5"></span>
+          <span class="heat__c" style="--v:0.492" title="Perl · Russian: 46.25"></span>
+          <span class="heat__c" style="--v:0.576" title="Perl · Chinese: 52.5"></span>
+          <span class="heat__c" style="--v:0.610" title="Perl · German: 55"></span>
+          <span class="heat__c" style="--v:0.576" title="Perl · Spanish: 52.5"></span>
+          <span class="heat__c" style="--v:0.525" title="Perl · French: 48.75"></span>
+          <span class="heat__c" style="--v:0.576" title="Perl · Italian: 52.5"></span>
+          <span class="heat__c" style="--v:0.627" title="Perl · Portuguese: 56.25"></span>
+          <span class="heat__c" style="--v:0.525" title="Perl · Greek: 48.75"></span>
+          <span class="heat__c" style="--v:0.644" title="Perl · Hungarian: 57.5"></span>
+          <span class="heat__c" style="--v:0.542" title="Perl · Dutch: 50"></span>
+          <span class="heat__c" style="--v:0.576" title="Perl · Finnish: 52.5"></span>
+          <span class="heat__c" style="--v:0.610" title="Perl · Indonesian: 55"></span>
+          <span class="heat__c" style="--v:0.559" title="Perl · Turkish: 51.25"></span>
+          <span class="heat__c" style="--v:0.542" title="Perl · Arabic: 50"></span>
+          <span class="heat__c" style="--v:0.576" title="Perl · Vietnamese: 52.5"></span>
+          <span class="heat__c" style="--v:0.542" title="Perl · Bulgarian: 50"></span>
+          <span class="heat__c" style="--v:0.576" title="Perl · Persian: 52.5"></span>
+          <span class="heat__c" style="--v:0.610" title="Perl · Malay: 55"></span>
+          <span class="heat__c" style="--v:0.525" title="Perl · Hebrew: 48.75"></span>
+          <span class="heat__c" style="--v:0.576" title="Perl · Estonian: 52.5"></span>
+          <span class="heat__c" style="--v:0.576" title="Perl · Tagalog: 52.5"></span>
+          <span class="heat__c" style="--v:0.542" title="Perl · Afrikaans: 50"></span>
+          <span class="heat__pl">Swift</span>
+          <span class="heat__c" style="--v:0.576" title="Swift · English: 52.5"></span>
+          <span class="heat__c" style="--v:0.661" title="Swift · Russian: 58.75"></span>
+          <span class="heat__c" style="--v:0.576" title="Swift · Chinese: 52.5"></span>
+          <span class="heat__c" style="--v:0.610" title="Swift · German: 55"></span>
+          <span class="heat__c" style="--v:0.610" title="Swift · Spanish: 55"></span>
+          <span class="heat__c" style="--v:0.593" title="Swift · French: 53.75"></span>
+          <span class="heat__c" style="--v:0.627" title="Swift · Italian: 56.25"></span>
+          <span class="heat__c" style="--v:0.593" title="Swift · Portuguese: 53.75"></span>
+          <span class="heat__c" style="--v:0.559" title="Swift · Greek: 51.25"></span>
+          <span class="heat__c" style="--v:0.644" title="Swift · Hungarian: 57.5"></span>
+          <span class="heat__c" style="--v:0.627" title="Swift · Dutch: 56.25"></span>
+          <span class="heat__c" style="--v:0.610" title="Swift · Finnish: 55"></span>
+          <span class="heat__c" style="--v:0.661" title="Swift · Indonesian: 58.75"></span>
+          <span class="heat__c" style="--v:0.644" title="Swift · Turkish: 57.5"></span>
+          <span class="heat__c" style="--v:0.610" title="Swift · Arabic: 55"></span>
+          <span class="heat__c" style="--v:0.627" title="Swift · Vietnamese: 56.25"></span>
+          <span class="heat__c" style="--v:0.644" title="Swift · Bulgarian: 57.5"></span>
+          <span class="heat__c" style="--v:0.661" title="Swift · Persian: 58.75"></span>
+          <span class="heat__c" style="--v:0.610" title="Swift · Malay: 55"></span>
+          <span class="heat__c" style="--v:0.610" title="Swift · Hebrew: 55"></span>
+          <span class="heat__c" style="--v:0.627" title="Swift · Estonian: 56.25"></span>
+          <span class="heat__c" style="--v:0.627" title="Swift · Tagalog: 56.25"></span>
+          <span class="heat__c" style="--v:0.644" title="Swift · Afrikaans: 57.5"></span>
+          <span class="heat__pl">Scala</span>
+          <span class="heat__c" style="--v:0.254" title="Scala · English: 28.75"></span>
+          <span class="heat__c" style="--v:0.220" title="Scala · Russian: 26.25"></span>
+          <span class="heat__c" style="--v:0.119" title="Scala · Chinese: 18.75"></span>
+          <span class="heat__c" style="--v:0.220" title="Scala · German: 26.25"></span>
+          <span class="heat__c" style="--v:0.203" title="Scala · Spanish: 25"></span>
+          <span class="heat__c" style="--v:0.186" title="Scala · French: 23.75"></span>
+          <span class="heat__c" style="--v:0.136" title="Scala · Italian: 20"></span>
+          <span class="heat__c" style="--v:0.068" title="Scala · Portuguese: 15"></span>
+          <span class="heat__c" style="--v:0.119" title="Scala · Greek: 18.75"></span>
+          <span class="heat__c" style="--v:0.305" title="Scala · Hungarian: 32.5"></span>
+          <span class="heat__c" style="--v:0.186" title="Scala · Dutch: 23.75"></span>
+          <span class="heat__c" style="--v:0.254" title="Scala · Finnish: 28.75"></span>
+          <span class="heat__c" style="--v:0.153" title="Scala · Indonesian: 21.25"></span>
+          <span class="heat__c" style="--v:0.424" title="Scala · Turkish: 41.25"></span>
+          <span class="heat__c" style="--v:0.000" title="Scala · Arabic: 10"></span>
+          <span class="heat__c" style="--v:0.237" title="Scala · Vietnamese: 27.5"></span>
+          <span class="heat__c" style="--v:0.203" title="Scala · Bulgarian: 25"></span>
+          <span class="heat__c" style="--v:0.237" title="Scala · Persian: 27.5"></span>
+          <span class="heat__c" style="--v:0.169" title="Scala · Malay: 22.5"></span>
+          <span class="heat__c" style="--v:0.102" title="Scala · Hebrew: 17.5"></span>
+          <span class="heat__c" style="--v:0.254" title="Scala · Estonian: 28.75"></span>
+          <span class="heat__c" style="--v:0.153" title="Scala · Tagalog: 21.25"></span>
+          <span class="heat__c" style="--v:0.136" title="Scala · Afrikaans: 20"></span>
+              </div>
+              <div class="heat__scale"><span>GPT-4 pass@1</span><span>10</span><i></i><span>83.75</span><span style="margin-left:auto">The same 80 problems in 12 programming × 23 natural languages. Peng, Chai and Li, LREC-COLING 2024.</span></div>
+            </figure>
+            <ol class="takeaways">
+              <li class="fragment fade-up"><b>Language matters.</b><span>Scala: 10 to 41, depending on the prompt’s language.</span></li>
+              <li class="fragment fade-up"><b>One model leads everywhere.</b><span>GPT-4 is best in all 276 language pairs.</span></li>
+              <li class="fragment fade-up"><b>Code pretraining beats size.</b><span>CodeGen2 16B beats GPT-3.5 in 9 of 12.</span></li>
+            </ol>
           </div>
-          <div class="heat__scale"><span>10</span><i></i><span>83.75 pass@1</span><span style="margin-left:auto">columns: 23 natural languages · rows: 12 programming languages</span></div>
         </div>
+        <aside class="notes">Proxy replaced: English-only coding scores. Every row is a programming language, every column a natural language; only the prompt’s language changes.</aside>
       </section>
 
-      <!-- 20 · Findings -->
-      <section class="slide slide--dark" data-section="IV · Multilingual">
-        <p class="kicker rise">Findings</p>
-        <h2 class="title rise">The prompt’s language moves the score</h2>
-        <div class="stats stats--4">
-          <div class="stat rise"><p class="stat__k">Strongest model</p><p class="stat__v">276<small> / 276</small></p><p>Language pairs where GPT-4 has the highest pass@1.</p></div>
-          <div class="stat stat--hi rise"><p class="stat__k">Same task, other language</p><p class="stat__v">10–41</p><p>GPT-4 pass@1 on the same Scala problems, from Arabic to Turkish prompts.</p></div>
-          <div class="stat rise"><p class="stat__k">Code pretraining</p><p class="stat__v">9<small> of 12</small></p><p>Programming languages where CodeGen2 16B beats the far larger GPT-3.5.</p></div>
-          <div class="stat rise"><p class="stat__k">Hardest language</p><p class="stat__v">Scala</p><p>No CodeT5+ or CodeGen2 model solves a single Scala problem.</p></div>
+      <!-- 12 · Publications -->
+      <section id="publications" data-section="Publications">
+        <div class="slide">
+          <p class="kicker rise">Publications</p>
+          <h2 class="title rise">Papers, 2024–2026</h2>
+          <ol class="pubs">
+          <li class="rise"><a href="/research/repeated-tokens/">What Is a Repeated Token Worth? The Scaling Geometry of Multi-Epoch Pretraining</a><span class="v">arXiv preprint</span></li>
+          <li class="rise"><a href="/research/xiangqibench/">Finding the Move Is Not Winning the Game: XiangqiBench for Closed-Loop Evaluation of LLM Agents</a><span class="v">arXiv preprint</span></li>
+          <li class="rise"><a href="https://aclanthology.org/2025.emnlp-main.1146/" target="_blank" rel="noopener">Understanding Subword Compositionality of Large Language Models</a><span class="v">EMNLP 2025</span></li>
+          <li class="rise"><a href="https://aclanthology.org/2025.emnlp-main.1149/" target="_blank" rel="noopener">Debiasing Multilingual LLMs in Cross-lingual Latent Space</a><span class="v">EMNLP 2025</span></li>
+          <li class="rise"><a href="https://aclanthology.org/2025.emnlp-main.109/" target="_blank" rel="noopener">CodeMixBench: Evaluating Code-Mixing Capabilities of LLMs Across 18 Languages</a><span class="v">EMNLP 2025</span></li>
+          <li class="rise"><a href="https://aclanthology.org/2025.findings-emnlp.88/" target="_blank" rel="noopener">EvolKV: Evolutionary KV Cache Compression for LLM Inference</a><span class="v">Findings of EMNLP 2025</span></li>
+          <li class="rise"><a href="https://aclanthology.org/2025.coling-industry.56/" target="_blank" rel="noopener">Aurora-M: Open Source Continual Pre-training for Multilingual Language and Code</a><span class="v">COLING 2025 (Industry)</span></li>
+          <li class="rise"><a href="https://aclanthology.org/2024.emnlp-main.315/" target="_blank" rel="noopener">Concept Space Alignment in Multilingual LLMs</a><span class="v">EMNLP 2024</span></li>
+          <li class="rise"><a href="/research/tkeval/">Tokenization Falling Short: On Subword Robustness in Large Language Models</a><span class="v">Findings of EMNLP 2024</span></li>
+          <li class="rise"><a href="https://proceedings.mlr.press/v235/li24i.html" target="_blank" rel="noopener">GiLOT: Interpreting Generative Language Models via Optimal Transport</a><span class="v">ICML 2024</span></li>
+          <li class="rise"><a href="/research/humaneval-xl/">HumanEval-XL: A Multilingual Code Generation Benchmark for Cross-lingual Natural Language Generalization</a><span class="v">LREC-COLING 2024</span></li>
+          </ol>
         </div>
-        <ol class="points points--tight" style="margin-top:52px">
-          <li class="rise"><span><b>Families rank languages alike</b>: Pearson 0.87 between GPT-3.5 and GPT-4 across resource levels; different families do not.</span></li>
-        </ol>
+        <aside class="notes">Full list with links; every entry is clickable. BibTeX is on the website.</aside>
       </section>
 
-      <!-- 21 · Publications -->
-      <section class="slide slide--light" data-section="Publications">
-        <p class="kicker rise">Publications</p>
-        <h2 class="title rise">Selected papers, 2024–2026</h2>
-        <ol class="pubs">
-            <li class="rise"><span class="c">Pretraining</span><a href="/research/repeated-tokens/">What Is a Repeated Token Worth? The Scaling Geometry of Multi-Epoch Pretraining</a><span class="v">arXiv preprint</span></li>
-            <li class="rise"><span class="c">Agents</span><a href="/research/xiangqibench/">Finding the Move Is Not Winning the Game: XiangqiBench for Closed-Loop Evaluation of LLM Agents</a><span class="v">arXiv preprint</span></li>
-            <li class="rise"><span class="c">Tokenization</span><a href="https://aclanthology.org/2025.emnlp-main.1146/" target="_blank" rel="noopener">Understanding Subword Compositionality of Large Language Models</a><span class="v">EMNLP 2025</span></li>
-            <li class="rise"><span class="c">Multilingual</span><a href="https://aclanthology.org/2025.emnlp-main.1149/" target="_blank" rel="noopener">Debiasing Multilingual LLMs in Cross-lingual Latent Space</a><span class="v">EMNLP 2025</span></li>
-            <li class="rise"><span class="c">Multilingual</span><a href="https://aclanthology.org/2025.emnlp-main.109/" target="_blank" rel="noopener">CodeMixBench: Evaluating Code-Mixing Capabilities of LLMs Across 18 Languages</a><span class="v">EMNLP 2025</span></li>
-            <li class="rise"><span class="c">Efficiency</span><a href="https://aclanthology.org/2025.findings-emnlp.88/" target="_blank" rel="noopener">EvolKV: Evolutionary KV Cache Compression for LLM Inference</a><span class="v">Findings of EMNLP 2025</span></li>
-            <li class="rise"><span class="c">Pretraining</span><a href="https://aclanthology.org/2025.coling-industry.56/" target="_blank" rel="noopener">Aurora-M: Open Source Continual Pre-training for Multilingual Language and Code</a><span class="v">COLING 2025 (Industry)</span></li>
-            <li class="rise"><span class="c">Multilingual</span><a href="https://aclanthology.org/2024.emnlp-main.315/" target="_blank" rel="noopener">Concept Space Alignment in Multilingual LLMs</a><span class="v">EMNLP 2024</span></li>
-            <li class="rise"><span class="c">Tokenization</span><a href="/research/tkeval/">Tokenization Falling Short: On Subword Robustness in Large Language Models</a><span class="v">Findings of EMNLP 2024</span></li>
-            <li class="rise"><span class="c">Interpretability</span><a href="https://proceedings.mlr.press/v235/li24i.html" target="_blank" rel="noopener">GiLOT: Interpreting Generative Language Models via Optimal Transport</a><span class="v">ICML 2024</span></li>
-            <li class="rise"><span class="c">Multilingual</span><a href="/research/humaneval-xl/">HumanEval-XL: A Multilingual Code Generation Benchmark for Cross-lingual Natural Language Generalization</a><span class="v">LREC-COLING 2024</span></li>
-        </ol>
-      </section>
-
-      <!-- 22 · Habits -->
-      <section class="slide slide--dark" data-section="Lessons">
-        <p class="kicker rise">Across projects</p>
-        <h2 class="title rise">Three habits that carry over</h2>
-        <ol class="points">
-          <li class="rise"><span><b>Price data by its value</b>, not by how often it was seen.</span></li>
-          <li class="rise"><span><b>Score the whole trajectory</b>, and report reliability (pass^k) next to coverage (pass@k).</span></li>
-          <li class="rise"><span><b>Hold the task fixed and vary one factor</b>, so a drop measures that factor and nothing else.</span></li>
-        </ol>
-      </section>
-
-      <!-- 23 · Close -->
-      <section class="slide slide--dark slide--cover" data-title="Thank you">
-        <p class="kicker rise">Thank you</p>
-        <h2 class="cover__title rise">Measure what models actually do.<br /><em>Then share it openly.</em></h2>
-        <p class="cover__sub rise">Benchmarks, data and code are public. Negative results are welcome.</p>
-        <div class="links rise">
-          <a href="/">floatai.github.io</a>
-          <a href="https://github.com/floatai" target="_blank" rel="noopener">github.com/floatai ↗</a>
-          <a href="https://huggingface.co/floatai" target="_blank" rel="noopener">huggingface.co/floatai ↗</a>
+      <!-- 13 · Get involved -->
+      <section id="get-involved" data-section="Get involved">
+        <div class="slide">
+          <p class="kicker rise">Get involved</p>
+          <h2 class="title rise">Open to anyone with a focused question</h2>
+          <div class="tiles tiles--3">
+            <div class="tile rise"><p class="lbl">Use</p><h3>Run the benchmarks</h3><p>Evaluate your models with our harnesses and report what you find, negative results included.</p><p class="meta">github.com/floatai</p></div>
+            <div class="tile rise"><p class="lbl">Build</p><h3>Contribute</h3><p>Fix a bug, add a model backend or a language. Every merged contribution is credited.</p><p class="meta">Issues and pull requests</p></div>
+            <div class="tile rise"><p class="lbl">Ask</p><h3>Propose a project</h3><p>Bring a question a controlled experiment can answer, and find collaborators.</p><p class="meta">GitHub Discussions</p></div>
+          </div>
         </div>
+        <aside class="notes">Three ways in, from lightest to deepest commitment.</aside>
       </section>
-    </div>
-  </main>
 
-  <div class="chrome progress" aria-hidden="true"><i></i></div>
-  <nav class="chrome controls" aria-label="Slide controls">
-    <button id="b-prev" type="button" aria-label="Previous slide">‹</button>
-    <span class="controls__count" id="count" aria-live="polite"></span>
-    <button id="b-next" type="button" aria-label="Next slide">›</button>
-    <span class="controls__sep"></span>
-    <button id="b-laser" type="button" aria-pressed="false" aria-label="Laser pointer" title="Laser pointer (L)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r="6"/></svg></button>
-    <button id="b-grid" type="button" aria-pressed="false" aria-label="Overview" title="Overview (G)"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></button>
-    <button id="b-full" type="button" aria-label="Fullscreen" title="Fullscreen (F)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
-    <button id="b-help" type="button" aria-label="Keyboard shortcuts" title="Help (?)">?</button>
-  </nav>
-  <div class="laser" aria-hidden="true"></div>
-  <div class="help" id="help" role="dialog" aria-label="Keyboard shortcuts" hidden>
-    <div class="help__box">
-      <h2>Keyboard</h2>
-      <dl>
-        <dt><kbd>→</kbd><kbd>Space</kbd></dt><dd>Next slide</dd>
-        <dt><kbd>←</kbd></dt><dd>Previous slide</dd>
-        <dt><kbd>Home</kbd><kbd>End</kbd></dt><dd>First or last slide</dd>
-        <dt><kbd>G</kbd></dt><dd>Overview of all slides</dd>
-        <dt><kbd>F</kbd></dt><dd>Fullscreen</dd>
-        <dt><kbd>L</kbd></dt><dd>Laser pointer</dd>
-        <dt><kbd>?</kbd><kbd>Esc</kbd></dt><dd>Show or close this help</dd>
-      </dl>
-      <p class="small" style="margin:20px 0 0;color:#9aa3b2">Each slide has its own address, e.g. <span class="mono">/slides/#8</span>. Print to PDF for a handout.</p>
+      <!-- 14 · Close -->
+      <section id="thanks" data-title="Thank you">
+        <div class="slide slide--cover">
+          <img class="cover__mark rise" src="/assets/brand/floatai-icon.svg" alt="" />
+          <h2 class="statement rise">Measure what models do.<br /><span class="glow">Share it openly.</span></h2>
+          <div class="links rise">
+            <a href="/">floatai.github.io</a>
+            <a href="https://github.com/floatai" target="_blank" rel="noopener">github.com/floatai</a>
+            <a href="https://huggingface.co/floatai" target="_blank" rel="noopener">huggingface.co/floatai</a>
+          </div>
+        </div>
+        <aside class="notes">Thank you. Questions.</aside>
+      </section>
     </div>
   </div>
-  <script src="/slides/slides.js?v=1" defer></script>
+
+  <nav class="chrome fades controls" aria-label="Slide controls">
+    <button id="b-prev" type="button" aria-label="Previous">‹</button>
+    <span class="controls__count" id="count" aria-live="polite"></span>
+    <button id="b-next" type="button" aria-label="Next">›</button>
+    <span class="controls__sep"></span>
+    <button id="b-notes" type="button" aria-label="Speaker view" title="Speaker view (S)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5 14h6M8 11.5V14"/></svg></button>
+    <button id="b-laser" type="button" aria-pressed="false" aria-label="Laser pointer" title="Laser pointer (L)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r="6"/></svg></button>
+    <button id="b-grid" type="button" aria-pressed="false" aria-label="Overview" title="Overview (O)"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></button>
+    <button id="b-full" type="button" aria-label="Fullscreen" title="Fullscreen (F)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
+    <button id="b-help" type="button" aria-label="Keyboard shortcuts" title="Shortcuts (?)">?</button>
+  </nav>
+  <div class="laser" aria-hidden="true"></div>
+  <script src="/assets/vendor/reveal/reveal.js"></script>
+  <script src="/assets/vendor/reveal/plugin/notes.js"></script>
+  <script src="/slides/slides.js?v=3"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@
   const startTarget = document.getElementById(decodeURIComponent(location.hash.slice(2)));
 
   sections.forEach((section, i) => {
-    const slide = section.querySelector(".slide");
+    const slide = section.querySelector(":scope > .slide");
     slide.querySelectorAll(".rise").forEach((el, j) => el.style.setProperty("--i", j));
     slide.querySelectorAll(".bar__fill").forEach((el, j) => el.style.setProperty("--i", j));
     if (slide.classList.contains("slide--cover") || slide.classList.contains("slide--center")) return;
@@ -25,15 +25,15 @@
       path.setAttribute("pathLength", "1");
       path.animate(
         [{ strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDasharray: 1, strokeDashoffset: 0 }],
-        { duration: 1500, delay: 300 + j * 70, easing: "cubic-bezier(.22, 1, .36, 1)", fill: "backwards" },
+        { duration: 1100, delay: 250 + j * 50, easing: "cubic-bezier(.22, 1, .36, 1)", fill: "backwards" },
       ).finished.then(() => path.removeAttribute("pathLength"), () => {});
     });
     section.querySelectorAll("[data-count]").forEach((el) => {
       const end = el.dataset.count;
       const target = parseFloat(end.replace(/,/g, ""));
-      const t0 = performance.now() + 250;
+      const t0 = performance.now() + 200;
       const tick = (t) => {
-        const p = Math.min(Math.max((t - t0) / 1200, 0), 1);
+        const p = Math.min(Math.max((t - t0) / 1000, 0), 1);
         el.textContent = p < 1 ? Math.round(target * (1 - Math.pow(1 - p, 3))).toLocaleString("en-US") : end;
         if (p < 1) requestAnimationFrame(tick);
       };
@@ -60,10 +60,10 @@
     controls: false,
     progress: true,
     slideNumber: false,
-    transition: "fade",
-    transitionSpeed: "default",
+    transition: "slide",
+    transitionSpeed: "fast",
     backgroundTransition: "none",
-    autoAnimateDuration: 0.8,
+    autoAnimateDuration: 0.6,
     autoAnimateEasing: "cubic-bezier(.22, 1, .36, 1)",
     pdfSeparateFragments: false,
     plugins: [RevealNotes],

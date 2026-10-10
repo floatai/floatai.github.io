@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/vendor/reveal/reveal.css" />
-  <link rel="stylesheet" href="/slides/slides.css?v=3" />
+  <link rel="stylesheet" href="/slides/slides.css?v=4" />
 </head>
 <body>
   <a class="chrome fades back" href="/">← floatai.github.io</a>
@@ -53,23 +53,24 @@
 
       <!-- 3 · Who we are -->
       <section id="who" data-section="About">
-        <div class="slide">
+        <div class="slide slide--mid">
           <p class="kicker rise">Who we are</p>
-          <h2 class="title rise">A small, open network of researchers</h2>
-          <div class="tiles tiles--3">
-            <div class="tile rise"><p class="lbl">People</p><h3>Five cities, one repository</h3><p>Researchers in Beijing, Copenhagen, Zurich, London and Edinburgh, working across universities and labs.</p></div>
-            <div class="tile rise"><p class="lbl">Projects</p><h3>One question each</h3><p>Every project starts from a single question that a controlled experiment can answer.</p></div>
-            <div class="tile rise"><p class="lbl">Output</p><h3>Open by default</h3><p>Benchmarks, datasets and evaluation code ship with the paper.</p></div>
+          <h2 class="title rise">An open research network</h2>
+          <p class="lede rise">Researchers across universities and labs, working in public on how language models learn, read and act.</p>
+          <div class="cols">
+            <div class="col rise"><h3>Focused questions</h3><p>Each project asks one question that an experiment can answer.</p></div>
+            <div class="col rise"><h3>Careful measurement</h3><p>Outcomes rather than proxies, and reliability beside averages.</p></div>
+            <div class="col rise"><h3>Open release</h3><p>Data and evaluation code ship with every paper.</p></div>
           </div>
         </div>
-        <aside class="notes">We are not a company lab. Collaboration happens in public repositories; a project is defined by its question, not by a team.</aside>
+        <aside class="notes">Not a company lab: collaboration happens in public repositories. Three habits shape every result that follows.</aside>
       </section>
 
       <!-- 4 · Research areas -->
       <section id="areas" data-section="About">
         <div class="slide">
-          <p class="kicker rise">Research areas</p>
-          <h2 class="title rise">Six questions, from pretraining to agents</h2>
+          <p class="kicker rise">Research</p>
+          <h2 class="title rise">What we study</h2>
           <div class="tiles tiles--6">
             <div class="tile rise"><p class="lbl">Pretraining</p><h3>How should training reuse a finite corpus?</h3><p class="meta">Repeated tokens · Aurora-M</p></div>
             <div class="tile rise"><p class="lbl">Agents</p><h3>Do agents finish what they start?</h3><p class="meta">XiangqiBench</p></div>
@@ -79,44 +80,28 @@
             <div class="tile rise"><p class="lbl">Interpretability</p><h3>Which inputs drive a generation?</h3><p class="meta">GiLOT</p></div>
           </div>
         </div>
-        <aside class="notes">Each area is phrased as a question. Point to the papers under each tile; the four studies later come from the first four tiles.</aside>
+        <aside class="notes">Each area is a question. The studies that follow come from the first four.</aside>
       </section>
 
-      <!-- 5 · How we work -->
-      <section id="how" data-section="About">
-        <div class="slide">
-          <p class="kicker rise">How we work</p>
-          <h2 class="title rise">Four habits behind every project</h2>
-          <div class="tiles tiles--2">
-            <div class="tile tile--row rise"><p class="lbl">01</p><div><h3>Measure the outcome, not a proxy</h3><p>A correct first move is not a won game.</p></div></div>
-            <div class="tile tile--row rise"><p class="lbl">02</p><div><h3>Change one thing at a time</h3><p>Parallel prompts, matched compute, fixed tasks.</p></div></div>
-            <div class="tile tile--row rise"><p class="lbl">03</p><div><h3>Report reliability with the average</h3><p>pass^k beside pass@k; intervals beside point estimates.</p></div></div>
-            <div class="tile tile--row rise"><p class="lbl">04</p><div><h3>Release what it takes to check us</h3><p>Data and code with the paper; negative results welcome.</p></div></div>
-          </div>
-        </div>
-        <aside class="notes">These habits explain the shape of every result that follows. Habit one is the thread through all four studies.</aside>
-      </section>
-
-      <!-- 6 · At a glance -->
+      <!-- 5 · At a glance -->
       <section id="numbers" data-section="About">
         <div class="slide">
           <p class="kicker rise">At a glance</p>
           <h2 class="title rise">Since 2024</h2>
           <div class="stats stats--4">
             <div class="stat rise"><p class="v glow" data-count="11">11</p><p>papers at EMNLP, ICML and COLING</p></div>
-            <div class="stat rise"><p class="v glow" data-count="4">4</p><p>open benchmarks, from code to games</p></div>
-            <div class="stat rise"><p class="v glow" data-count="22,080">22,080</p><p>parallel coding prompts, 23 languages</p></div>
-            <div class="stat rise"><p class="v glow" data-count="175">175</p><p>controlled pretraining runs, 14M to 2B</p></div>
+            <div class="stat rise"><p class="v glow" data-count="4">4</p><p>open benchmarks</p></div>
+            <div class="stat rise"><p class="v glow" data-count="22,080">22,080</p><p>parallel coding prompts</p></div>
+            <div class="stat rise"><p class="v glow" data-count="175">175</p><p>controlled pretraining runs</p></div>
           </div>
         </div>
         <aside class="notes">Numbers in brief. The 175 runs and 22,080 prompts reappear in the studies.</aside>
       </section>
 
-      <!-- 7 · Selected work -->
+      <!-- 6 · Selected work -->
       <section id="work" data-section="Selected work" data-auto-animate>
         <div class="slide">
-          <p class="kicker rise">Selected work</p>
-          <h2 class="title rise">Four studies, four proxies replaced</h2>
+          <h2 class="title rise">Selected work</h2>
           <ol class="toc">
             <li class="rise"><b data-id="p1">What is a repeated token worth?</b><span>Pretraining · 2026</span></li>
             <li class="rise"><b>Finding the move is not winning the game</b><span>Agents · 2026</span></li>
@@ -132,61 +117,17 @@
         <div class="slide">
           <p class="kicker"><span class="kicker__n">01</span> <span data-id="p1">What is a repeated token worth?</span></p>
           <h2 class="title rise">A repeated token is worth half a fresh one after four to five epochs</h2>
-          <div class="paper">
-            <figure class="figure rise">
-              <svg class="chart" viewBox="0 0 640 360" role="img" aria-labelledby="s-rt-t">
-        <title id="s-rt-t">Loss change from repeating one billion unique tokens, relative to one epoch, for eight model sizes from 14M to 2B. Small models keep improving up to 16 or 32 epochs; 1B and 2B models are best near 4 epochs and lose ground quickly after.</title>
-        <defs><clipPath id="s-rt-clip"><rect x="64" y="22" width="486" height="292"/></clipPath></defs>
-        <path class="grid" d="M64 294.0H548"/>
-        <text class="tick" x="54" y="298.0" text-anchor="end">-100</text>
-        <path class="grid" d="M64 249.0H548"/>
-        <text class="tick" x="54" y="253.0" text-anchor="end">-75</text>
-        <path class="grid" d="M64 204.0H548"/>
-        <text class="tick" x="54" y="208.0" text-anchor="end">-50</text>
-        <path class="grid" d="M64 159.0H548"/>
-        <text class="tick" x="54" y="163.0" text-anchor="end">-25</text>
-        <path class="ax" d="M64 114.0H548"/>
-        <text class="tick" x="54" y="118.0" text-anchor="end">0</text>
-        <path class="grid" d="M64 69.0H548"/>
-        <text class="tick" x="54" y="73.0" text-anchor="end">+25</text>
-        <path class="grid" d="M64 24.0H548"/>
-        <text class="tick" x="54" y="28.0" text-anchor="end">+50</text>
-        <text class="tick" x="64.0" y="334" text-anchor="middle">1</text>
-        <text class="tick" x="160.8" y="334" text-anchor="middle">2</text>
-        <text class="tick" x="257.6" y="334" text-anchor="middle">4</text>
-        <text class="tick" x="354.4" y="334" text-anchor="middle">8</text>
-        <text class="tick" x="451.2" y="334" text-anchor="middle">16</text>
-        <text class="tick" x="548.0" y="334" text-anchor="middle">32</text>
-        <text class="lbl" x="306" y="354" text-anchor="middle">epochs over the same 1B unique tokens</text>
-        <text class="lbl" x="16" y="168" text-anchor="middle" transform="rotate(-90 16 168)">loss vs. one epoch (10⁻³ bpb)</text>
-        <g clip-path="url(#s-rt-clip)"><path class="c-line" style="opacity:0.28" d="M64.0 114.0L160.8 170.5L257.6 206.0L354.4 225.4L451.2 242.9L548.0 241.1"/><path class="c-line" style="opacity:0.38" d="M64.0 114.0L160.8 179.9L257.6 224.2L354.4 251.0L451.2 268.4L548.0 277.6"/><path class="c-line" style="opacity:0.49" d="M64.0 114.0L160.8 187.8L257.6 235.5L354.4 263.4L451.2 276.0L548.0 283.6"/><path class="c-line" style="opacity:0.59" d="M64.0 114.0L160.8 196.6L257.6 247.2L354.4 272.8L451.2 278.0L548.0 271.1"/><path class="c-line" style="opacity:0.69" d="M64.0 114.0L160.8 201.1L257.6 251.7L354.4 266.8L451.2 251.0L548.0 213.9"/><path class="c-line" style="opacity:0.79" d="M64.0 114.0L160.8 235.3L257.6 296.0L354.4 298.1L451.2 240.2L548.0 129.5"/><path class="c-line c-line--hi" style="opacity:0.90" d="M64.0 114.0L160.8 227.9L257.6 276.9L354.4 236.8L451.2 80.0L548.0 -229.3"/><path class="c-line c-line--hi" style="opacity:1.00" d="M64.0 114.0L160.8 231.5L257.6 276.0L354.4 194.5L451.2 -102.4L548.0 -778.8"/></g>
-        <circle class="c-dot" style="opacity:0.28" cx="451.2" cy="242.9" r="3.5"/>
-        <circle class="c-dot" style="opacity:0.38" cx="548.0" cy="277.6" r="3.5"/>
-        <circle class="c-dot" style="opacity:0.49" cx="548.0" cy="283.6" r="3.5"/>
-        <circle class="c-dot" style="opacity:0.59" cx="451.2" cy="278.0" r="3.5"/>
-        <circle class="c-dot" style="opacity:0.69" cx="354.4" cy="266.8" r="3.5"/>
-        <circle class="c-dot" style="opacity:0.79" cx="354.4" cy="298.1" r="3.5"/>
-        <circle class="c-dot c-dot--hi" style="opacity:0.90" cx="257.6" cy="276.9" r="3.5"/>
-        <circle class="c-dot c-dot--hi" style="opacity:1.00" cx="257.6" cy="276.0" r="3.5"/>
-        <text class="lbl hi" x="558" y="28.0">2B <tspan class="tick">(+496)</tspan></text>
-        <text class="lbl hi" x="558" y="42.0">1B <tspan class="tick">(+191)</tspan></text>
-        <text class="lbl" x="558" y="133.5">511M</text>
-        <text class="lbl" x="558" y="217.9">252M</text>
-        <text class="lbl" x="558" y="245.1">14M</text>
-        <text class="lbl" x="558" y="275.1">127M</text>
-        <text class="lbl" x="558" y="289.1">31M</text>
-        <text class="lbl" x="558" y="303.1">59M</text>
-        </svg>
-              <figcaption>Loss change from repeating 1B unique tokens, relative to one epoch, 14M to 2B parameters. Chai and Xiong, arXiv 2610.05591.</figcaption>
-            </figure>
-            <ol class="takeaways">
-              <li class="fragment fade-up"><b>A second epoch is nearly free.</b><span>Worth 0.87–1.02 fresh tokens at every budget.</span></li>
-              <li class="fragment fade-up"><b>Scale epochs with data, not model size.</b><span>The best epoch count stays near four.</span></li>
-              <li class="fragment fade-up"><b>Spread repeats out.</b><span>Back-to-back replay costs 0.46 bpb.</span></li>
-            </ol>
-          </div>
+          <div class="trio">
+              <figure class="trio__col rise"><div class="figure"><svg class="chart" viewBox="0 0 440 330" role="img" aria-label="Value of a repeated token against tokens per parameter, for 2, 4, 8 and 16 epochs"><line class="grid" x1="58" x2="396" y1="255.6" y2="255.6"/><text class="tick" x="50" y="259.1" text-anchor="end">0</text><line class="grid" x1="58" x2="396" y1="143.8" y2="143.8"/><text class="tick" x="50" y="147.3" text-anchor="end">0.5</text><line class="grid" x1="58" x2="396" y1="31.9" y2="31.9"/><text class="tick" x="50" y="35.4" text-anchor="end">1</text><text class="tick" x="69.7" y="296" text-anchor="middle">5</text><text class="tick" x="123.3" y="296" text-anchor="middle">10</text><text class="tick" x="176.9" y="296" text-anchor="middle">20</text><text class="tick" x="247.7" y="296" text-anchor="middle">50</text><text class="tick" x="301.4" y="296" text-anchor="middle">100</text><text class="tick" x="386.3" y="296" text-anchor="middle">300</text><line class="ax" x1="58" x2="396" y1="278" y2="278"/><text class="lbl" x="227" y="324" text-anchor="middle">tokens per parameter D/N</text><text class="lbl" transform="translate(13 146) rotate(-90)" text-anchor="middle">value of a repeat, η</text><line class="ref" x1="58" x2="396" y1="143.8" y2="143.8"/><text class="lbl" x="64" y="160.8">half a fresh token</text><path class="c-line" style="stroke:#cfe0ff" d="M69.7,60.4 L74.9,60.0 L80.2,59.7 L85.5,59.3 L90.8,59.0 L96.1,58.6 L101.3,58.2 L106.6,57.9 L111.9,57.5 L117.2,57.1 L122.4,56.8 L127.7,56.4 L133.0,56.0 L138.3,55.7 L143.6,55.3 L148.8,54.9 L154.1,54.6 L159.4,54.2 L164.7,53.8 L169.9,53.5 L175.2,53.1 L180.5,52.7 L185.8,52.4 L191.0,52.0 L196.3,51.6 L201.6,51.3 L206.9,50.9 L212.2,50.5 L217.4,50.2 L222.7,49.8 L228.0,49.4 L233.3,49.1 L238.5,48.7 L243.8,48.3 L249.1,48.0 L254.4,47.6 L259.7,47.2 L264.9,46.9 L270.2,46.5 L275.5,46.2 L280.8,45.8 L286.0,45.4 L291.3,45.1 L296.6,44.7 L301.9,44.3 L307.2,44.0 L312.4,43.6 L317.7,43.2 L323.0,42.9 L328.3,42.5 L333.5,42.1 L338.8,41.8 L344.1,41.4 L349.4,41.0 L354.7,40.7 L359.9,40.3 L365.2,39.9 L370.5,39.6 L375.8,39.2 L381.0,38.8 L386.3,38.5"/><circle class="pt" cx="69.7" cy="58.1" r="3.2" style="fill:#cfe0ff"/><circle class="pt" cx="123.3" cy="56.1" r="3.2" style="fill:#cfe0ff"/><circle class="pt" cx="176.9" cy="62.8" r="3.2" style="fill:#cfe0ff"/><circle class="pt" cx="247.7" cy="45.1" r="3.2" style="fill:#cfe0ff"/><circle class="pt" cx="301.4" cy="40.4" r="3.2" style="fill:#cfe0ff"/><circle class="pt" cx="355.0" cy="28.1" r="3.2" style="fill:#cfe0ff"/><circle class="pt" cx="386.3" cy="51.1" r="3.2" style="fill:#cfe0ff"/><path class="c-line" style="stroke:#8db8ff" d="M69.7,131.7 L74.9,130.5 L80.2,129.2 L85.5,127.9 L90.8,126.6 L96.1,125.4 L101.3,124.1 L106.6,122.8 L111.9,121.6 L117.2,120.3 L122.4,119.0 L127.7,117.7 L133.0,116.5 L138.3,115.2 L143.6,113.9 L148.8,112.6 L154.1,111.4 L159.4,110.1 L164.7,108.8 L169.9,107.5 L175.2,106.3 L180.5,105.0 L185.8,103.7 L191.0,102.4 L196.3,101.2 L201.6,99.9 L206.9,98.6 L212.2,97.4 L217.4,96.1 L222.7,94.8 L228.0,93.5 L233.3,92.3 L238.5,91.0 L243.8,89.7 L249.1,88.4 L254.4,87.2 L259.7,85.9 L264.9,84.6 L270.2,83.3 L275.5,82.1 L280.8,80.8 L286.0,79.5 L291.3,78.2 L296.6,77.0 L301.9,75.7 L307.2,74.4 L312.4,73.1 L317.7,71.9 L323.0,70.6 L328.3,69.3 L333.5,68.1 L338.8,66.8 L344.1,65.5 L349.4,64.2 L354.7,63.0 L359.9,61.7 L365.2,60.4 L370.5,59.1 L375.8,57.9 L381.0,56.6 L386.3,55.3"/><circle class="pt" cx="69.7" cy="130.8" r="3.2" style="fill:#8db8ff"/><circle class="pt" cx="123.3" cy="119.2" r="3.2" style="fill:#8db8ff"/><circle class="pt" cx="176.9" cy="108.2" r="3.2" style="fill:#8db8ff"/><circle class="pt" cx="247.7" cy="87.8" r="3.2" style="fill:#8db8ff"/><circle class="pt" cx="301.4" cy="76.9" r="3.2" style="fill:#8db8ff"/><circle class="pt" cx="355.0" cy="55.4" r="3.2" style="fill:#8db8ff"/><circle class="pt" cx="386.3" cy="61.0" r="3.2" style="fill:#8db8ff"/><path class="c-line" style="stroke:#4d8dff" d="M69.7,264.2 L74.9,261.6 L80.2,259.0 L85.5,256.4 L90.8,253.9 L96.1,251.3 L101.3,248.7 L106.6,246.1 L111.9,243.6 L117.2,241.0 L122.4,238.4 L127.7,235.8 L133.0,233.3 L138.3,230.7 L143.6,228.1 L148.8,225.5 L154.1,223.0 L159.4,220.4 L164.7,217.8 L169.9,215.2 L175.2,212.6 L180.5,210.1 L185.8,207.5 L191.0,204.9 L196.3,202.3 L201.6,199.8 L206.9,197.2 L212.2,194.6 L217.4,192.0 L222.7,189.5 L228.0,186.9 L233.3,184.3 L238.5,181.7 L243.8,179.2 L249.1,176.6 L254.4,174.0 L259.7,171.4 L264.9,168.9 L270.2,166.3 L275.5,163.7 L280.8,161.1 L286.0,158.5 L291.3,156.0 L296.6,153.4 L301.9,150.8 L307.2,148.2 L312.4,145.7 L317.7,143.1 L323.0,140.5 L328.3,137.9 L333.5,135.4 L338.8,132.8 L344.1,130.2 L349.4,127.6 L354.7,125.1 L359.9,122.5 L365.2,119.9 L370.5,117.3 L375.8,114.8 L381.0,112.2 L386.3,109.6"/><circle class="pt" cx="69.7" cy="257.9" r="3.2" style="fill:#4d8dff"/><circle class="pt" cx="123.3" cy="242.2" r="3.2" style="fill:#4d8dff"/><circle class="pt" cx="176.9" cy="216.5" r="3.2" style="fill:#4d8dff"/><circle class="pt" cx="247.7" cy="178.0" r="3.2" style="fill:#4d8dff"/><circle class="pt" cx="301.4" cy="150.0" r="3.2" style="fill:#4d8dff"/><circle class="pt" cx="355.0" cy="121.8" r="3.2" style="fill:#4d8dff"/><circle class="pt" cx="386.3" cy="110.4" r="3.2" style="fill:#4d8dff"/><path class="c-line" style="stroke:#2c5fd9" d="M176.9,274.8 L180.4,273.4 L183.9,271.9 L187.4,270.5 L190.8,269.1 L194.3,267.6 L197.8,266.2 L201.3,264.8 L204.8,263.3 L208.3,261.9 L211.8,260.5 L215.3,259.0 L218.8,257.6 L222.3,256.2 L225.7,254.7 L229.2,253.3 L232.7,251.9 L236.2,250.4 L239.7,249.0 L243.2,247.6 L246.7,246.1 L250.2,244.7 L253.7,243.3 L257.2,241.8 L260.7,240.4 L264.1,239.0 L267.6,237.5 L271.1,236.1 L274.6,234.7 L278.1,233.2 L281.6,231.8 L285.1,230.4 L288.6,228.9 L292.1,227.5 L295.6,226.1 L299.1,224.6 L302.5,223.2 L306.0,221.8 L309.5,220.3 L313.0,218.9 L316.5,217.5 L320.0,216.0 L323.5,214.6 L327.0,213.2 L330.5,211.7 L334.0,210.3 L337.5,208.9 L340.9,207.4 L344.4,206.0 L347.9,204.6 L351.4,203.1 L354.9,201.7 L358.4,200.3 L361.9,198.8 L365.4,197.4 L368.9,196.0 L372.4,194.5 L375.8,193.1 L379.3,191.7 L382.8,190.2 L386.3,188.8"/><circle class="pt" cx="176.9" cy="265.7" r="3.2" style="fill:#2c5fd9"/><circle class="pt" cx="247.7" cy="254.7" r="3.2" style="fill:#2c5fd9"/><circle class="pt" cx="301.4" cy="231.7" r="3.2" style="fill:#2c5fd9"/><circle class="pt" cx="355.0" cy="201.0" r="3.2" style="fill:#2c5fd9"/><circle class="pt" cx="386.3" cy="181.6" r="3.2" style="fill:#2c5fd9"/><text class="lbl" x="393.3" y="43.5" style="fill:#cfe0ff">2×</text><text class="lbl" x="393.3" y="60.3" style="fill:#8db8ff">4×</text><text class="lbl" x="393.3" y="114.6" style="fill:#4d8dff">8×</text><text class="lbl" x="393.3" y="193.8" style="fill:#2c5fd9">16×</text></svg></div>
+                <figcaption class="fragment fade-up"><b>A second epoch is nearly free.</b><span>η = 0.87–1.02 at every budget, then falls with each further epoch.</span></figcaption></figure>
+              <figure class="trio__col rise"><div class="figure"><svg class="chart" viewBox="0 0 440 330" role="img" aria-label="Critical epoch count against tokens per parameter for five model sizes, with the fitted law"><line class="grid" x1="58" x2="396" y1="228.7" y2="228.7"/><text class="tick" x="50" y="232.2" text-anchor="end">4</text><line class="grid" x1="58" x2="396" y1="159.2" y2="159.2"/><text class="tick" x="50" y="162.7" text-anchor="end">6</text><line class="grid" x1="58" x2="396" y1="109.9" y2="109.9"/><text class="tick" x="50" y="113.4" text-anchor="end">8</text><line class="grid" x1="58" x2="396" y1="40.4" y2="40.4"/><text class="tick" x="50" y="43.9" text-anchor="end">12</text><text class="tick" x="69.7" y="296" text-anchor="middle">5</text><text class="tick" x="123.3" y="296" text-anchor="middle">10</text><text class="tick" x="176.9" y="296" text-anchor="middle">20</text><text class="tick" x="247.7" y="296" text-anchor="middle">50</text><text class="tick" x="301.4" y="296" text-anchor="middle">100</text><text class="tick" x="386.3" y="296" text-anchor="middle">300</text><line class="ax" x1="58" x2="396" y1="278" y2="278"/><text class="lbl" x="227" y="324" text-anchor="middle">tokens per parameter D/N</text><text class="lbl" transform="translate(13 146) rotate(-90)" text-anchor="middle">epochs to half value R<tspan dy="3" font-size="0.75em">c</tspan></text><path class="zone-lo" d="M58.0,236.1 L63.6,233.1 L69.3,230.1 L74.9,227.1 L80.5,224.1 L86.2,221.1 L91.8,218.1 L97.4,215.1 L103.1,212.1 L108.7,209.1 L114.3,206.1 L120.0,203.1 L125.6,200.1 L131.2,197.1 L136.9,194.1 L142.5,191.1 L148.1,188.1 L153.8,185.1 L159.4,182.1 L165.0,179.1 L170.7,176.1 L176.3,173.1 L181.9,170.2 L187.6,167.2 L193.2,164.2 L198.8,161.2 L204.5,158.2 L210.1,155.2 L215.7,152.2 L221.4,149.2 L227.0,146.2 L232.6,143.2 L238.3,140.2 L243.9,137.2 L249.5,134.2 L255.2,131.2 L260.8,128.2 L266.4,125.2 L272.1,122.2 L277.7,119.2 L283.3,116.2 L289.0,113.2 L294.6,110.2 L300.2,107.2 L305.9,104.2 L311.5,101.2 L317.1,98.2 L322.8,95.3 L328.4,92.3 L334.0,89.3 L339.7,86.3 L345.3,83.3 L350.9,80.3 L356.6,77.3 L362.2,74.3 L367.8,71.3 L373.5,68.3 L379.1,65.3 L384.7,62.3 L390.4,59.3 L396.0,56.3 L396,278 L58,278 Z"/><text class="lbl" x="332.7" y="220.3" text-anchor="middle">worth more than half</text><text class="lbl" x="130.6" y="80.5" text-anchor="middle">worth less than half</text><circle class="pt pt--mute" cx="69.7" cy="221.2" r="3"/><circle class="pt pt--mute" cx="123.3" cy="207.8" r="3"/><circle class="pt pt--mute" cx="176.9" cy="195.3" r="3"/><circle class="pt pt--mute" cx="247.7" cy="172.0" r="3"/><circle class="pt pt--mute" cx="301.4" cy="134.5" r="3"/><circle class="pt pt--mute" cx="355.0" cy="78.5" r="3"/><circle class="pt pt--mute" cx="386.3" cy="44.8" r="3"/><circle class="pt pt--mute" cx="69.7" cy="228.3" r="3"/><circle class="pt pt--mute" cx="123.3" cy="216.7" r="3"/><circle class="pt pt--mute" cx="176.9" cy="203.3" r="3"/><circle class="pt pt--mute" cx="247.7" cy="163.0" r="3"/><circle class="pt pt--mute" cx="301.4" cy="136.0" r="3"/><circle class="pt pt--mute" cx="355.0" cy="76.2" r="3"/><circle class="pt pt--mute" cx="386.3" cy="57.4" r="3"/><circle class="pt pt--mute" cx="69.7" cy="217.1" r="3"/><circle class="pt pt--mute" cx="123.3" cy="204.0" r="3"/><circle class="pt pt--mute" cx="176.9" cy="186.4" r="3"/><circle class="pt pt--mute" cx="247.7" cy="148.4" r="3"/><circle class="pt pt--mute" cx="301.4" cy="112.1" r="3"/><circle class="pt pt--mute" cx="355.0" cy="84.3" r="3"/><circle class="pt pt--mute" cx="386.3" cy="73.7" r="3"/><circle class="pt pt--mute" cx="69.7" cy="211.6" r="3"/><circle class="pt pt--mute" cx="123.3" cy="200.3" r="3"/><circle class="pt pt--mute" cx="176.9" cy="184.7" r="3"/><circle class="pt pt--mute" cx="247.7" cy="147.9" r="3"/><circle class="pt pt--mute" cx="301.4" cy="112.5" r="3"/><circle class="pt pt--mute" cx="355.0" cy="76.0" r="3"/><circle class="pt pt--mute" cx="386.3" cy="54.2" r="3"/><circle class="pt pt--mute" cx="69.7" cy="208.5" r="3"/><circle class="pt pt--mute" cx="123.3" cy="198.5" r="3"/><circle class="pt pt--mute" cx="176.9" cy="181.4" r="3"/><circle class="pt pt--mute" cx="247.7" cy="145.8" r="3"/><circle class="pt pt--mute" cx="301.4" cy="105.0" r="3"/><circle class="pt pt--mute" cx="355.0" cy="71.8" r="3"/><circle class="pt pt--mute" cx="386.3" cy="46.1" r="3"/><path class="c-line c-line--hi" d="M58.0,236.1 L63.6,233.1 L69.3,230.1 L74.9,227.1 L80.5,224.1 L86.2,221.1 L91.8,218.1 L97.4,215.1 L103.1,212.1 L108.7,209.1 L114.3,206.1 L120.0,203.1 L125.6,200.1 L131.2,197.1 L136.9,194.1 L142.5,191.1 L148.1,188.1 L153.8,185.1 L159.4,182.1 L165.0,179.1 L170.7,176.1 L176.3,173.1 L181.9,170.2 L187.6,167.2 L193.2,164.2 L198.8,161.2 L204.5,158.2 L210.1,155.2 L215.7,152.2 L221.4,149.2 L227.0,146.2 L232.6,143.2 L238.3,140.2 L243.9,137.2 L249.5,134.2 L255.2,131.2 L260.8,128.2 L266.4,125.2 L272.1,122.2 L277.7,119.2 L283.3,116.2 L289.0,113.2 L294.6,110.2 L300.2,107.2 L305.9,104.2 L311.5,101.2 L317.1,98.2 L322.8,95.3 L328.4,92.3 L334.0,89.3 L339.7,86.3 L345.3,83.3 L350.9,80.3 L356.6,77.3 L362.2,74.3 L367.8,71.3 L373.5,68.3 L379.1,65.3 L384.7,62.3 L390.4,59.3 L396.0,56.3"/><text class="lbl hi" x="72.7" y="249.2">R<tspan dy="3" font-size="0.75em">c</tspan><tspan dy="-3"> ≈ 2.7 (D/N)</tspan><tspan dy="-6" font-size="0.75em">0.24</tspan></text></svg></div>
+                <figcaption class="fragment fade-up"><b>Half value at four to five epochs.</b><span>Rising slowly with budget, and nearly the same for every model size.</span></figcaption></figure>
+              <figure class="trio__col rise"><div class="figure"><svg class="chart" viewBox="0 0 440 330" role="img" aria-label="Loss-minimizing epoch count against model size when unique data grow with the model"><line class="grid" x1="58" x2="396" y1="278.0" y2="278.0"/><text class="tick" x="50" y="281.5" text-anchor="end">2</text><line class="grid" x1="58" x2="396" y1="187.2" y2="187.2"/><text class="tick" x="50" y="190.7" text-anchor="end">3</text><line class="grid" x1="58" x2="396" y1="122.7" y2="122.7"/><text class="tick" x="50" y="126.2" text-anchor="end">4</text><line class="grid" x1="58" x2="396" y1="31.9" y2="31.9"/><text class="tick" x="50" y="35.4" text-anchor="end">6</text><text class="tick" x="76.5" y="296" text-anchor="middle">23M</text><text class="tick" x="168.4" y="296" text-anchor="middle">78M</text><text class="tick" x="283.9" y="296" text-anchor="middle">361M</text><text class="tick" x="374.3" y="296" text-anchor="middle">1.2B</text><line class="ax" x1="58" x2="396" y1="278" y2="278"/><text class="lbl" x="227" y="324" text-anchor="middle">model size (non-embedding)</text><text class="lbl" transform="translate(13 146) rotate(-90)" text-anchor="middle">best epoch count R*</text><path class="c-line c-line--hi" d="M58.0,139.0 L63.6,138.4 L69.3,137.7 L74.9,137.1 L80.5,136.4 L86.2,135.7 L91.8,135.1 L97.4,134.4 L103.1,133.8 L108.7,133.1 L114.3,132.4 L120.0,131.8 L125.6,131.1 L131.2,130.4 L136.9,129.8 L142.5,129.1 L148.1,128.5 L153.8,127.8 L159.4,127.1 L165.0,126.5 L170.7,125.8 L176.3,125.1 L181.9,124.5 L187.6,123.8 L193.2,123.2 L198.8,122.5 L204.5,121.8 L210.1,121.2 L215.7,120.5 L221.4,119.8 L227.0,119.2 L232.6,118.5 L238.3,117.9 L243.9,117.2 L249.5,116.5 L255.2,115.9 L260.8,115.2 L266.4,114.5 L272.1,113.9 L277.7,113.2 L283.3,112.6 L289.0,111.9 L294.6,111.2 L300.2,110.6 L305.9,109.9 L311.5,109.2 L317.1,108.6 L322.8,107.9 L328.4,107.3 L334.0,106.6 L339.7,105.9 L345.3,105.3 L350.9,104.6 L356.6,103.9 L362.2,103.3 L367.8,102.6 L373.5,102.0 L379.1,101.3 L384.7,100.6 L390.4,100.0 L396.0,99.3"/><circle class="pt" cx="76.5" cy="140.2" r="3.2"/><circle class="pt" cx="127.0" cy="136.0" r="3.2"/><circle class="pt" cx="168.4" cy="122.2" r="3.2"/><circle class="pt" cx="233.5" cy="111.8" r="3.2"/><circle class="pt" cx="283.9" cy="108.1" r="3.2"/><circle class="pt" cx="343.8" cy="101.4" r="3.2"/><circle class="pt" cx="374.3" cy="112.4" r="3.2"/><text class="lbl hi" x="76.5" y="68.3">CommonCrawl · γ = +0.04</text><path class="c-line " stroke-dasharray="5 4" d="M58.0,189.1 L63.6,189.8 L69.3,190.5 L74.9,191.2 L80.5,191.9 L86.2,192.6 L91.8,193.3 L97.4,194.0 L103.1,194.7 L108.7,195.4 L114.3,196.0 L120.0,196.7 L125.6,197.4 L131.2,198.1 L136.9,198.8 L142.5,199.5 L148.1,200.2 L153.8,200.9 L159.4,201.6 L165.0,202.3 L170.7,203.0 L176.3,203.7 L181.9,204.4 L187.6,205.1 L193.2,205.8 L198.8,206.4 L204.5,207.1 L210.1,207.8 L215.7,208.5 L221.4,209.2 L227.0,209.9 L232.6,210.6 L238.3,211.3 L243.9,212.0 L249.5,212.7 L255.2,213.4 L260.8,214.1 L266.4,214.8 L272.1,215.5 L277.7,216.2 L283.3,216.9 L289.0,217.5 L294.6,218.2 L300.2,218.9 L305.9,219.6 L311.5,220.3 L317.1,221.0 L322.8,221.7 L328.4,222.4 L334.0,223.1 L339.7,223.8 L345.3,224.5 L350.9,225.2 L356.6,225.9 L362.2,226.6 L367.8,227.3 L373.5,227.9 L379.1,228.6 L384.7,229.3 L390.4,230.0 L396.0,230.7"/><circle class="pt pt--mute" cx="76.5" cy="184.2" r="3.2"/><circle class="pt pt--mute" cx="127.0" cy="201.0" r="3.2"/><circle class="pt pt--mute" cx="168.4" cy="208.3" r="3.2"/><circle class="pt pt--mute" cx="233.5" cy="213.3" r="3.2"/><circle class="pt pt--mute" cx="283.9" cy="215.8" r="3.2"/><circle class="pt pt--mute" cx="343.8" cy="220.1" r="3.2"/><circle class="pt pt--mute" cx="374.3" cy="228.9" r="3.2"/><text class="lbl" x="76.5" y="246.7">GitHub · γ = -0.04</text></svg></div>
+                <figcaption class="fragment fade-up"><b>Scale epochs with data, not size.</b><span>With unique data at 2.5N, the best epoch count stays near four from 23M to 1.2B.</span></figcaption></figure>
+            </div>
+            <p class="src">Points: measured. Lines: log-linear fits (left), R<sub>c</sub> ≈ 2.7 (D/N)<sup>0.24</sup> (centre), power laws (right). Chai and Xiong, arXiv 2610.05591, Figs. 3, 4 and 7.</p>
         </div>
-        <aside class="notes">Proxy replaced: counting tokens seen. 175 matched runs. Blue lines are the largest models: gains flatten, then reverse after about four epochs. Reveal the three takeaways one by one.</aside>
+        <aside class="notes">Proxy replaced: counting tokens seen. 175 grid runs. Left: value of a repeat per epoch count. Centre: where repeats fall to half value, about four to five epochs. Right: with data scaled to the model, the best epoch count stays flat. Reveal the takeaways one by one.</aside>
       </section>
 
       <!-- 9 · XiangqiBench -->
@@ -597,8 +538,7 @@
       <!-- 12 · Publications -->
       <section id="publications" data-section="Publications">
         <div class="slide">
-          <p class="kicker rise">Publications</p>
-          <h2 class="title rise">Papers, 2024–2026</h2>
+          <h2 class="title rise">Publications</h2>
           <ol class="pubs">
           <li class="rise"><a href="/research/repeated-tokens/">What Is a Repeated Token Worth? The Scaling Geometry of Multi-Epoch Pretraining</a><span class="v">arXiv preprint</span></li>
           <li class="rise"><a href="/research/xiangqibench/">Finding the Move Is Not Winning the Game: XiangqiBench for Closed-Loop Evaluation of LLM Agents</a><span class="v">arXiv preprint</span></li>
@@ -619,12 +559,11 @@
       <!-- 13 · Get involved -->
       <section id="get-involved" data-section="Get involved">
         <div class="slide">
-          <p class="kicker rise">Get involved</p>
-          <h2 class="title rise">Open to anyone with a focused question</h2>
+          <h2 class="title rise">Get involved</h2>
           <div class="tiles tiles--3">
-            <div class="tile rise"><p class="lbl">Use</p><h3>Run the benchmarks</h3><p>Evaluate your models with our harnesses and report what you find, negative results included.</p><p class="meta">github.com/floatai</p></div>
-            <div class="tile rise"><p class="lbl">Build</p><h3>Contribute</h3><p>Fix a bug, add a model backend or a language. Every merged contribution is credited.</p><p class="meta">Issues and pull requests</p></div>
-            <div class="tile rise"><p class="lbl">Ask</p><h3>Propose a project</h3><p>Bring a question a controlled experiment can answer, and find collaborators.</p><p class="meta">GitHub Discussions</p></div>
+            <div class="tile rise"><svg class="tile__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M6 20V11M12 20V5M18 20v-6"/></svg><h3>Run the benchmarks</h3><p>Evaluate your models and share what you find.</p></div>
+            <div class="tile rise"><svg class="tile__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg><h3>Contribute</h3><p>Fix a bug, or add a model or a language.</p></div>
+            <div class="tile rise"><svg class="tile__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><h3>Propose a project</h3><p>Bring a question and find collaborators.</p></div>
           </div>
         </div>
         <aside class="notes">Three ways in, from lightest to deepest commitment.</aside>
@@ -636,9 +575,9 @@
           <img class="cover__mark rise" src="/assets/brand/floatai-icon.svg" alt="" />
           <h2 class="statement rise">Measure what models do.<br /><span class="glow">Share it openly.</span></h2>
           <div class="links rise">
-            <a href="/">floatai.github.io</a>
-            <a href="https://github.com/floatai" target="_blank" rel="noopener">github.com/floatai</a>
-            <a href="https://huggingface.co/floatai" target="_blank" rel="noopener">huggingface.co/floatai</a>
+            <a href="https://github.com/floatai" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>github.com/floatai</a>
+            <a href="https://huggingface.co/floatai" target="_blank" rel="noopener"><img src="/slides/img/huggingface.svg" alt="" />huggingface.co/floatai</a>
+            <a href="/"><img src="/assets/brand/floatai-icon.svg" alt="" />floatai.github.io</a>
           </div>
         </div>
         <aside class="notes">Thank you. Questions.</aside>
@@ -660,6 +599,6 @@
   <div class="laser" aria-hidden="true"></div>
   <script src="/assets/vendor/reveal/reveal.js"></script>
   <script src="/assets/vendor/reveal/plugin/notes.js"></script>
-  <script src="/slides/slides.js?v=3"></script>
+  <script src="/slides/slides.js?v=4"></script>
 </body>
 </html>

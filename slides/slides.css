@@ -97,7 +97,7 @@ section > .slide {
 
 /* Big numbers */
 .stats { display: grid; gap: 48px; margin-block: auto; }
-.stats--4 { grid-template-columns: repeat(4, auto); justify-content: space-between; }
+.stats--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .stat .v { margin: 0; padding-bottom: 6px; font: 700 120px/1 var(--sans); letter-spacing: -0.05em; white-space: nowrap; }
 .stat .v.glow { color: transparent; }
 .stat p { margin: 20px 0 0; font-size: 21px; line-height: 1.45; color: var(--ink-2); max-width: 15ch; }
